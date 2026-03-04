@@ -91,11 +91,184 @@ const GEOGRAFIA_IKONOMIKA_QUESTIONS = [
   { q: "Коя от изброените организации е военна организация?", correct: "Организация на Северноатлантическия договор (НАТО)", wrong1: "ООН", wrong2: "ЕС" },
 ];
 
+/** Language Revision – 5th grade English (Grammar, Vocabulary, Phrases) */
+const ENGLISH_LANGUAGE_REVISION_QUESTIONS = [
+  // Grammar – verbs (Exercise 1)
+  { q: "He's a teacher. He ___ in a school in Madrid.", correct: "works", wrong1: "don't work", wrong2: "comes" },
+  { q: "My cousins ___ in the UK. They live in Germany.", correct: "don't live", wrong1: "live", wrong2: "work" },
+  { q: "Maria ___ tennis or basketball. She hates sport.", correct: "doesn't play", wrong1: "plays", wrong2: "takes" },
+  { q: "I ___ Polish. I only speak English.", correct: "don't speak", wrong1: "speak", wrong2: "come" },
+  { q: "My sister ___ very good photos of animals.", correct: "takes", wrong1: "don't take", wrong2: "works" },
+  { q: "Do you ___ from America?", correct: "come", wrong1: "not come", wrong2: "speak" },
+  // Grammar – pronouns (Exercise 2)
+  { q: "A: Do you like rock music? B: No, I hate ___.", correct: "it", wrong1: "him", wrong2: "us" },
+  { q: "A: My mum likes The Beatles! B: My mum likes ___, too.", correct: "them", wrong1: "it", wrong2: "her" },
+  { q: "A: Is this your book? B: Yes, please give it to ___.", correct: "me", wrong1: "him", wrong2: "us" },
+  { q: "A: Do you like Nicole Kidman? B: No, I'm not keen on ___.", correct: "her", wrong1: "him", wrong2: "them" },
+  { q: "A: Are these your brothers with you? B: Yes, it's a photo of ___ on our holiday.", correct: "them", wrong1: "us", wrong2: "me" },
+  // Vocabulary – jobs and places (Exercise 3)
+  { q: "Where does a plumber work?", correct: "building site", wrong1: "hospital", wrong2: "school" },
+  { q: "Where does a doctor work?", correct: "hospital", wrong1: "shop", wrong2: "farm" },
+  { q: "Where does a teacher work?", correct: "school", wrong1: "film studio", wrong2: "office" },
+  { q: "Where does a secretary work?", correct: "office", wrong1: "building site", wrong2: "farm" },
+  { q: "Where does a farmer work?", correct: "farm", wrong1: "hospital", wrong2: "shop" },
+  { q: "Where does an actor work?", correct: "film studio", wrong1: "school", wrong2: "building site" },
+  // Vocabulary – scrambled adjectives (Exercise 4): bretrile, looc, tictafans, gorbin, tagre, tanibrili, drew, fulwa, nynut
+  { q: "Rearrange the letters to make an adjective of opinion: bretrile", correct: "terrible", wrong1: "brilliant", wrong2: "tablet" },
+  { q: "Rearrange the letters to make an adjective of opinion: looc", correct: "cool", wrong1: "cold", wrong2: "pool" },
+  { q: "Rearrange the letters to make an adjective of opinion: tictafans", correct: "fantastic", wrong1: "fantasy", wrong2: "fact" },
+  { q: "Rearrange the letters to make an adjective of opinion: gorbin", correct: "boring", wrong1: "going", wrong2: "bring" },
+  { q: "Rearrange the letters to make an adjective of opinion: tagre", correct: "great", wrong1: "target", wrong2: "gate" },
+  { q: "Rearrange the letters to make an adjective of opinion: tanibrili", correct: "brilliant", wrong1: "terrible", wrong2: "natural" },
+  { q: "Rearrange the letters to make an adjective of opinion: drew", correct: "weird", wrong1: "red", wrong2: "word" },
+  { q: "Rearrange the letters to make an adjective of opinion: fulwa", correct: "awful", wrong1: "full", wrong2: "law" },
+  { q: "Rearrange the letters to make an adjective of opinion: nynut", correct: "funny", wrong1: "nut", wrong2: "tunnel" },
+  // Phrases (Exercise 5)
+  { q: "A: Can I borrow your camera, please? B: ___", correct: "Yes, OK.", wrong1: "That's right.", wrong2: "Don't look at me!" },
+  { q: "A: Look, here's my new iPad. B: ___", correct: "Cool!", wrong1: "Yes, OK.", wrong2: "That's right." },
+  // Conversation Rob & Liz (Exercise 6)
+  { q: "Rob: Do you want to watch my new DVD? Liz: ___", correct: "Yes, OK. What film is it?", wrong1: "Who's in it?", wrong2: "Oh, I love him." },
+  { q: "Rob: It's called Alice in Wonderland. Liz: ___", correct: "Who's in it?", wrong1: "Yes, OK. What film is it?", wrong2: "I'm not keen on her." },
+  { q: "Rob: Johnny Depp. Liz: ___", correct: "Oh, I love him. I think he's fantastic.", wrong1: "He's awful.", wrong2: "Who's in it?" },
+  { q: "Rob: Me, too. What do you think of Helena Bonham Carter? She's in it, too. Liz: ___", correct: "I'm not keen on her. She's weird.", wrong1: "Oh, I love him.", wrong2: "Yes, OK. What film is it?" },
+];
+
+/** Test 1: Have / Go / Do / Get – 5th grade English */
+const ENGLISH_HAVE_GO_DO_GET_QUESTIONS = [
+  { q: "I ______ up at 7 o'clock every day.", correct: "get", wrong1: "have", wrong2: "do" },
+  { q: "She ______ to school by bus.", correct: "goes", wrong1: "has", wrong2: "gets" },
+  { q: "We ______ homework in the afternoon.", correct: "do", wrong1: "have", wrong2: "get" },
+  { q: "They ______ breakfast at 8 a.m.", correct: "have", wrong1: "go", wrong2: "do" },
+  { q: "He ______ to bed at 10 p.m.", correct: "goes", wrong1: "does", wrong2: "has" },
+  { q: "I ______ dressed before school.", correct: "get", wrong1: "go", wrong2: "do" },
+  { q: "She ______ a shower in the morning.", correct: "has", wrong1: "does", wrong2: "goes" },
+  { q: "We ______ to football practice on Mondays.", correct: "go", wrong1: "have", wrong2: "get" },
+  { q: "He ______ his teeth before bed.", correct: "does", wrong1: "gets", wrong2: "goes" },
+  { q: "I ______ home at 4 p.m.", correct: "get", wrong1: "do", wrong2: "have" },
+  { q: "I ______ lunch at school.", correct: "have", wrong1: "go", wrong2: "get" },
+  { q: "She ______ up early.", correct: "gets", wrong1: "has", wrong2: "goes" },
+  { q: "We ______ shopping on Saturday.", correct: "go", wrong1: "have", wrong2: "get" },
+  { q: "He ______ his homework after dinner.", correct: "does", wrong1: "gets", wrong2: "has" },
+  { q: "They ______ to the park in the evening.", correct: "go", wrong1: "have", wrong2: "get" },
+  { q: "I ______ dressed quickly.", correct: "get", wrong1: "do", wrong2: "go" },
+  { q: "She ______ a bath at night.", correct: "has", wrong1: "gets", wrong2: "goes" },
+  { q: "We ______ home late.", correct: "get", wrong1: "have", wrong2: "do" },
+  { q: "Match: get ___", correct: "dressed", wrong1: "homework", wrong2: "breakfast" },
+  { q: "Match: have ___", correct: "breakfast", wrong1: "to school", wrong2: "homework" },
+  { q: "Match: do ___", correct: "homework", wrong1: "to bed", wrong2: "a shower" },
+  { q: "Match: go ___", correct: "to school", wrong1: "dressed", wrong2: "breakfast" },
+  { q: "Match: have ___ (shower)", correct: "a shower", wrong1: "to school", wrong2: "homework" },
+  { q: "Match: go ___ (bed)", correct: "to bed", wrong1: "dressed", wrong2: "breakfast" },
+];
+
+/** Test 2: Adverbs of frequency & Transport (by/on/in) – 5th grade English */
+const ENGLISH_ADVERBS_TRANSPORT_QUESTIONS = [
+  { q: "I ______ brush my teeth before bed. (every time)", correct: "always", wrong1: "never", wrong2: "sometimes" },
+  { q: "She ______ watches TV after school. (3–4 times a week)", correct: "often", wrong1: "never", wrong2: "always" },
+  { q: "We ______ eat fast food. (0 times)", correct: "never", wrong1: "always", wrong2: "often" },
+  { q: "They ______ go to the park on Sundays.", correct: "usually", wrong1: "never", wrong2: "sometimes" },
+  { q: "He ______ forgets his homework. (almost every time)", correct: "often", wrong1: "never", wrong2: "sometimes" },
+  { q: "I ______ get up at 7 a.m. (every day)", correct: "always", wrong1: "never", wrong2: "often" },
+  { q: "She ______ plays computer games. (2 times a month)", correct: "sometimes", wrong1: "always", wrong2: "never" },
+  { q: "We ______ visit our grandparents. (many times)", correct: "often", wrong1: "never", wrong2: "sometimes" },
+  { q: "He ______ drinks milk. (not at all)", correct: "never", wrong1: "always", wrong2: "usually" },
+  { q: "I ______ help my parents at home.", correct: "usually", wrong1: "never", wrong2: "always" },
+  { q: "Which is correct? I go to school by bus. (always)", correct: "I always go to school by bus.", wrong1: "I go always to school by bus.", wrong2: "Always I go to school by bus." },
+  { q: "Which is correct? She is late. (never)", correct: "She is never late.", wrong1: "She never is late.", wrong2: "Never she is late." },
+  { q: "Which is correct? We play football after school. (often)", correct: "We often play football after school.", wrong1: "We play often football after school.", wrong2: "Often we play football after school." },
+  { q: "Which is correct? They are tired in the morning. (sometimes)", correct: "They are sometimes tired in the morning.", wrong1: "They sometimes are tired in the morning.", wrong2: "Sometimes they are tired in the morning." },
+  { q: "I go to school ___ bus.", correct: "by", wrong1: "on", wrong2: "in" },
+  { q: "She travels ___ train.", correct: "by", wrong1: "on", wrong2: "in" },
+  { q: "We go ___ car.", correct: "by", wrong1: "in", wrong2: "on" },
+  { q: "They travel ___ plane.", correct: "by", wrong1: "in", wrong2: "on" },
+  { q: "He goes to work ___ bike.", correct: "by", wrong1: "on", wrong2: "in" },
+  { q: "She travels ___ foot.", correct: "on", wrong1: "by", wrong2: "in" },
+];
+
+/** Test 3: Present Simple & at (time) – 5th grade English */
+const ENGLISH_PRESENT_SIMPLE_AT_QUESTIONS = [
+  { q: "She ______ school at 8 o'clock. (start / starts)", correct: "starts", wrong1: "start", wrong2: "starting" },
+  { q: "I ______ dinner at 7 p.m. (have / has)", correct: "have", wrong1: "has", wrong2: "having" },
+  { q: "They ______ football at 5 o'clock. (play / plays)", correct: "play", wrong1: "plays", wrong2: "playing" },
+  { q: "He ______ TV at night. (watch / watches)", correct: "watches", wrong1: "watch", wrong2: "watching" },
+  { q: "We ______ up at 6:30. (get / gets)", correct: "get", wrong1: "gets", wrong2: "getting" },
+  { q: "My dad ______ to work at 9 a.m. (go / goes)", correct: "goes", wrong1: "go", wrong2: "going" },
+  { q: "I ______ my homework at 4 o'clock. (do / does)", correct: "do", wrong1: "does", wrong2: "doing" },
+  { q: "Anna ______ a book at bedtime. (read / reads)", correct: "reads", wrong1: "read", wrong2: "reading" },
+  { q: "The lesson ______ at 2 p.m. (finish / finishes)", correct: "finishes", wrong1: "finish", wrong2: "finishing" },
+  { q: "Tom and Ben ______ lunch at noon. (eat / eats)", correct: "eat", wrong1: "eats", wrong2: "eating" },
+  { q: "I wake up ___ 7 o'clock.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "She goes to bed ___ night.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "We meet ___ 5:30 p.m.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "He has English ___ noon.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "They have breakfast ___ 8 a.m.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "The film starts ___ 6 o'clock.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "I study ___ the weekend.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "She calls me ___ midnight.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "Correct: She go to bed at 10 o'clock.", correct: "She goes to bed at 10 o'clock.", wrong1: "She go to bed at 10 o'clock.", wrong2: "She going to bed at 10 o'clock." },
+  { q: "Correct: I has dinner at 7 p.m.", correct: "I have dinner at 7 p.m.", wrong1: "I has dinner at 7 p.m.", wrong2: "I am have dinner at 7 p.m." },
+  { q: "Correct: He play football at 5 o'clock.", correct: "He plays football at 5 o'clock.", wrong1: "He play football at 5 o'clock.", wrong2: "He playing football at 5 o'clock." },
+  { q: "Correct: We goes to school at 8 a.m.", correct: "We go to school at 8 a.m.", wrong1: "We goes to school at 8 a.m.", wrong2: "We going to school at 8 a.m." },
+];
+
+/** Test 4: Time in words and numbers – 5th grade English */
+const ENGLISH_TIME_QUESTIONS = [
+  { q: "Write the time in words: 3:00", correct: "three o'clock", wrong1: "half past three", wrong2: "quarter past three" },
+  { q: "Write the time in words: 7:15", correct: "quarter past seven", wrong1: "quarter to seven", wrong2: "half past seven" },
+  { q: "Write the time in words: 9:30", correct: "half past nine", wrong1: "quarter past nine", wrong2: "quarter to nine" },
+  { q: "Write the time in words: 4:45", correct: "quarter to five", wrong1: "quarter past four", wrong2: "half past four" },
+  { q: "Write the time in words: 12:00", correct: "twelve o'clock", wrong1: "half past twelve", wrong2: "quarter past twelve" },
+  { q: "Write the time in words: 5:10", correct: "ten past five", wrong1: "ten to five", wrong2: "quarter past five" },
+  { q: "Write the time in words: 8:20", correct: "twenty past eight", wrong1: "twenty to eight", wrong2: "half past eight" },
+  { q: "Write the time in words: 6:35", correct: "twenty-five to seven", wrong1: "twenty-five past six", wrong2: "half past six" },
+  { q: "Write the time in words: 10:50", correct: "ten to eleven", wrong1: "ten past ten", wrong2: "quarter to eleven" },
+  { q: "Write the time in words: 1:05", correct: "five past one", wrong1: "five to one", wrong2: "quarter past one" },
+  { q: "It's half past four. What time is it?", correct: "4:30", wrong1: "4:15", wrong2: "4:45" },
+  { q: "It's quarter past nine. What time is it?", correct: "9:15", wrong1: "9:30", wrong2: "9:45" },
+  { q: "It's quarter to seven. What time is it?", correct: "6:45", wrong1: "7:15", wrong2: "7:45" },
+  { q: "It's ten past three. What time is it?", correct: "3:10", wrong1: "3:50", wrong2: "10:03" },
+  { q: "It's twenty to eight. What time is it?", correct: "7:40", wrong1: "8:20", wrong2: "7:20" },
+  { q: "It's five past one. What time is it?", correct: "1:05", wrong1: "1:50", wrong2: "5:01" },
+  { q: "It's twenty-five past six. What time is it?", correct: "6:25", wrong1: "6:35", wrong2: "5:25" },
+  { q: "It's ten to eleven. What time is it?", correct: "10:50", wrong1: "11:10", wrong2: "10:10" },
+  { q: "2:30 is:", correct: "half past two", wrong1: "quarter to two", wrong2: "half to two" },
+  { q: "11:45 is:", correct: "quarter to twelve", wrong1: "quarter past eleven", wrong2: "half past eleven" },
+  { q: "6:15 is:", correct: "quarter past six", wrong1: "quarter to six", wrong2: "half past six" },
+  { q: "9:50 is:", correct: "ten to ten", wrong1: "ten past nine", wrong2: "ten to nine" },
+  { q: "4:05 is:", correct: "five past four", wrong1: "five to four", wrong2: "half past four" },
+  { q: "7:40 is:", correct: "twenty to eight", wrong1: "twenty past seven", wrong2: "forty past seven" },
+];
+
 const TESTS = {
   '5|geografia|geografia-ikonomika-test': {
     title: 'География и стопанство',
     slug: 'geografia-ikonomika-test',
     questions: GEOGRAFIA_IKONOMIKA_QUESTIONS,
+  },
+  '5|english|language-revision': {
+    title: 'Language Revision (English)',
+    slug: 'language-revision',
+    questions: ENGLISH_LANGUAGE_REVISION_QUESTIONS,
+  },
+  '5|english|have-go-do-get': {
+    title: 'Have / Go / Do / Get',
+    slug: 'have-go-do-get',
+    questions: ENGLISH_HAVE_GO_DO_GET_QUESTIONS,
+  },
+  '5|english|adverbs-and-transport': {
+    title: 'Adverbs of frequency & Transport',
+    slug: 'adverbs-and-transport',
+    questions: ENGLISH_ADVERBS_TRANSPORT_QUESTIONS,
+  },
+  '5|english|present-simple-at': {
+    title: 'Present Simple & at (time)',
+    slug: 'present-simple-at',
+    questions: ENGLISH_PRESENT_SIMPLE_AT_QUESTIONS,
+  },
+  '5|english|time': {
+    title: 'Time in words and numbers',
+    slug: 'time',
+    questions: ENGLISH_TIME_QUESTIONS,
   },
 };
 

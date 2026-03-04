@@ -5,10 +5,10 @@ import Link from 'next/link';
 
 const SUBJECT_LABELS = {
   geografia: 'География',
+  english: 'Английски език',
   matematika: 'Математика',
   istoriya: 'История',
   bg: 'Български език',
-  // добави други предмети при нужда
 };
 
 export default function TestovePage() {
