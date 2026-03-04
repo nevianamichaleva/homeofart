@@ -1,5 +1,5 @@
-import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 import Quiz from '@/components/Quiz';
 import { getTest } from '@/data/tests';
 import Link from 'next/link';
@@ -42,10 +42,15 @@ export default async function TestPage({ params }) {
           <h1 className="text-2xl sm:text-3xl font-bold text-[#1a3a52] mb-1">
             Тест – {testData.title}
           </h1>
-          <p className="text-gray-600 mb-8">
+          {/* <p className="text-gray-600 mb-8">
             Всеки въпрос има 3 възможни отговора. Изберете един.
-          </p>
-          <Quiz title={testData.title} questions={testData.questions} />
+          </p> */}
+          <Quiz
+            title={testData.title}
+            questions={testData.questions}
+            testId={`${classNum}|${subject}|${testSlug}`}
+            testTitle={testData.title}
+          />
         </div>
       </main>
 

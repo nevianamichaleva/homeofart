@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 function shuffle(arr) {
   const b = [...arr];
@@ -42,7 +44,10 @@ function getCorrectDisplay(question) {
   return question.correct;
 }
 
-export default function Quiz({ title, questions }) {
+export default function Quiz({ title, questions, testId = '', testTitle = '' }) {
+  /** Име на участника и дали е започнал теста */
+  const [userName, setUserName] = useState('');
+  const [started, setStarted] = useState(false);
   /** Разбъркан ред на въпросите – фиксиран при стартиране на теста */
   const [shuffledQuestions] = useState(() => shuffle([...questions]));
   const [index, setIndex] = useState(0);
@@ -50,6 +55,8 @@ export default function Quiz({ title, questions }) {
   const [optionOrder, setOptionOrder] = useState(() => shuffle([0, 1, 2]));
   const [answered, setAnswered] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  /** При показване на обобщение: { correctCount, total, grade, gradeLabel, resultSaved } */
+  const [summaryResult, setSummaryResult] = useState(null);
   /** Избраният отговор за текущия въпрос (null = нищо не е избрано) */
   const [selectedOption, setSelectedOption] = useState(null);
   /** За въпроси тип "текст" – написаният отговор */
@@ -67,7 +74,30 @@ export default function Quiz({ title, questions }) {
   const handleNext = () => {
     if (answered) {
       if (index + 1 >= shuffledQuestions.length) {
+        const correctCount = answers.filter((a, i) => isCorrectAnswer(shuffledQuestions[i], a)).length;
+        const total = shuffledQuestions.length;
+        const gradeRaw = 2 + (correctCount / total) * 4;
+        const grade = Math.round(gradeRaw * 2) / 2;
+        const gradeLabel =
+          grade >= 5.5 ? 'Отличен' : grade >= 4.5 ? 'Много добър' : grade >= 3.5 ? 'Добър' : grade >= 2.5 ? 'Среден' : 'Слаб';
+        setSummaryResult({ correctCount, total, grade, gradeLabel });
         setShowSummary(true);
+        const points = `${correctCount}/${total}`;
+        const assessment = `${grade} (${gradeLabel})`;
+        const test = testId || title || '';
+        (async () => {
+          try {
+            await addDoc(collection(db, 'results'), {
+              name: userName.trim() || 'Анонимен',
+              points,
+              assessment,
+              test,
+            });
+            setSummaryResult((prev) => (prev ? { ...prev, resultSaved: true } : null));
+          } catch (err) {
+            console.warn('Неуспешен запис на резултат:', err?.message);
+          }
+        })();
         return;
       }
       setIndex((i) => i + 1);
@@ -101,24 +131,47 @@ export default function Quiz({ title, questions }) {
     }
   };
 
-  if (showSummary) {
-    const correctCount = answers.filter((a, i) => isCorrectAnswer(shuffledQuestions[i], a)).length;
-    const percent = (100 * correctCount) / shuffledQuestions.length;
-    const percentRounded = Math.round(percent);
-    // Оценка 2–6: 2 + (верни/общо) * 4, закръглена до 0.5
-    const gradeRaw = 2 + (correctCount / shuffledQuestions.length) * 4;
-    const grade = Math.round(gradeRaw * 2) / 2;
-    const gradeLabel =
-      grade >= 5.5 ? 'Отличен' : grade >= 4.5 ? 'Много добър' : grade >= 3.5 ? 'Добър' : grade >= 2.5 ? 'Среден' : 'Слаб';
+  if (!started) {
+    return (
+      <div className="max-w-xl mx-auto p-6 bg-white/80 rounded-xl border-2 border-[#1a3a52]/20">
+        <h2 className="text-xl font-semibold text-[#1a3a52] mb-4">Въведете вашето име</h2>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value.trim())}
+            placeholder="Име"
+            className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-[#1a3a52] focus:ring-2 focus:ring-[#1a3a52]/20"
+            onKeyDown={(e) => e.key === 'Enter' && userName.trim() && setStarted(true)}
+          />
+          <button
+            type="button"
+            onClick={() => userName.trim() && setStarted(true)}
+            disabled={!userName.trim()}
+            className="px-6 py-3 rounded-lg font-semibold bg-[#1a3a52] text-white hover:bg-[#244a62] disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Започни теста
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (showSummary && summaryResult) {
+    const { correctCount, total, grade, gradeLabel, resultSaved } = summaryResult;
+    const percentRounded = Math.round((100 * correctCount) / total);
     return (
       <div className="mt-8 p-6 bg-white rounded-xl shadow-md max-w-xl mx-auto">
         <h2 className="text-2xl font-semibold text-[#1a3a52] mb-4">Край на теста</h2>
         <p className="text-lg font-medium text-gray-700 mb-2">
-          Верни отговори: {correctCount} от {shuffledQuestions.length} ({percentRounded}%).
+          Верни отговори: {correctCount} от {total} ({percentRounded}%).
         </p>
         <p className="text-lg font-semibold text-[#1a3a52]">
           Оценка: <span className="text-2xl">{grade}</span> ({gradeLabel})
         </p>
+        {resultSaved && (
+          <p className="mt-4 text-sm text-gray-500">Резултатът е записан.</p>
+        )}
       </div>
     );
   }
