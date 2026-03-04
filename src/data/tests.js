@@ -109,3 +109,20 @@ export function getTest(classNum, subject, testSlug) {
   const key = `${classNum}|${subject}|${testSlug}`;
   return TESTS[key] ?? null;
 }
+
+/**
+ * Връща списък с всички тестове за обобщената страница.
+ * Всеки елемент: { classNum, subject, slug, title, questionCount }
+ */
+export function getAllTests() {
+  return Object.entries(TESTS).map(([key, data]) => {
+    const [classNum, subject, slug] = key.split('|');
+    return {
+      classNum,
+      subject,
+      slug,
+      title: data.title,
+      questionCount: data.questions.length,
+    };
+  });
+}
