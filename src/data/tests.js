@@ -2,10 +2,9 @@
  * Дефиниции на тестове. Ключ: "class|subject|testSlug"
  *
  * Как да добавиш друг тест:
- * 1. Създай масив с въпроси (всеки обект: { q: "въпрос?", correct: "верен отговор", wrong1: "...", wrong2: "..." }).
- * 2. В обекта TESTS добави нов запис с ключ "клас|предмет|slug-на-теста".
- *    Пример: за 6 клас, математика, тест "algebra": ключът е '6|matematika|algebra'.
- * 3. URL-ът ще бъде: /testove/6/matematika/algebra
+ * 1. Въпроси с избор от 3: { q: "въпрос?", correct: "...", wrong1: "...", wrong2: "..." }.
+ * 2. Въпроси с написване: { type: "text", q: "въпрос?", correct: "отговор", acceptedAnswers?: ["вариант1", "вариант2"] }.
+ * 3. В TESTS добави запис с ключ "клас|предмет|slug". URL: /testove/клас/предмет/slug
  */
 const GEOGRAFIA_IKONOMIKA_QUESTIONS = [
   { q: "Какво показва стълбчестата диаграма?", correct: "Промени в стойности по години или сравнение между различни обекти", wrong1: "Дяловете на всяка част от едно цяло в %", wrong2: "Териториалното разпределение на дейностите" },
@@ -324,6 +323,62 @@ const ENGLISH_UNIT_6C_QUESTIONS = [
   { q: "From the list: get up very late, tidy your bedroom, go to bed early – we use these with:", correct: "How often do you...?", wrong1: "How much...?", wrong2: "Where do you...?" },
 ];
 
+/**
+ * Round up 3 & 6b/6c – въпроси с избор И с написване на отговор.
+ * type: 'text' = потребителят пише отговор; acceptedAnswers = приема се всеки от списъка (без значение малки/големи букви).
+ */
+const ENGLISH_ROUNDUP_6_WRITE_IN_QUESTIONS = [
+  // Round up – Complete the chat (Exercise 1)
+  { type: 'text', q: "Where ___ ? (Nero asks DJ Bob)", correct: "do you come from", acceptedAnswers: ["do you come from"] },
+  { type: 'text', q: "So, do ___ French?", correct: "you speak", acceptedAnswers: ["you speak"] },
+  { type: 'text', q: "My parents ___ English at home, just French.", correct: "don't speak", acceptedAnswers: ["don't speak", "dont speak"] },
+  { type: 'text', q: "At school, we ___ in French!", correct: "study", acceptedAnswers: ["study"] },
+  { type: 'text', q: "___ come from Argentina? (Do your parents)", correct: "Do your parents", acceptedAnswers: ["Do your parents", "Do your parents "] },
+  { type: 'text', q: "Ha, ha, ___. No. (very funny)", correct: "very funny", acceptedAnswers: ["very funny"] },
+  { type: 'text', q: "I ___ in Brazil. I live in Argentina!", correct: "don't live", acceptedAnswers: ["don't live", "dont live"] },
+  { type: 'text', q: "They ___ in a big hospital here in Buenos Aires.", correct: "work", acceptedAnswers: ["work"] },
+  { type: 'text', q: "They're ___. (parents' job)", correct: "doctors", acceptedAnswers: ["doctors"] },
+  // Round up – Mike's survey (Exercise 2). Напиши изречението.
+  { type: 'text', q: "Mike: He goes to football matches ___. (2 times, month)", correct: "twice a month", acceptedAnswers: ["twice a month", "twice a Month"] },
+  { type: 'text', q: "Mike: He ___ three times a week. (take exercise)", correct: "takes exercise", acceptedAnswers: ["takes exercise", "takes exercise three times a week"] },
+  { type: 'text', q: "Mike: He visits his grandparents ___. (1 time, month)", correct: "once a month", acceptedAnswers: ["once a month"] },
+  { type: 'text', q: "Mike: He eats fast food ___. (2 times, week)", correct: "twice a week", acceptedAnswers: ["twice a week"] },
+  { type: 'text', q: "Mike: He eats fruit ___. (3 times, day)", correct: "three times a day", acceptedAnswers: ["three times a day", "3 times a day"] },
+  { type: 'text', q: "Mike: He does homework ___. (every, day)", correct: "every day", acceptedAnswers: ["every day"] },
+  // 6c – Complete the phrases (frequency)
+  { type: 'text', q: "Tuesday / Wednesday / Thursday = ___", correct: "three days a week", acceptedAnswers: ["three days a week", "3 days a week"] },
+  { type: 'text', q: "15th May, 30th May, 15th June, 30th June... = ___", correct: "twice a month", acceptedAnswers: ["twice a month", "2 times a month"] },
+  { type: 'text', q: "Mon / Tue / Wed / Thu / Fri / Sat / Sun = every day (or ___ )", correct: "seven days a week", acceptedAnswers: ["seven days a week", "every day", "7 days a week"] },
+  { type: 'text', q: "10.00, 10.20, 10.40, 11.00... = ___", correct: "every twenty minutes", acceptedAnswers: ["every twenty minutes", "every 20 minutes", "three times an hour"] },
+  // 6c – Sort the words: He doesn't like practising the guitar.
+  { type: 'text', q: "Sort the words: doesn't / He / the / guitar / like / practising", correct: "He doesn't like practising the guitar.", acceptedAnswers: ["He doesn't like practising the guitar.", "He doesnt like practising the guitar."] },
+  { type: 'text', q: "Sort the words: watching / love / DVDs / We", correct: "We love watching DVDs.", acceptedAnswers: ["We love watching DVDs.", "We love watching DVDs"] },
+  { type: 'text', q: "Sort the words: like / Does / she / concerts / to / going", correct: "Does she like going to concerts?", acceptedAnswers: ["Does she like going to concerts?", "Does she like going to concerts"] },
+  { type: 'text', q: "Sort the words: brother / hates / My / tennis / playing", correct: "My brother hates playing tennis.", acceptedAnswers: ["My brother hates playing tennis.", "My brother hates playing tennis"] },
+  // 6b – Put words in order (adverbs of frequency)
+  { type: 'text', q: "Put in order: brush / in / my / I / the / always / teeth / morning.", correct: "I always brush my teeth in the morning.", acceptedAnswers: ["I always brush my teeth in the morning.", "I always brush my teeth in the morning"] },
+  { type: 'text', q: "Put in order: your / always / eat / breakfast? / sister / Does", correct: "Does your sister always eat breakfast?", acceptedAnswers: ["Does your sister always eat breakfast?", "Does your sister always eat breakfast"] },
+  { type: 'text', q: "Put in order: parents / on / work / Sunday. / never / My / go / to", correct: "My parents never go to work on Sunday.", acceptedAnswers: ["My parents never go to work on Sunday.", "My parents never go to work on Sunday"] },
+  { type: 'text', q: "Put in order: never / friends / the / evening. / in / phone / I / my", correct: "I never phone my friends in the evening.", acceptedAnswers: ["I never phone my friends in the evening.", "I never phone my friends in the evening"] },
+  // Page 32 – Put words in order
+  { type: 'text', q: "Put in order: always / bed / go / I / early. / to", correct: "I always go to bed early.", acceptedAnswers: ["I always go to bed early.", "I always go to bed early"] },
+  { type: 'text', q: "Put in order: go / We / holiday / twice / on / a / year.", correct: "We go on holiday twice a year.", acceptedAnswers: ["We go on holiday twice a year.", "We go on holiday twice a year"] },
+  { type: 'text', q: "Put in order: goes / Sam / swimming / once / a / week.", correct: "Sam goes swimming once a week.", acceptedAnswers: ["Sam goes swimming once a week.", "Sam goes swimming once a week"] },
+  { type: 'text', q: "Put in order: sister / My / a / has / shower / twice / day. / a", correct: "My sister has a shower twice a day.", acceptedAnswers: ["My sister has a shower twice a day.", "My sister has a shower twice a day"] },
+  // Page 32 – Complete the questions (How often...?)
+  { type: 'text', q: "How often ___ to work? (My parents go to work five days a week.)", correct: "do your parents go", acceptedAnswers: ["do your parents go", "do your parents go to work"] },
+  { type: 'text', q: "How often ___ English? (I study English twice a week.)", correct: "do you study", acceptedAnswers: ["do you study", "do you study English"] },
+  { type: 'text', q: "How often ___ your grandparents? (I visit my grandparents three times a month.)", correct: "do you visit", acceptedAnswers: ["do you visit", "do you visit your grandparents"] },
+  { type: 'text', q: "How often ___ TV? (I watch TV every night.)", correct: "do you watch", acceptedAnswers: ["do you watch", "do you watch TV"] },
+  // Page 32 – Complete the dialogue (like + -ing)
+  { type: 'text', q: "Rob: Yes, I do. I ___ (love/go) to the shopping centre.", correct: "love going", acceptedAnswers: ["love going", "love go"] },
+  { type: 'text', q: "Steve: ___ (you/like/surf) the net? Rob: No, I don't.", correct: "Do you like surfing", acceptedAnswers: ["Do you like surfing", "Do you like surfing the net"] },
+  { type: 'text', q: "Rob: I ___ (not/like/use) computers.", correct: "don't like using", acceptedAnswers: ["don't like using", "dont like using"] },
+  // Donald's week (6b) – избор или кратък текст
+  { q: "Donald plays computer games in the evening every day. So he ___ plays computer games in the evening.", correct: "always", wrong1: "sometimes", wrong2: "never" },
+  { q: "Donald is late for school on Mon, Tue, Thu but not Wed, Fri. So he is ___ late for school.", correct: "sometimes", wrong1: "always", wrong2: "never" },
+];
+
 const TESTS = {
   '5|geografia|geografia-ikonomika-test': {
     title: 'География и стопанство',
@@ -364,6 +419,11 @@ const TESTS = {
     title: 'Unit 6c – Once a week (frequency & personality)',
     slug: 'unit-6c-once-a-week',
     questions: ENGLISH_UNIT_6C_QUESTIONS,
+  },
+  '5|english|roundup-6-write-in': {
+    title: 'Round up 3 & 6b/6c – с написване на отговор',
+    slug: 'roundup-6-write-in',
+    questions: ENGLISH_ROUNDUP_6_WRITE_IN_QUESTIONS,
   },
 };
 
