@@ -379,6 +379,95 @@ const ENGLISH_ROUNDUP_6_WRITE_IN_QUESTIONS = [
   { q: "Donald is late for school on Mon, Tue, Thu but not Wed, Fri. So he is ___ late for school.", correct: "sometimes", wrong1: "always", wrong2: "never" },
 ];
 
+/**
+ * Grammar Summary & 6c/7a – попълване и тестови (a, b, c) по учебника.
+ */
+const ENGLISH_GRAMMAR_6ABC_QUESTIONS = [
+  // —— Grammar Summary: Possessive of (попълване) ——
+  { type: 'text', q: "Write your name at the ___ (top/the page), please.", correct: "top of the page", acceptedAnswers: ["top of the page", "the top of the page"] },
+  { type: 'text', q: "Sofia is the ___ (capital/Bulgaria).", correct: "capital of Bulgaria", acceptedAnswers: ["capital of Bulgaria"] },
+  { type: 'text', q: "This is the ___ (end/the story).", correct: "end of the story", acceptedAnswers: ["end of the story", "the end of the story"] },
+  // —— Object pronouns (Lesson 5c): избор a,b,c ——
+  { q: "I like football, but Adam doesn't like ___.", correct: "it", wrong1: "him", wrong2: "them" },
+  { q: "Are they your new friends? Can I meet ___?", correct: "them", wrong1: "they", wrong2: "us" },
+  { q: "My sister loves that song. Play ___ again.", correct: "it", wrong1: "her", wrong2: "she" },
+  { q: "Where is Tom? I need to talk to ___.", correct: "him", wrong1: "he", wrong2: "his" },
+  { q: "Mum is waiting. Let's go with ___.", correct: "her", wrong1: "she", wrong2: "us" },
+  { q: "The teacher asked ___ a question. (I)", correct: "me", wrong1: "I", wrong2: "my" },
+  // —— Present simple + at (попълване) ——
+  { type: 'text', q: "What time does the concert start? It ___ seven o'clock.", correct: "starts at", acceptedAnswers: ["starts at", "starts at seven o'clock"] },
+  { type: 'text', q: "And what time does it ___? (finish)", correct: "finish", acceptedAnswers: ["finish", "finish at"] },
+  { q: "The museum opens ___ nine o'clock.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "We have English ___ noon.", correct: "at", wrong1: "in", wrong2: "on" },
+  // —— Adverbs of frequency (6b): попълване и избор ——
+  { type: 'text', q: "I ___ go to bed at nine o'clock. (never) – напишете изречението.", correct: "I never go to bed at nine o'clock.", acceptedAnswers: ["I never go to bed at nine o'clock.", "I never go to bed at nine o'clock"] },
+  { q: "Where do we put 'always' in: He is late? (He ___ is late.)", correct: "He is always late.", wrong1: "He always is late.", wrong2: "Always he is late." },
+  { q: "My sister ___ has breakfast at home.", correct: "usually", wrong1: "never", wrong2: "sometimes" },
+  { q: "We ___ go to school by bus.", correct: "often", wrong1: "never", wrong2: "hardly ever" },
+  // —— Lesson 6c: How often + adverbial (попълване) ——
+  { type: 'text', q: "How often do you brush your teeth? (twice a day) – кратък отговор.", correct: "Twice a day.", acceptedAnswers: ["Twice a day.", "Twice a day", "I brush my teeth twice a day."] },
+  { type: 'text', q: "Do you like surfing the net? – напишете въпроса с you/like/surf.", correct: "Do you like surfing the net?", acceptedAnswers: ["Do you like surfing the net?", "Do you like surfing the net"] },
+  { type: 'text', q: "I love ___ to friends on the phone. (chat)", correct: "chatting", acceptedAnswers: ["chatting", "chat to friends"] },
+  { type: 'text', q: "I ___ like cooking. (not)", correct: "don't like", acceptedAnswers: ["don't like", "dont like", "do not like"] },
+  { type: 'text', q: "She ___ playing the piano. (hate)", correct: "hates", acceptedAnswers: ["hates", "hate"] },
+  // —— Lesson 7a: Present continuous – избор a,b,c (по картинките) ——
+  { q: "What is she eating? (picture: apple) a) an apple  b) an orange  c) a banana", correct: "an apple", wrong1: "an orange", wrong2: "a banana" },
+  { q: "What is he playing? (picture: football) a) tennis  b) football  c) basketball", correct: "football", wrong1: "tennis", wrong2: "basketball" },
+  { q: "What is she reading? (picture: magazine) a) a book  b) a magazine  c) a newspaper", correct: "a magazine", wrong1: "a book", wrong2: "a newspaper" },
+  { q: "What is he listening to? (picture: MP3) a) the radio  b) an MP3 player  c) a podcast", correct: "an MP3 player", wrong1: "the radio", wrong2: "a podcast" },
+  { q: "What is your dad cooking? (picture: chips) a) a cake  b) chips  c) pizza", correct: "chips", wrong1: "a cake", wrong2: "pizza" },
+  { q: "What's the weather like? (picture: snow) a) It's raining  b) It's snowing  c) It's sunny", correct: "It's snowing", wrong1: "It's raining", wrong2: "It's sunny" },
+  // —— Cinema timetable (Grammar Summary) – избор ——
+  { q: "The film 'Not Fair!' has two showings. One is at 18.45. The other is at:", correct: "22.15", wrong1: "19.35", wrong2: "17.20" },
+  { q: "Which film has a showing at 19.35?", correct: "Men On Mars", wrong1: "Three In A Boat", wrong2: "The Rock Star" },
+  { q: "The Rock Star – second showing is at:", correct: "22.15", wrong1: "18.45", wrong2: "19.35" },
+];
+
+/**
+ * 6a – Present simple с фиксирани часове, предлог at, имейл със разписания, Marco's routine.
+ * По картинките: Grammar (fixed times + at) и Workbook 6a.
+ */
+const ENGLISH_6A_FIXED_TIMES_QUESTIONS = [
+  // —— Present simple + at, граматика (попълване и избор) ——
+  { type: 'text', q: "The museum ___ at nine o'clock. (open)", correct: "opens", acceptedAnswers: ["opens", "opens at nine o'clock"] },
+  { type: 'text', q: "The shop ___ at 6 p.m. (close)", correct: "closes", acceptedAnswers: ["closes", "closes at 6 p.m."] },
+  { type: 'text', q: "The bus ___ at 11.40 a.m. (arrive)", correct: "arrives", acceptedAnswers: ["arrives", "arrives at 11.40 a.m."] },
+  { type: 'text', q: "The match ___ at 4.45 p.m. (finish)", correct: "finishes", acceptedAnswers: ["finishes", "finishes at 4.45 p.m."] },
+  { q: "With times we use the preposition:", correct: "at", wrong1: "on", wrong2: "in" },
+  { q: "Correct form: The bus ___ at 4 p.m.", correct: "leaves", wrong1: "leave", wrong2: "leaving" },
+  { q: "Correct question: ___ the shops open?", correct: "What time do", wrong1: "What time the", wrong2: "What time does the" },
+  { q: "School starts ___ 9 a.m.", correct: "at", wrong1: "on", wrong2: "in" },
+  // —— Email: European concerts trip (разписания) – избор a,b,c ——
+  { q: "Banks ___ at half past nine. (schedule: National Bank 09.30–15.30)", correct: "open", wrong1: "start", wrong2: "leave" },
+  { q: "The plane ___ London at twenty past ten.", correct: "leaves", wrong1: "starts", wrong2: "opens" },
+  { q: "The plane ___ in Amsterdam at ten past eleven.", correct: "arrives", wrong1: "finishes", wrong2: "closes" },
+  { q: "The doors ___ at six. (Concert: Doors open 6 p.m.)", correct: "open", wrong1: "start", wrong2: "arrive" },
+  { q: "The concert ___ at quarter past seven.", correct: "starts", wrong1: "opens", wrong2: "arrives" },
+  { q: "The concert ___ at ten thirty-five.", correct: "finishes", wrong1: "closes", wrong2: "leaves" },
+  { q: "The train to Berlin ___ at five to eleven. (Amsterdam 22.55)", correct: "leaves", wrong1: "opens", wrong2: "starts" },
+  { q: "We ___ in Berlin at twenty to six in the morning. (Berlin 05.40)", correct: "arrive", wrong1: "finish", wrong2: "close" },
+  // —— Workbook 6a: Complete the sentences (попълване) ——
+  { type: 'text', q: "This shop ___ (open) at half past eight.", correct: "opens", acceptedAnswers: ["opens"] },
+  { type: 'text', q: "Lessons at our school ___ (start) at eight o'clock.", correct: "start", acceptedAnswers: ["start"] },
+  { type: 'text', q: "My last lesson ___ (finish) at half past three.", correct: "finishes", acceptedAnswers: ["finishes"] },
+  { type: 'text', q: "My father's office ___ (close) at six p.m.", correct: "closes", acceptedAnswers: ["closes"] },
+  { type: 'text', q: "Your train ___ (leave) at ten past nine.", correct: "leaves", acceptedAnswers: ["leaves"] },
+  { type: 'text', q: "Trains from London ___ (arrive) here at five past three.", correct: "arrive", acceptedAnswers: ["arrive"] },
+  // —— Write questions and answers (попълване) ——
+  { type: 'text', q: "What time does the English class start? (5.00) – кратък отговор.", correct: "It starts at five o'clock.", acceptedAnswers: ["It starts at five o'clock.", "It starts at 5.00.", "At five o'clock."] },
+  { type: 'text', q: "What time does the concert finish? (9.45) – отговор с It.", correct: "It finishes at 9.45.", acceptedAnswers: ["It finishes at 9.45.", "It finishes at nine forty-five."] },
+  { type: 'text', q: "What time does the film start? (6.00) – въпрос с does.", correct: "What time does the film start?", acceptedAnswers: ["What time does the film start?", "What time does the film start"] },
+  // —— Marco's daily routine (chart) – избор и попълване ——
+  { q: "What time does Marco get up? (chart)", correct: "7.15", wrong1: "7.35", wrong2: "8.15" },
+  { q: "What time does Marco have breakfast?", correct: "7.35", wrong1: "7.15", wrong2: "8.15" },
+  { q: "What time does Marco go to school?", correct: "8.15", wrong1: "7.35", wrong2: "16.30" },
+  { q: "Marco has lunch from 12.30 to 13.30. What does he eat? (chart)", correct: "Pizza and fruit", wrong1: "Eggs", wrong2: "Nothing" },
+  { q: "What does Marco never do? (chart)", correct: "Watch TV", wrong1: "Do homework", wrong2: "Play computer games" },
+  { q: "When does Marco play computer games? (chart)", correct: "Always, after dinner", wrong1: "Never", wrong2: "In the morning" },
+  { type: 'text', q: "Marco goes to bed at ___. (chart: 22.30)", correct: "22.30", acceptedAnswers: ["22.30", "10.30 p.m.", "half past ten"] },
+  { type: 'text', q: "Marco has breakfast at 7.35. He eats ___ for breakfast. (chart: Eggs)", correct: "eggs", acceptedAnswers: ["eggs", "Eggs"] },
+];
+
 const TESTS = {
   '5|geografia|geografia-ikonomika-test': {
     title: 'География и стопанство',
@@ -424,6 +513,16 @@ const TESTS = {
     title: 'Round up 3 & 6b/6c – с написване на отговор',
     slug: 'roundup-6-write-in',
     questions: ENGLISH_ROUNDUP_6_WRITE_IN_QUESTIONS,
+  },
+  '5|english|grammar-6abc': {
+    title: 'Grammar Summary & 6c/7a (попълване и a,b,c)',
+    slug: 'grammar-6abc',
+    questions: ENGLISH_GRAMMAR_6ABC_QUESTIONS,
+  },
+  '5|english|6a-fixed-times': {
+    title: '6a – Present simple & fixed times (попълване и тестови)',
+    slug: '6a-fixed-times',
+    questions: ENGLISH_6A_FIXED_TIMES_QUESTIONS,
   },
 };
 
