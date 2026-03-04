@@ -288,6 +288,42 @@ const ISTORIYA_DREVNA_TRAKIYA_QUESTIONS = [
   { q: "Какво според Херодот би било траките, ако бяха „единодушни“ и под един господар?", correct: "Непобедими", wrong1: "Слаби", wrong2: "Малобройни" },
 ];
 
+/** Unit 6c – Once a week: frequency, personality quiz, like/dislike + -ing, surprise & comment */
+const ENGLISH_UNIT_6C_QUESTIONS = [
+  // Frequency phrases (quiz options)
+  { q: "Which phrase means 'one time in seven days'?", correct: "once a week", wrong1: "once a month", wrong2: "every week" },
+  { q: "Which phrase means 'two times in a month'?", correct: "twice a month", wrong1: "twice a week", wrong2: "two months" },
+  { q: "Where do we usually put 'every day' in: I play computer games ___?", correct: "at the end: I play computer games every day.", wrong1: "after the verb: I every day play computer games.", wrong2: "at the start: Every day I play computer games." },
+  { q: "Complete: How often do you ___ the net?", correct: "surf", wrong1: "surfs", wrong2: "surfing" },
+  { q: "Complete: How often do you ___ your English vocabulary?", correct: "revise", wrong1: "revises", wrong2: "revising" },
+  { q: "Complete: How often do you ___ out with your friends?", correct: "hang", wrong1: "hangs", wrong2: "hanging" },
+  // Like / love / hate + -ing (grammar)
+  { q: "I like ___ computer games.", correct: "playing", wrong1: "play", wrong2: "to play" },
+  { q: "She loves ___ books.", correct: "reading", wrong1: "read", wrong2: "reads" },
+  { q: "I hate ___ English vocabulary.", correct: "revising", wrong1: "revise", wrong2: "revises" },
+  { q: "They don't like ___ a sport.", correct: "playing", wrong1: "play", wrong2: "plays" },
+  { q: "We can say: I like ___ (noun).", correct: "football", wrong1: "playing football only", wrong2: "to football" },
+  // Express surprise and comment
+  { q: "Which expression do we use to show surprise?", correct: "Really?", wrong1: "I think so.", wrong2: "Maybe." },
+  { q: "Which expression shows positive comment?", correct: "That's great. Well done!", wrong1: "That's awful.", wrong2: "That's not very good." },
+  { q: "Which expression shows negative comment?", correct: "That's not very good.", wrong1: "Wow!", wrong2: "That's interesting." },
+  { q: "When someone says 'Every day', you can repeat and react with:", correct: "Every day? Wow! That's great.", wrong1: "Every day. So what?", wrong2: "I never." },
+  { q: "Which is a way to express surprise?", correct: "You're joking!", wrong1: "That's good.", wrong2: "I don't know." },
+  // Activities from the quiz and exercises
+  { q: "How often do you go jogging? Choose a frequency phrase.", correct: "three times a week", wrong1: "three weeks", wrong2: "three time a week" },
+  { q: "Complete the sentence: Sandra ___ her mobile every evening.", correct: "uses", wrong1: "use", wrong2: "using" },
+  { q: "Which sentence is correct?", correct: "I play football twice a week.", wrong1: "I twice a week play football.", wrong2: "I play twice a week football." },
+  { q: "How often do you ___ to a party?", correct: "go", wrong1: "goes", wrong2: "going" },
+  { q: "How often do you ___ an email?", correct: "write", wrong1: "writes", wrong2: "writing" },
+  { q: "How often do you ___ your bike?", correct: "ride", wrong1: "rides", wrong2: "riding" },
+  { q: "Which activity fits 'PARTY PERSON'?", correct: "have a barbecue", wrong1: "revise vocabulary", wrong2: "surf the net" },
+  { q: "Which activity fits 'COMPUTER KID'?", correct: "chat to friends online", wrong1: "go jogging", wrong2: "have a party" },
+  { q: "Which activity fits 'SERIOUS STUDENT'?", correct: "get 100% in a test", wrong1: "ride your bike", wrong2: "hang out with friends" },
+  { q: "Which activity fits 'SPORTS STAR'?", correct: "play a sport", wrong1: "write an email", wrong2: "watch a DVD in English" },
+  { q: "We ask about frequency with:", correct: "How often do you...?", wrong1: "How many do you...?", wrong2: "How long do you...?" },
+  { q: "From the list: get up very late, tidy your bedroom, go to bed early – we use these with:", correct: "How often do you...?", wrong1: "How much...?", wrong2: "Where do you...?" },
+];
+
 const TESTS = {
   '5|geografia|geografia-ikonomika-test': {
     title: 'География и стопанство',
@@ -323,6 +359,11 @@ const TESTS = {
     title: 'Древна Тракия',
     slug: 'drevna-trakiya',
     questions: ISTORIYA_DREVNA_TRAKIYA_QUESTIONS,
+  },
+  '5|english|unit-6c-once-a-week': {
+    title: 'Unit 6c – Once a week (frequency & personality)',
+    slug: 'unit-6c-once-a-week',
+    questions: ENGLISH_UNIT_6C_QUESTIONS,
   },
 };
 
