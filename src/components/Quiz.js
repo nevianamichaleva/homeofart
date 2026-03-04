@@ -12,37 +12,39 @@ function shuffle(arr) {
 }
 
 export default function Quiz({ title, questions }) {
+  /** Разбъркан ред на въпросите – фиксиран при стартиране на теста */
+  const [shuffledQuestions] = useState(() => shuffle([...questions]));
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [optionOrder, setOptionOrder] = useState(() => shuffle([0, 1, 2]));
   const [answered, setAnswered] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  /** Избраният отговор за текущия въпрос (null = нищо не е избрано) */
+  const [selectedOption, setSelectedOption] = useState(null);
 
-  const opts = [questions[index]?.correct, questions[index]?.wrong1, questions[index]?.wrong2];
+  const opts = [shuffledQuestions[index]?.correct, shuffledQuestions[index]?.wrong1, shuffledQuestions[index]?.wrong2];
   const orderedOpts = optionOrder.map((i) => opts[i]);
 
   const handleNext = () => {
     if (answered) {
-      if (index + 1 >= questions.length) {
+      if (index + 1 >= shuffledQuestions.length) {
         setShowSummary(true);
         return;
       }
       setIndex((i) => i + 1);
-      const nextQ = questions[index + 1];
-      const nextOpts = [nextQ.correct, nextQ.wrong1, nextQ.wrong2];
       setOptionOrder(shuffle([0, 1, 2]));
       setAnswered(false);
+      setSelectedOption(null);
       return;
     }
-    const selected = document.querySelector('input[name="opt"]:checked');
-    if (!selected) return;
+    if (selectedOption == null) return;
     setAnswers((prev) => {
       const next = [...prev];
-      next[index] = selected.value;
+      next[index] = selectedOption;
       return next;
     });
     setAnswered(true);
-    if (index + 1 >= questions.length) {
+    if (index + 1 >= shuffledQuestions.length) {
       document.querySelector('#quiz-next')?.focus();
     }
   };
@@ -52,15 +54,16 @@ export default function Quiz({ title, questions }) {
       setIndex((i) => i - 1);
       setAnswered(false);
       setOptionOrder(shuffle([0, 1, 2]));
+      setSelectedOption(null);
     }
   };
 
   if (showSummary) {
-    const correctCount = answers.filter((a, i) => a === questions[i].correct).length;
-    const percent = (100 * correctCount) / questions.length;
+    const correctCount = answers.filter((a, i) => a === shuffledQuestions[i].correct).length;
+    const percent = (100 * correctCount) / shuffledQuestions.length;
     const percentRounded = Math.round(percent);
     // Оценка 2–6: 2 + (верни/общо) * 4, закръглена до 0.5
-    const gradeRaw = 2 + (correctCount / questions.length) * 4;
+    const gradeRaw = 2 + (correctCount / shuffledQuestions.length) * 4;
     const grade = Math.round(gradeRaw * 2) / 2;
     const gradeLabel =
       grade >= 5.5 ? 'Отличен' : grade >= 4.5 ? 'Много добър' : grade >= 3.5 ? 'Добър' : grade >= 2.5 ? 'Среден' : 'Слаб';
@@ -68,7 +71,7 @@ export default function Quiz({ title, questions }) {
       <div className="mt-8 p-6 bg-white rounded-xl shadow-md max-w-xl mx-auto">
         <h2 className="text-2xl font-semibold text-[#1a3a52] mb-4">Край на теста</h2>
         <p className="text-lg font-medium text-gray-700 mb-2">
-          Верни отговори: {correctCount} от {questions.length} ({percentRounded}%).
+          Верни отговори: {correctCount} от {shuffledQuestions.length} ({percentRounded}%).
         </p>
         <p className="text-lg font-semibold text-[#1a3a52]">
           Оценка: <span className="text-2xl">{grade}</span> ({gradeLabel})
@@ -77,7 +80,7 @@ export default function Quiz({ title, questions }) {
     );
   }
 
-  const q = questions[index];
+  const q = shuffledQuestions[index];
   if (!q) return null;
 
   return (
@@ -104,8 +107,10 @@ export default function Quiz({ title, questions }) {
             >
               <input
                 type="radio"
-                name="opt"
+                name={`opt-${index}`}
                 value={text}
+                checked={selectedOption === text}
+                onChange={() => setSelectedOption(text)}
                 disabled={answered}
                 className="mt-1 flex-shrink-0"
               />
@@ -135,7 +140,7 @@ export default function Quiz({ title, questions }) {
           ← Предишен
         </button>
         <span className="font-semibold text-[#1a3a52]">
-          Въпрос {index + 1} от {questions.length}
+          Въпрос {index + 1} от {shuffledQuestions.length}
         </span>
         <button
           id="quiz-next"
@@ -144,7 +149,7 @@ export default function Quiz({ title, questions }) {
           className="px-4 py-2 rounded-lg font-semibold bg-[#1a3a52] text-white hover:bg-[#244a62]"
         >
           {answered
-            ? index + 1 >= questions.length
+            ? index + 1 >= shuffledQuestions.length
               ? 'Край на теста'
               : 'Напред →'
             : 'Отговор и напред →'}
