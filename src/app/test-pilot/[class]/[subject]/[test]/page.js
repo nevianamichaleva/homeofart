@@ -39,12 +39,6 @@ export default async function TestPage({ params }) {
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 sm:p-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#1a3a52] mb-1">
-            Тест – {testData.title}
-          </h1>
-          {/* <p className="text-gray-600 mb-8">
-            Всеки въпрос има 3 възможни отговора. Изберете един.
-          </p> */}
           <Quiz
             title={testData.title}
             questions={testData.questions}

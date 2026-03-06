@@ -4,7 +4,7 @@
  * Как да добавиш друг тест:
  * 1. Въпроси с избор от 3: { q: "въпрос?", correct: "...", wrong1: "...", wrong2: "..." }.
  * 2. Въпроси с написване: { type: "text", q: "въпрос?", correct: "отговор", acceptedAnswers?: ["вариант1", "вариант2"] }.
- * 3. В TESTS добави запис с ключ "клас|предмет|slug". URL: /testove/клас/предмет/slug
+ * 3. В TESTS добави запис с ключ "клас|предмет|slug". URL: /test-pilot/клас/предмет/slug
  */
 const GEOGRAFIA_IKONOMIKA_QUESTIONS = [
   { q: "Какво показва стълбчестата диаграма?", correct: "Промени в стойности по години или сравнение между различни обекти", wrong1: "Дяловете на всяка част от едно цяло в %", wrong2: "Териториалното разпределение на дейностите" },
@@ -89,6 +89,10 @@ const GEOGRAFIA_IKONOMIKA_QUESTIONS = [
   { q: "Паричната стойност на стоките и услугите представлява:", correct: "Тяхната цена", wrong1: "Пазара", wrong2: "Капитала" },
   { q: "Коя от изброените организации е военна организация?", correct: "Организация на Северноатлантическия договор (НАТО)", wrong1: "ООН", wrong2: "ЕС" },
 ];
+
+const GEOGRAFIA_IKONOMIKA_PART1 = GEOGRAFIA_IKONOMIKA_QUESTIONS.slice(0, 26);
+const GEOGRAFIA_IKONOMIKA_PART2 = GEOGRAFIA_IKONOMIKA_QUESTIONS.slice(26, 52);
+const GEOGRAFIA_IKONOMIKA_PART3 = GEOGRAFIA_IKONOMIKA_QUESTIONS.slice(52, 78);
 
 /** Language Revision – 5th grade English (Grammar, Vocabulary, Phrases) */
 const ENGLISH_LANGUAGE_REVISION_QUESTIONS = [
@@ -468,11 +472,90 @@ const ENGLISH_6A_FIXED_TIMES_QUESTIONS = [
   { type: 'text', q: "Marco has breakfast at 7.35. He eats ___ for breakfast. (chart: Eggs)", correct: "eggs", acceptedAnswers: ["eggs", "Eggs"] },
 ];
 
+import {
+  BULGARSKI_MORFOLOGIYA_QUESTIONS,
+  BULGARSKI_PRAKTICHESKI_QUESTIONS,
+  BULGARSKI_GRAMATIKA_IZBOR_QUESTIONS,
+  BULGARSKI_GRAMATIKA_ZADACHI_QUESTIONS,
+  BULGARSKI_VAZVRATNO_MESTOIMENIE_QUESTIONS,
+  BULGARSKI_PRITEJATELNO_MESTOIMENIE_QUESTIONS,
+  BULGARSKI_GLAGOL_MINALO_QUESTIONS,
+  BULGARSKI_PRICHASTIQ_QUESTIONS,
+  BULGARSKI_NARECHIE_QUESTIONS,
+  BULGARSKI_PREDLOG_QUESTIONS,
+  BULGARSKI_OBOBSHTENIE_QUESTIONS,
+} from './bulgarski-tests';
+
 const TESTS = {
-  '5|geografia|geografia-ikonomika-test': {
-    title: 'География и стопанство',
-    slug: 'geografia-ikonomika-test',
-    questions: GEOGRAFIA_IKONOMIKA_QUESTIONS,
+  '5|bg|morfolojiya': {
+    title: 'Морфология – Изменяеми части на речта. Местоимение',
+    slug: 'morfolojiya',
+    questions: BULGARSKI_MORFOLOGIYA_QUESTIONS,
+  },
+  '5|bg|praktitcheski-zadachi': {
+    title: 'Практически задачи – текст, морфология, правопис (стр. 62–63)',
+    slug: 'praktitcheski-zadachi',
+    questions: BULGARSKI_PRAKTICHESKI_QUESTIONS,
+  },
+  '5|bg|gramatika-izbor': {
+    title: 'Граматика с избор – части на речта, време, синтаксис, правопис',
+    slug: 'gramatika-izbor',
+    questions: BULGARSKI_GRAMATIKA_IZBOR_QUESTIONS,
+  },
+  '5|bg|gramatika-zadachi': {
+    title: 'Граматика – глаголи, предлози, причастия, наречия, местоимения',
+    slug: 'gramatika-zadachi',
+    questions: BULGARSKI_GRAMATIKA_ZADACHI_QUESTIONS,
+  },
+  '5|bg|vazvratno-mestoimenie': {
+    title: 'Възвратно лично местоимение – се / си',
+    slug: 'vazvratno-mestoimenie',
+    questions: BULGARSKI_VAZVRATNO_MESTOIMENIE_QUESTIONS,
+  },
+  '5|bg|pritejatelno-mestoimenie': {
+    title: 'Притежателно и възвратно притежателно местоимение',
+    slug: 'pritejatelno-mestoimenie',
+    questions: BULGARSKI_PRITEJATELNO_MESTOIMENIE_QUESTIONS,
+  },
+  '5|bg|glagol-minalo-vreme': {
+    title: 'Глагол – минало свършено и минало несвършено време',
+    slug: 'glagol-minalo-vreme',
+    questions: BULGARSKI_GLAGOL_MINALO_QUESTIONS,
+  },
+  '5|bg|prichastiq': {
+    title: 'Причастия – минало свършено и несвършено деятелно причастие',
+    slug: 'prichastiq',
+    questions: BULGARSKI_PRICHASTIQ_QUESTIONS,
+  },
+  '5|bg|narechie': {
+    title: 'Неизменяеми части на речта. Наречие',
+    slug: 'narechie',
+    questions: BULGARSKI_NARECHIE_QUESTIONS,
+  },
+  '5|bg|predlog': {
+    title: 'Неизменяеми части на речта. Предлог',
+    slug: 'predlog',
+    questions: BULGARSKI_PREDLOG_QUESTIONS,
+  },
+  '5|bg|obobshtenie': {
+    title: 'Обобщение – думите като части на речта',
+    slug: 'obobshtenie',
+    questions: BULGARSKI_OBOBSHTENIE_QUESTIONS,
+  },
+  '5|geografia|geografia-ikonomika-1': {
+    title: 'География и стопанство (част 1)',
+    slug: 'geografia-ikonomika-1',
+    questions: GEOGRAFIA_IKONOMIKA_PART1,
+  },
+  '5|geografia|geografia-ikonomika-2': {
+    title: 'География и стопанство (част 2)',
+    slug: 'geografia-ikonomika-2',
+    questions: GEOGRAFIA_IKONOMIKA_PART2,
+  },
+  '5|geografia|geografia-ikonomika-3': {
+    title: 'География и стопанство (част 3)',
+    slug: 'geografia-ikonomika-3',
+    questions: GEOGRAFIA_IKONOMIKA_PART3,
   },
   '5|english|language-revision': {
     title: 'Language Revision (English)',

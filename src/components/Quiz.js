@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import { collection, addDoc } from 'firebase/firestore';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { db } from '@/lib/firebase';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { useState } from 'react';
 
 function shuffle(arr) {
   const b = [...arr];
@@ -92,6 +93,8 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
               points,
               assessment,
               test,
+              testTitle: testTitle || test,
+              createdAt: serverTimestamp(),
             });
             setSummaryResult((prev) => (prev ? { ...prev, resultSaved: true } : null));
           } catch (err) {
@@ -134,6 +137,9 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   if (!started) {
     return (
       <div className="max-w-xl mx-auto p-6 bg-white/80 rounded-xl border-2 border-[#1a3a52]/20">
+        {title && (
+          <h1 className="text-2xl font-bold text-[#1a3a52] mb-4">{title}</h1>
+        )}
         <h2 className="text-xl font-semibold text-[#1a3a52] mb-4">Въведете вашето име</h2>
         <div className="flex flex-col sm:flex-row gap-3">
           <input
@@ -160,6 +166,8 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   if (showSummary && summaryResult) {
     const { correctCount, total, grade, gradeLabel, resultSaved } = summaryResult;
     const percentRounded = Math.round((100 * correctCount) / total);
+    const displayName = userName.trim() || 'Анонимен';
+    const isExcellent = grade >= 5;
     return (
       <div className="mt-8 p-6 bg-white rounded-xl shadow-md max-w-xl mx-auto">
         <h2 className="text-2xl font-semibold text-[#1a3a52] mb-4">Край на теста</h2>
@@ -168,6 +176,21 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
         </p>
         <p className="text-lg font-semibold text-[#1a3a52]">
           Оценка: <span className="text-2xl">{grade}</span> ({gradeLabel})
+        </p>
+        {isExcellent && (
+          <div className="flex justify-center my-4">
+            <DotLottieReact
+              src="https://lottie.host/c7773dc6-1d8c-4949-ad1c-a58479232a48/nyai3vgIb2.lottie"
+              loop
+              autoplay
+              style={{ width: 120, height: 120 }}
+            />
+          </div>
+        )}
+        <p className={`mt-4 text-xl font-semibold ${isExcellent ? 'text-amber-700' : 'text-[#1a3a52]'}`}>
+          {isExcellent
+            ? `Отличен резултат, ${displayName}! Гордея се с теб!`
+            : `Браво, ${displayName}! Положи още малко за отлични резултати.`}
         </p>
         {resultSaved && (
           <p className="mt-4 text-sm text-gray-500">Резултатът е записан.</p>
