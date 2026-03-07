@@ -94,6 +94,47 @@ const GEOGRAFIA_IKONOMIKA_PART1 = GEOGRAFIA_IKONOMIKA_QUESTIONS.slice(0, 26);
 const GEOGRAFIA_IKONOMIKA_PART2 = GEOGRAFIA_IKONOMIKA_QUESTIONS.slice(26, 52);
 const GEOGRAFIA_IKONOMIKA_PART3 = GEOGRAFIA_IKONOMIKA_QUESTIONS.slice(52, 78);
 
+/** География и икономика 5. клас – Тест 4 Тематичен контрол (обобщаващ). 20 въпроса с избор. */
+const GEOGRAFIA_OBOBSTAVASHT_QUESTIONS = [
+  { q: 'Най-многобройно е населението на:', correct: 'Азия', wrong1: 'Северна Америка', wrong2: 'Европа' },
+  { q: 'Средната гъстота на населението е най-малка в:', correct: 'Австралия', wrong1: 'Азия', wrong2: 'Европа' },
+  { q: 'Придвижването на големи групи хора от едно място на друго се нарича:', correct: 'миграция', wrong1: 'миграционен поток', wrong2: 'обезлюдяване' },
+  { q: 'Основна причина за движението на населението е:', correct: 'неравномерното разпределение на благата между хората', wrong1: 'природното разнообразие', wrong2: 'развитието на науката и техниката' },
+  { q: 'Посочете ГРЕШНИЯ отговор. Принадлежността на хората към дадена раса се определя от:', correct: 'езиците, които говорят', wrong1: 'цвета на кожата', wrong2: 'формата на устните' },
+  { q: 'За коя раса се отнасят белезите: жълтеникава кожа; нисък ръст; права черна коса; слабо изпъкнал нос?', correct: 'монголоидна', wrong1: 'европеидна', wrong2: 'негроидно-австралоидна' },
+  { q: 'На коя раса са представители българите, руснаците, румънците?', correct: 'на европеидната', wrong1: 'на монголоидната', wrong2: 'на негроидно-австралоидната' },
+  { q: 'Открийте ГРЕШНИЯ отговор. Религията е:', correct: 'съвкупност от раси', wrong1: 'съвкупност от вярвания', wrong2: 'съвкупност от правила на поведение' },
+  { q: 'Коя е преобладаващата религия в Европа, Америка и Австралия?', correct: 'християнство', wrong1: 'юдаизъм', wrong2: 'ислям' },
+  { q: 'Преобладаваща част от хората в България са:', correct: 'православни християни', wrong1: 'протестанти', wrong2: 'католици' },
+  { q: 'Селищата се поделят на градове и села в зависимост от:', correct: 'трудовата дейност на хората', wrong1: 'образованието на хората', wrong2: 'географското им положение' },
+  { q: 'Открийте ГРЕШНИЯ отговор. Градовете са:', correct: 'селища, чието население се занимава със земеделие', wrong1: 'селища, чието население е заето в производството на стоки и услуги', wrong2: 'селища, в които са оформени зони за труд, за живеене и за отдих' },
+  { q: 'В селата населението се занимава главно с:', correct: 'земеделие', wrong1: 'транспорт', wrong2: 'търговия' },
+  { q: 'Основен проблем на селата е:', correct: 'силното обезлюдяване', wrong1: 'замърсяването на въздуха', wrong2: 'голямата пренаселеност' },
+  { q: 'Открийте ГРЕШНИЯ отговор. Политическата карта:', correct: 'изработва се със способа на количествения фон', wrong1: 'е вид тематична карта', wrong2: 'изобразява границите на държавите' },
+  { q: 'Приемането на законите се извършва от:', correct: 'парламента', wrong1: 'правителството', wrong2: 'президента' },
+  { q: 'НАТО е:', correct: 'военно-политическа организация', wrong1: 'обединение на държавите в Европа', wrong2: 'обединение за свободна търговия' },
+  { q: 'Кой фактор за развитие на стопанството определя природните условия, близостта до важни пътнища и пристанища, през което се внасят и изнасят суровини и готови изделия?', correct: 'географското положение', wrong1: 'икономическата политика на държавата', wrong2: 'природните фактори' },
+  { q: 'Транспортът, търговията и туризмът се отнасят към:', correct: 'обслужващите дейности', wrong1: 'обработващите дейности', wrong2: 'добивните дейности' },
+  { q: 'Кръговата диаграма е най-подходяща за изобразяването на:', correct: 'структурата на икономиката', wrong1: 'разпределението на стопанските дейности', wrong2: 'динамиката на дадено производство по години' },
+];
+
+/** География – селища, стопанство, промишленост, транспорт (допълнителни въпроси). */
+const GEOGRAFIA_DOPALNITELNI_QUESTIONS = [
+  { q: 'Вярно ли е? С появата на земеделието се появява нуждата хората да имат постоянен дом близо до земята, която обработват.', correct: 'Вярно', wrong1: 'Грешно', wrong2: 'Частично вярно' },
+  { q: 'Вярно ли е? Селищата се различават по времето на възникване, външния си облик, преобладаващата трудова дейност, броя на жителите им. Има постоянни и временни селища.', correct: 'Вярно', wrong1: 'Грешно', wrong2: 'Частично вярно' },
+  { q: 'Кое от следните твърдения е вярно?', correct: 'Всички изброени', wrong1: 'Годишно хиляди села по света напълно се обезлюдяват и изчезват от географската карта.', wrong2: 'Много села по света нямат канализация, питейна вода, електричество.' },
+  { q: 'Коя стопанска дейност осигурява храни за хората, фуражи за животните, суровини за обработващата дейност?', correct: 'растениевъдство', wrong1: 'животновъдство', wrong2: 'търговия' },
+  { q: 'Добив на въглища, нефт, природен газ и електроенергия се отнасят към кой промишлен отрасъл?', correct: 'енергетика', wrong1: 'металургия', wrong2: 'химическа промишленост' },
+  { q: 'Брашно, млечни продукти, захар, консерви се произвеждат от кой промишлен отрасъл?', correct: 'хранително-вкусова промишленост', wrong1: 'лека промишленост', wrong2: 'машиностроене' },
+  { q: 'Машини, кораби, автомобили, електроника, електротехника се произвеждат от кой промишлен отрасъл?', correct: 'машиностроене', wrong1: 'металургия', wrong2: 'енергетика' },
+  { q: 'Желязо, мед, олово се произвеждат от кой промишлен отрасъл?', correct: 'металургия', wrong1: 'химическа промишленост', wrong2: 'машиностроене' },
+  { q: 'Лекарства, минерални торове, изкуствени влакна, пластмаси, бои, масла се произвеждат от кой промишлен отрасъл?', correct: 'химическа промишленост', wrong1: 'лека промишленост', wrong2: 'хранително-вкусова промишленост' },
+  { q: 'Обувки, чорапи, мебели, текстилни изделия се произвеждат от кой промишлен отрасъл?', correct: 'лека промишленост', wrong1: 'машиностроене', wrong2: 'енергетика' },
+  { q: 'За кой вид транспорт се отнася характеристиката: „Този транспорт е евтин и е на първо място по обем на превозени товари“?', correct: 'морски', wrong1: 'автомобилен', wrong2: 'железопътен' },
+  { q: 'Наличието на чист въздух, гори, ливади, чисти води е предпоставка за развитието на:', correct: 'туризъм', wrong1: 'производство на електроенергия', wrong2: 'добив на полезни изкопаеми' },
+  { q: 'Най-голямата по площ държава в света е:', correct: 'Русия', wrong1: 'САЩ', wrong2: 'Китай' },
+];
+
 /** Language Revision – 5th grade English (Grammar, Vocabulary, Phrases) */
 const ENGLISH_LANGUAGE_REVISION_QUESTIONS = [
   // Grammar – verbs (Exercise 1)
@@ -473,17 +514,21 @@ const ENGLISH_6A_FIXED_TIMES_QUESTIONS = [
 ];
 
 import {
-  BULGARSKI_MORFOLOGIYA_QUESTIONS,
-  BULGARSKI_PRAKTICHESKI_QUESTIONS,
+  BULGARSKI_EZIK_LITERATURA_V_KLAS_2008_QUESTIONS,
+  BULGARSKI_EZIK_LITERATURA_V_KLAS_2009_QUESTIONS,
+  BULGARSKI_EZIK_LITERATURA_V_KLAS_QUESTIONS,
+  BULGARSKI_GLAGOL_MINALO_QUESTIONS,
   BULGARSKI_GRAMATIKA_IZBOR_QUESTIONS,
   BULGARSKI_GRAMATIKA_ZADACHI_QUESTIONS,
-  BULGARSKI_VAZVRATNO_MESTOIMENIE_QUESTIONS,
-  BULGARSKI_PRITEJATELNO_MESTOIMENIE_QUESTIONS,
-  BULGARSKI_GLAGOL_MINALO_QUESTIONS,
-  BULGARSKI_PRICHASTIQ_QUESTIONS,
+  BULGARSKI_MORFOLOGIYA_QUESTIONS,
   BULGARSKI_NARECHIE_QUESTIONS,
-  BULGARSKI_PREDLOG_QUESTIONS,
   BULGARSKI_OBOBSHTENIE_QUESTIONS,
+  BULGARSKI_PRAKTICHESKI_QUESTIONS,
+  BULGARSKI_PREDLOG_QUESTIONS,
+  BULGARSKI_PRICHASTIQ_QUESTIONS,
+  BULGARSKI_PRITEJATELNO_MESTOIMENIE_QUESTIONS,
+  BULGARSKI_VAZVRATNO_MESTOIMENIE_QUESTIONS,
+  BULGARSKI_TETRADKA_IZBOR_QUESTIONS,
 } from './bulgarski-tests';
 
 const TESTS = {
@@ -542,6 +587,26 @@ const TESTS = {
     slug: 'obobshtenie',
     questions: BULGARSKI_OBOBSHTENIE_QUESTIONS,
   },
+  '5|bg|ezik-literatura-v-klas': {
+    title: 'Български език и литература V клас (външно оценяване)',
+    slug: 'ezik-literatura-v-klas',
+    questions: BULGARSKI_EZIK_LITERATURA_V_KLAS_QUESTIONS,
+  },
+  '5|bg|ezik-literatura-v-klas-2009': {
+    title: 'Български език и литература V клас – юни 2009',
+    slug: 'ezik-literatura-v-klas-2009',
+    questions: BULGARSKI_EZIK_LITERATURA_V_KLAS_2009_QUESTIONS,
+  },
+  '5|bg|ezik-literatura-v-klas-2008': {
+    title: 'Български език и литература V клас – май 2008',
+    slug: 'ezik-literatura-v-klas-2008',
+    questions: BULGARSKI_EZIK_LITERATURA_V_KLAS_2008_QUESTIONS,
+  },
+  '5|bg|tetradka-izbor': {
+    title: 'Български език – упражнения от тетрадка (избор)',
+    slug: 'tetradka-izbor',
+    questions: BULGARSKI_TETRADKA_IZBOR_QUESTIONS,
+  },
   '5|geografia|geografia-ikonomika-1': {
     title: 'География и стопанство (част 1)',
     slug: 'geografia-ikonomika-1',
@@ -556,6 +621,16 @@ const TESTS = {
     title: 'География и стопанство (част 3)',
     slug: 'geografia-ikonomika-3',
     questions: GEOGRAFIA_IKONOMIKA_PART3,
+  },
+  '5|geografia|geografia-obobstavasht': {
+    title: 'География – обобщаващ тест (тематичен контрол 4)',
+    slug: 'geografia-obobstavasht',
+    questions: GEOGRAFIA_OBOBSTAVASHT_QUESTIONS,
+  },
+  '5|geografia|geografia-dopalnitelni': {
+    title: 'География – селища, стопанство, транспорт',
+    slug: 'geografia-dopalnitelni',
+    questions: GEOGRAFIA_DOPALNITELNI_QUESTIONS,
   },
   '5|english|language-revision': {
     title: 'Language Revision (English)',

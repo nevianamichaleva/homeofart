@@ -1,7 +1,7 @@
 'use client';
 
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { db } from '@/lib/firebase';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { useState } from 'react';
 
@@ -177,7 +177,7 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
         <p className="text-lg font-semibold text-[#1a3a52]">
           Оценка: <span className="text-2xl">{grade}</span> ({gradeLabel})
         </p>
-        {isExcellent && (
+        {isExcellent ? (
           <div className="flex justify-center my-4">
             <DotLottieReact
               src="https://lottie.host/c7773dc6-1d8c-4949-ad1c-a58479232a48/nyai3vgIb2.lottie"
@@ -186,7 +186,16 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
               style={{ width: 120, height: 120 }}
             />
           </div>
-        )}
+        ) :
+          <div className="flex justify-center my-4">
+            <DotLottieReact
+              src="https://lottie.host/48d3778f-60a4-44fc-b003-0e4abb8264b0/GARsHkTWnC.lottie"
+              loop
+              autoplay
+              style={{ width: 120, height: 120 }}
+            />
+          </div>
+        }
         <p className={`mt-4 text-xl font-semibold ${isExcellent ? 'text-amber-700' : 'text-[#1a3a52]'}`}>
           {isExcellent
             ? `Отличен резултат, ${displayName}! Гордея се с теб!`
