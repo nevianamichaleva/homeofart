@@ -53,7 +53,11 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   const [shuffledQuestions] = useState(() => shuffle([...questions]));
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [optionOrder, setOptionOrder] = useState(() => shuffle([0, 1, 2]));
+  const [optionOrder, setOptionOrder] = useState(() => {
+    const q0 = shuffledQuestions[0];
+    const n = [q0?.correct, q0?.wrong1, q0?.wrong2, q0?.wrong3].filter(Boolean).length;
+    return shuffle(Array.from({ length: n }, (_, i) => i));
+  });
   const [answered, setAnswered] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   /** При показване на обобщение: { correctCount, total, grade, gradeLabel, resultSaved } */
@@ -68,6 +72,7 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
     qCurrent?.correct,
     qCurrent?.wrong1,
     qCurrent?.wrong2,
+    qCurrent?.wrong3,
   ].filter(Boolean);
   const orderedOpts = optionOrder.map((i) => opts[i]).filter((_, i) => opts[i] != null);
   const isText = isTextQuestion(qCurrent);
@@ -104,7 +109,9 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
         return;
       }
       setIndex((i) => i + 1);
-      setOptionOrder(shuffle([0, 1, 2]));
+      const nextQ = shuffledQuestions[index + 1];
+      const nextN = [nextQ?.correct, nextQ?.wrong1, nextQ?.wrong2, nextQ?.wrong3].filter(Boolean).length;
+      setOptionOrder(shuffle(Array.from({ length: nextN }, (_, i) => i)));
       setAnswered(false);
       setSelectedOption(null);
       setTypedAnswer('');
@@ -128,7 +135,9 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
     if (index > 0) {
       setIndex((i) => i - 1);
       setAnswered(false);
-      setOptionOrder(shuffle([0, 1, 2]));
+      const prevQ = shuffledQuestions[index - 1];
+      const prevN = [prevQ?.correct, prevQ?.wrong1, prevQ?.wrong2, prevQ?.wrong3].filter(Boolean).length;
+      setOptionOrder(shuffle(Array.from({ length: prevN }, (_, i) => i)));
       setSelectedOption(null);
       setTypedAnswer('');
     }
