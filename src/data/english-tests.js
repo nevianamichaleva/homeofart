@@ -1,0 +1,334 @@
+/**
+ * Тестове по английски език за 5. клас.
+ * Избор от 3 отговора и попълване (type: 'text').
+ */
+
+export const ENGLISH_LANGUAGE_REVISION_QUESTIONS = [
+  // Grammar – verbs (Exercise 1)
+  { q: "He's a teacher. He ___ in a school in Madrid.", correct: "works", wrong1: "don't work", wrong2: "comes" },
+  { q: "My cousins ___ in the UK. They live in Germany.", correct: "don't live", wrong1: "live", wrong2: "work" },
+  { q: "Maria ___ tennis or basketball. She hates sport.", correct: "doesn't play", wrong1: "plays", wrong2: "takes" },
+  { q: "I ___ Polish. I only speak English.", correct: "don't speak", wrong1: "speak", wrong2: "come" },
+  { q: "My sister ___ very good photos of animals.", correct: "takes", wrong1: "don't take", wrong2: "works" },
+  { q: "Do you ___ from America?", correct: "come", wrong1: "not come", wrong2: "speak" },
+  // Grammar – pronouns (Exercise 2)
+  { q: "A: Do you like rock music? B: No, I hate ___.", correct: "it", wrong1: "him", wrong2: "us" },
+  { q: "A: My mum likes The Beatles! B: My mum likes ___, too.", correct: "them", wrong1: "it", wrong2: "her" },
+  { q: "A: Is this your book? B: Yes, please give it to ___.", correct: "me", wrong1: "him", wrong2: "us" },
+  { q: "A: Do you like Nicole Kidman? B: No, I'm not keen on ___.", correct: "her", wrong1: "him", wrong2: "them" },
+  { q: "A: Are these your brothers with you? B: Yes, it's a photo of ___ on our holiday.", correct: "them", wrong1: "us", wrong2: "me" },
+  // Vocabulary – jobs and places (Exercise 3)
+  { q: "Where does a plumber work?", correct: "building site", wrong1: "hospital", wrong2: "school" },
+  { q: "Where does a doctor work?", correct: "hospital", wrong1: "shop", wrong2: "farm" },
+  { q: "Where does a teacher work?", correct: "school", wrong1: "film studio", wrong2: "office" },
+  { q: "Where does a secretary work?", correct: "office", wrong1: "building site", wrong2: "farm" },
+  { q: "Where does a farmer work?", correct: "farm", wrong1: "hospital", wrong2: "shop" },
+  { q: "Where does an actor work?", correct: "film studio", wrong1: "school", wrong2: "building site" },
+  // Vocabulary – scrambled adjectives (Exercise 4): bretrile, looc, tictafans, gorbin, tagre, tanibrili, drew, fulwa, nynut
+  { q: "Rearrange the letters to make an adjective of opinion: bretrile", correct: "terrible", wrong1: "brilliant", wrong2: "tablet" },
+  { q: "Rearrange the letters to make an adjective of opinion: looc", correct: "cool", wrong1: "cold", wrong2: "pool" },
+  { q: "Rearrange the letters to make an adjective of opinion: tictafans", correct: "fantastic", wrong1: "fantasy", wrong2: "fact" },
+  { q: "Rearrange the letters to make an adjective of opinion: gorbin", correct: "boring", wrong1: "going", wrong2: "bring" },
+  { q: "Rearrange the letters to make an adjective of opinion: tagre", correct: "great", wrong1: "target", wrong2: "gate" },
+  { q: "Rearrange the letters to make an adjective of opinion: tanibrili", correct: "brilliant", wrong1: "terrible", wrong2: "natural" },
+  { q: "Rearrange the letters to make an adjective of opinion: drew", correct: "weird", wrong1: "red", wrong2: "word" },
+  { q: "Rearrange the letters to make an adjective of opinion: fulwa", correct: "awful", wrong1: "full", wrong2: "law" },
+  { q: "Rearrange the letters to make an adjective of opinion: nynut", correct: "funny", wrong1: "nut", wrong2: "tunnel" },
+  // Phrases (Exercise 5)
+  { q: "A: Can I borrow your camera, please? B: ___", correct: "Yes, OK.", wrong1: "That's right.", wrong2: "Don't look at me!" },
+  { q: "A: Look, here's my new iPad. B: ___", correct: "Cool!", wrong1: "Yes, OK.", wrong2: "That's right." },
+  // Conversation Rob & Liz (Exercise 6)
+  { q: "Rob: Do you want to watch my new DVD? Liz: ___", correct: "Yes, OK. What film is it?", wrong1: "Who's in it?", wrong2: "Oh, I love him." },
+  { q: "Rob: It's called Alice in Wonderland. Liz: ___", correct: "Who's in it?", wrong1: "Yes, OK. What film is it?", wrong2: "I'm not keen on her." },
+  { q: "Rob: Johnny Depp. Liz: ___", correct: "Oh, I love him. I think he's fantastic.", wrong1: "He's awful.", wrong2: "Who's in it?" },
+  { q: "Rob: Me, too. What do you think of Helena Bonham Carter? She's in it, too. Liz: ___", correct: "I'm not keen on her. She's weird.", wrong1: "Oh, I love him.", wrong2: "Yes, OK. What film is it?" },
+];
+
+/** Test 1: Have / Go / Do / Get – 5th grade English */
+export const ENGLISH_HAVE_GO_DO_GET_QUESTIONS = [
+  { q: "I ______ up at 7 o'clock every day.", correct: "get", wrong1: "have", wrong2: "do" },
+  { q: "She ______ to school by bus.", correct: "goes", wrong1: "has", wrong2: "gets" },
+  { q: "We ______ homework in the afternoon.", correct: "do", wrong1: "have", wrong2: "get" },
+  { q: "They ______ breakfast at 8 a.m.", correct: "have", wrong1: "go", wrong2: "do" },
+  { q: "He ______ to bed at 10 p.m.", correct: "goes", wrong1: "does", wrong2: "has" },
+  { q: "I ______ dressed before school.", correct: "get", wrong1: "go", wrong2: "do" },
+  { q: "She ______ a shower in the morning.", correct: "has", wrong1: "does", wrong2: "goes" },
+  { q: "We ______ to football practice on Mondays.", correct: "go", wrong1: "have", wrong2: "get" },
+  { q: "He ______ his teeth before bed.", correct: "does", wrong1: "gets", wrong2: "goes" },
+  { q: "I ______ home at 4 p.m.", correct: "get", wrong1: "do", wrong2: "have" },
+  { q: "I ______ lunch at school.", correct: "have", wrong1: "go", wrong2: "get" },
+  { q: "She ______ up early.", correct: "gets", wrong1: "has", wrong2: "goes" },
+  { q: "We ______ shopping on Saturday.", correct: "go", wrong1: "have", wrong2: "get" },
+  { q: "He ______ his homework after dinner.", correct: "does", wrong1: "gets", wrong2: "has" },
+  { q: "They ______ to the park in the evening.", correct: "go", wrong1: "have", wrong2: "get" },
+  { q: "I ______ dressed quickly.", correct: "get", wrong1: "do", wrong2: "go" },
+  { q: "She ______ a bath at night.", correct: "has", wrong1: "gets", wrong2: "goes" },
+  { q: "We ______ home late.", correct: "get", wrong1: "have", wrong2: "do" },
+  { q: "Match: get ___", correct: "dressed", wrong1: "homework", wrong2: "breakfast" },
+  { q: "Match: have ___", correct: "breakfast", wrong1: "to school", wrong2: "homework" },
+  { q: "Match: do ___", correct: "homework", wrong1: "to bed", wrong2: "a shower" },
+  { q: "Match: go ___", correct: "to school", wrong1: "dressed", wrong2: "breakfast" },
+  { q: "Match: have ___ (shower)", correct: "a shower", wrong1: "to school", wrong2: "homework" },
+  { q: "Match: go ___ (bed)", correct: "to bed", wrong1: "dressed", wrong2: "breakfast" },
+];
+
+/** Test 2: Adverbs of frequency & Transport (by/on/in) – 5th grade English */
+export const ENGLISH_ADVERBS_TRANSPORT_QUESTIONS = [
+  { q: "I ______ brush my teeth before bed. (every time)", correct: "always", wrong1: "never", wrong2: "sometimes" },
+  { q: "She ______ watches TV after school. (3–4 times a week)", correct: "often", wrong1: "never", wrong2: "always" },
+  { q: "We ______ eat fast food. (0 times)", correct: "never", wrong1: "always", wrong2: "often" },
+  { q: "They ______ go to the park on Sundays.", correct: "usually", wrong1: "never", wrong2: "sometimes" },
+  { q: "He ______ forgets his homework. (almost every time)", correct: "often", wrong1: "never", wrong2: "sometimes" },
+  { q: "I ______ get up at 7 a.m. (every day)", correct: "always", wrong1: "never", wrong2: "often" },
+  { q: "She ______ plays computer games. (2 times a month)", correct: "sometimes", wrong1: "always", wrong2: "never" },
+  { q: "We ______ visit our grandparents. (many times)", correct: "often", wrong1: "never", wrong2: "sometimes" },
+  { q: "He ______ drinks milk. (not at all)", correct: "never", wrong1: "always", wrong2: "usually" },
+  { q: "I ______ help my parents at home.", correct: "usually", wrong1: "never", wrong2: "always" },
+  { q: "Which is correct? I go to school by bus. (always)", correct: "I always go to school by bus.", wrong1: "I go always to school by bus.", wrong2: "Always I go to school by bus." },
+  { q: "Which is correct? She is late. (never)", correct: "She is never late.", wrong1: "She never is late.", wrong2: "Never she is late." },
+  { q: "Which is correct? We play football after school. (often)", correct: "We often play football after school.", wrong1: "We play often football after school.", wrong2: "Often we play football after school." },
+  { q: "Which is correct? They are tired in the morning. (sometimes)", correct: "They are sometimes tired in the morning.", wrong1: "They sometimes are tired in the morning.", wrong2: "Sometimes they are tired in the morning." },
+  { q: "I go to school ___ bus.", correct: "by", wrong1: "on", wrong2: "in" },
+  { q: "She travels ___ train.", correct: "by", wrong1: "on", wrong2: "in" },
+  { q: "We go ___ car.", correct: "by", wrong1: "in", wrong2: "on" },
+  { q: "They travel ___ plane.", correct: "by", wrong1: "in", wrong2: "on" },
+  { q: "He goes to work ___ bike.", correct: "by", wrong1: "on", wrong2: "in" },
+  { q: "She travels ___ foot.", correct: "on", wrong1: "by", wrong2: "in" },
+];
+
+/** Test 3: Present Simple & at (time) – 5th grade English */
+export const ENGLISH_PRESENT_SIMPLE_AT_QUESTIONS = [
+  { q: "She ______ school at 8 o'clock. (start / starts)", correct: "starts", wrong1: "start", wrong2: "starting" },
+  { q: "I ______ dinner at 7 p.m. (have / has)", correct: "have", wrong1: "has", wrong2: "having" },
+  { q: "They ______ football at 5 o'clock. (play / plays)", correct: "play", wrong1: "plays", wrong2: "playing" },
+  { q: "He ______ TV at night. (watch / watches)", correct: "watches", wrong1: "watch", wrong2: "watching" },
+  { q: "We ______ up at 6:30. (get / gets)", correct: "get", wrong1: "gets", wrong2: "getting" },
+  { q: "My dad ______ to work at 9 a.m. (go / goes)", correct: "goes", wrong1: "go", wrong2: "going" },
+  { q: "I ______ my homework at 4 o'clock. (do / does)", correct: "do", wrong1: "does", wrong2: "doing" },
+  { q: "Anna ______ a book at bedtime. (read / reads)", correct: "reads", wrong1: "read", wrong2: "reading" },
+  { q: "The lesson ______ at 2 p.m. (finish / finishes)", correct: "finishes", wrong1: "finish", wrong2: "finishing" },
+  { q: "Tom and Ben ______ lunch at noon. (eat / eats)", correct: "eat", wrong1: "eats", wrong2: "eating" },
+  { q: "I wake up ___ 7 o'clock.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "She goes to bed ___ night.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "We meet ___ 5:30 p.m.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "He has English ___ noon.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "They have breakfast ___ 8 a.m.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "The film starts ___ 6 o'clock.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "I study ___ the weekend.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "She calls me ___ midnight.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "Correct: She go to bed at 10 o'clock.", correct: "She goes to bed at 10 o'clock.", wrong1: "She go to bed at 10 o'clock.", wrong2: "She going to bed at 10 o'clock." },
+  { q: "Correct: I has dinner at 7 p.m.", correct: "I have dinner at 7 p.m.", wrong1: "I has dinner at 7 p.m.", wrong2: "I am have dinner at 7 p.m." },
+  { q: "Correct: He play football at 5 o'clock.", correct: "He plays football at 5 o'clock.", wrong1: "He play football at 5 o'clock.", wrong2: "He playing football at 5 o'clock." },
+  { q: "Correct: We goes to school at 8 a.m.", correct: "We go to school at 8 a.m.", wrong1: "We goes to school at 8 a.m.", wrong2: "We going to school at 8 a.m." },
+];
+
+/** Test 4: Time in words and numbers – 5th grade English */
+export const ENGLISH_TIME_QUESTIONS = [
+  { q: "Write the time in words: 3:00", correct: "three o'clock", wrong1: "half past three", wrong2: "quarter past three" },
+  { q: "Write the time in words: 7:15", correct: "quarter past seven", wrong1: "quarter to seven", wrong2: "half past seven" },
+  { q: "Write the time in words: 9:30", correct: "half past nine", wrong1: "quarter past nine", wrong2: "quarter to nine" },
+  { q: "Write the time in words: 4:45", correct: "quarter to five", wrong1: "quarter past four", wrong2: "half past four" },
+  { q: "Write the time in words: 12:00", correct: "twelve o'clock", wrong1: "half past twelve", wrong2: "quarter past twelve" },
+  { q: "Write the time in words: 5:10", correct: "ten past five", wrong1: "ten to five", wrong2: "quarter past five" },
+  { q: "Write the time in words: 8:20", correct: "twenty past eight", wrong1: "twenty to eight", wrong2: "half past eight" },
+  { q: "Write the time in words: 6:35", correct: "twenty-five to seven", wrong1: "twenty-five past six", wrong2: "half past six" },
+  { q: "Write the time in words: 10:50", correct: "ten to eleven", wrong1: "ten past ten", wrong2: "quarter to eleven" },
+  { q: "Write the time in words: 1:05", correct: "five past one", wrong1: "five to one", wrong2: "quarter past one" },
+  { q: "It's half past four. What time is it?", correct: "4:30", wrong1: "4:15", wrong2: "4:45" },
+  { q: "It's quarter past nine. What time is it?", correct: "9:15", wrong1: "9:30", wrong2: "9:45" },
+  { q: "It's quarter to seven. What time is it?", correct: "6:45", wrong1: "7:15", wrong2: "7:45" },
+  { q: "It's ten past three. What time is it?", correct: "3:10", wrong1: "3:50", wrong2: "10:03" },
+  { q: "It's twenty to eight. What time is it?", correct: "7:40", wrong1: "8:20", wrong2: "7:20" },
+  { q: "It's five past one. What time is it?", correct: "1:05", wrong1: "1:50", wrong2: "5:01" },
+  { q: "It's twenty-five past six. What time is it?", correct: "6:25", wrong1: "6:35", wrong2: "5:25" },
+  { q: "It's ten to eleven. What time is it?", correct: "10:50", wrong1: "11:10", wrong2: "10:10" },
+  { q: "2:30 is:", correct: "half past two", wrong1: "quarter to two", wrong2: "half to two" },
+  { q: "11:45 is:", correct: "quarter to twelve", wrong1: "quarter past eleven", wrong2: "half past eleven" },
+  { q: "6:15 is:", correct: "quarter past six", wrong1: "quarter to six", wrong2: "half past six" },
+  { q: "9:50 is:", correct: "ten to ten", wrong1: "ten past nine", wrong2: "ten to nine" },
+  { q: "4:05 is:", correct: "five past four", wrong1: "five to four", wrong2: "half past four" },
+  { q: "7:40 is:", correct: "twenty to eight", wrong1: "twenty past seven", wrong2: "forty past seven" },
+];
+
+/** История 5 клас – Древна Тракия (по учебника, обобщение и кратки въпроси) */
+
+/** Unit 6c – Once a week: frequency, personality quiz, like/dislike + -ing, surprise & comment */
+export const ENGLISH_UNIT_6C_QUESTIONS = [
+  // Frequency phrases (quiz options)
+  { q: "Which phrase means 'one time in seven days'?", correct: "once a week", wrong1: "once a month", wrong2: "every week" },
+  { q: "Which phrase means 'two times in a month'?", correct: "twice a month", wrong1: "twice a week", wrong2: "two months" },
+  { q: "Where do we usually put 'every day' in: I play computer games ___?", correct: "at the end: I play computer games every day.", wrong1: "after the verb: I every day play computer games.", wrong2: "at the start: Every day I play computer games." },
+  { q: "Complete: How often do you ___ the net?", correct: "surf", wrong1: "surfs", wrong2: "surfing" },
+  { q: "Complete: How often do you ___ your English vocabulary?", correct: "revise", wrong1: "revises", wrong2: "revising" },
+  { q: "Complete: How often do you ___ out with your friends?", correct: "hang", wrong1: "hangs", wrong2: "hanging" },
+  // Like / love / hate + -ing (grammar)
+  { q: "I like ___ computer games.", correct: "playing", wrong1: "play", wrong2: "to play" },
+  { q: "She loves ___ books.", correct: "reading", wrong1: "read", wrong2: "reads" },
+  { q: "I hate ___ English vocabulary.", correct: "revising", wrong1: "revise", wrong2: "revises" },
+  { q: "They don't like ___ a sport.", correct: "playing", wrong1: "play", wrong2: "plays" },
+  { q: "We can say: I like ___ (noun).", correct: "football", wrong1: "playing football only", wrong2: "to football" },
+  // Express surprise and comment
+  { q: "Which expression do we use to show surprise?", correct: "Really?", wrong1: "I think so.", wrong2: "Maybe." },
+  { q: "Which expression shows positive comment?", correct: "That's great. Well done!", wrong1: "That's awful.", wrong2: "That's not very good." },
+  { q: "Which expression shows negative comment?", correct: "That's not very good.", wrong1: "Wow!", wrong2: "That's interesting." },
+  { q: "When someone says 'Every day', you can repeat and react with:", correct: "Every day? Wow! That's great.", wrong1: "Every day. So what?", wrong2: "I never." },
+  { q: "Which is a way to express surprise?", correct: "You're joking!", wrong1: "That's good.", wrong2: "I don't know." },
+  // Activities from the quiz and exercises
+  { q: "How often do you go jogging? Choose a frequency phrase.", correct: "three times a week", wrong1: "three weeks", wrong2: "three time a week" },
+  { q: "Complete the sentence: Sandra ___ her mobile every evening.", correct: "uses", wrong1: "use", wrong2: "using" },
+  { q: "Which sentence is correct?", correct: "I play football twice a week.", wrong1: "I twice a week play football.", wrong2: "I play twice a week football." },
+  { q: "How often do you ___ to a party?", correct: "go", wrong1: "goes", wrong2: "going" },
+  { q: "How often do you ___ an email?", correct: "write", wrong1: "writes", wrong2: "writing" },
+  { q: "How often do you ___ your bike?", correct: "ride", wrong1: "rides", wrong2: "riding" },
+  { q: "Which activity fits 'PARTY PERSON'?", correct: "have a barbecue", wrong1: "revise vocabulary", wrong2: "surf the net" },
+  { q: "Which activity fits 'COMPUTER KID'?", correct: "chat to friends online", wrong1: "go jogging", wrong2: "have a party" },
+  { q: "Which activity fits 'SERIOUS STUDENT'?", correct: "get 100% in a test", wrong1: "ride your bike", wrong2: "hang out with friends" },
+  { q: "Which activity fits 'SPORTS STAR'?", correct: "play a sport", wrong1: "write an email", wrong2: "watch a DVD in English" },
+  { q: "We ask about frequency with:", correct: "How often do you...?", wrong1: "How many do you...?", wrong2: "How long do you...?" },
+  { q: "From the list: get up very late, tidy your bedroom, go to bed early – we use these with:", correct: "How often do you...?", wrong1: "How much...?", wrong2: "Where do you...?" },
+];
+
+/**
+ * Round up 3 & 6b/6c – въпроси с избор И с написване на отговор.
+ * type: 'text' = потребителят пише отговор; acceptedAnswers = приема се всеки от списъка (без значение малки/големи букви).
+ */
+export const ENGLISH_ROUNDUP_6_WRITE_IN_QUESTIONS = [
+  // Round up – Complete the chat (Exercise 1)
+  { type: 'text', q: "Where ___ ? (Nero asks DJ Bob)", correct: "do you come from", acceptedAnswers: ["do you come from"] },
+  { type: 'text', q: "So, do ___ French?", correct: "you speak", acceptedAnswers: ["you speak"] },
+  { type: 'text', q: "My parents ___ English at home, just French.", correct: "don't speak", acceptedAnswers: ["don't speak", "dont speak"] },
+  { type: 'text', q: "At school, we ___ in French!", correct: "study", acceptedAnswers: ["study"] },
+  { type: 'text', q: "___ come from Argentina? (Do your parents)", correct: "Do your parents", acceptedAnswers: ["Do your parents", "Do your parents "] },
+  { type: 'text', q: "Ha, ha, ___. No. (very funny)", correct: "very funny", acceptedAnswers: ["very funny"] },
+  { type: 'text', q: "I ___ in Brazil. I live in Argentina!", correct: "don't live", acceptedAnswers: ["don't live", "dont live"] },
+  { type: 'text', q: "They ___ in a big hospital here in Buenos Aires.", correct: "work", acceptedAnswers: ["work"] },
+  { type: 'text', q: "They're ___. (parents' job)", correct: "doctors", acceptedAnswers: ["doctors"] },
+  // Round up – Mike's survey (Exercise 2). Напиши изречението.
+  { type: 'text', q: "Mike: He goes to football matches ___. (2 times, month)", correct: "twice a month", acceptedAnswers: ["twice a month", "twice a Month"] },
+  { type: 'text', q: "Mike: He ___ three times a week. (take exercise)", correct: "takes exercise", acceptedAnswers: ["takes exercise", "takes exercise three times a week"] },
+  { type: 'text', q: "Mike: He visits his grandparents ___. (1 time, month)", correct: "once a month", acceptedAnswers: ["once a month"] },
+  { type: 'text', q: "Mike: He eats fast food ___. (2 times, week)", correct: "twice a week", acceptedAnswers: ["twice a week"] },
+  { type: 'text', q: "Mike: He eats fruit ___. (3 times, day)", correct: "three times a day", acceptedAnswers: ["three times a day", "3 times a day"] },
+  { type: 'text', q: "Mike: He does homework ___. (every, day)", correct: "every day", acceptedAnswers: ["every day"] },
+  // 6c – Complete the phrases (frequency)
+  { type: 'text', q: "Tuesday / Wednesday / Thursday = ___", correct: "three days a week", acceptedAnswers: ["three days a week", "3 days a week"] },
+  { type: 'text', q: "15th May, 30th May, 15th June, 30th June... = ___", correct: "twice a month", acceptedAnswers: ["twice a month", "2 times a month"] },
+  { type: 'text', q: "Mon / Tue / Wed / Thu / Fri / Sat / Sun = every day (or ___ )", correct: "seven days a week", acceptedAnswers: ["seven days a week", "every day", "7 days a week"] },
+  { type: 'text', q: "10.00, 10.20, 10.40, 11.00... = ___", correct: "every twenty minutes", acceptedAnswers: ["every twenty minutes", "every 20 minutes", "three times an hour"] },
+  // 6c – Sort the words: He doesn't like practising the guitar.
+  { type: 'text', q: "Sort the words: doesn't / He / the / guitar / like / practising", correct: "He doesn't like practising the guitar.", acceptedAnswers: ["He doesn't like practising the guitar.", "He doesnt like practising the guitar."] },
+  { type: 'text', q: "Sort the words: watching / love / DVDs / We", correct: "We love watching DVDs.", acceptedAnswers: ["We love watching DVDs.", "We love watching DVDs"] },
+  { type: 'text', q: "Sort the words: like / Does / she / concerts / to / going", correct: "Does she like going to concerts?", acceptedAnswers: ["Does she like going to concerts?", "Does she like going to concerts"] },
+  { type: 'text', q: "Sort the words: brother / hates / My / tennis / playing", correct: "My brother hates playing tennis.", acceptedAnswers: ["My brother hates playing tennis.", "My brother hates playing tennis"] },
+  // 6b – Put words in order (adverbs of frequency)
+  { type: 'text', q: "Put in order: brush / in / my / I / the / always / teeth / morning.", correct: "I always brush my teeth in the morning.", acceptedAnswers: ["I always brush my teeth in the morning.", "I always brush my teeth in the morning"] },
+  { type: 'text', q: "Put in order: your / always / eat / breakfast? / sister / Does", correct: "Does your sister always eat breakfast?", acceptedAnswers: ["Does your sister always eat breakfast?", "Does your sister always eat breakfast"] },
+  { type: 'text', q: "Put in order: parents / on / work / Sunday. / never / My / go / to", correct: "My parents never go to work on Sunday.", acceptedAnswers: ["My parents never go to work on Sunday.", "My parents never go to work on Sunday"] },
+  { type: 'text', q: "Put in order: never / friends / the / evening. / in / phone / I / my", correct: "I never phone my friends in the evening.", acceptedAnswers: ["I never phone my friends in the evening.", "I never phone my friends in the evening"] },
+  // Page 32 – Put words in order
+  { type: 'text', q: "Put in order: always / bed / go / I / early. / to", correct: "I always go to bed early.", acceptedAnswers: ["I always go to bed early.", "I always go to bed early"] },
+  { type: 'text', q: "Put in order: go / We / holiday / twice / on / a / year.", correct: "We go on holiday twice a year.", acceptedAnswers: ["We go on holiday twice a year.", "We go on holiday twice a year"] },
+  { type: 'text', q: "Put in order: goes / Sam / swimming / once / a / week.", correct: "Sam goes swimming once a week.", acceptedAnswers: ["Sam goes swimming once a week.", "Sam goes swimming once a week"] },
+  { type: 'text', q: "Put in order: sister / My / a / has / shower / twice / day. / a", correct: "My sister has a shower twice a day.", acceptedAnswers: ["My sister has a shower twice a day.", "My sister has a shower twice a day"] },
+  // Page 32 – Complete the questions (How often...?)
+  { type: 'text', q: "How often ___ to work? (My parents go to work five days a week.)", correct: "do your parents go", acceptedAnswers: ["do your parents go", "do your parents go to work"] },
+  { type: 'text', q: "How often ___ English? (I study English twice a week.)", correct: "do you study", acceptedAnswers: ["do you study", "do you study English"] },
+  { type: 'text', q: "How often ___ your grandparents? (I visit my grandparents three times a month.)", correct: "do you visit", acceptedAnswers: ["do you visit", "do you visit your grandparents"] },
+  { type: 'text', q: "How often ___ TV? (I watch TV every night.)", correct: "do you watch", acceptedAnswers: ["do you watch", "do you watch TV"] },
+  // Page 32 – Complete the dialogue (like + -ing)
+  { type: 'text', q: "Rob: Yes, I do. I ___ (love/go) to the shopping centre.", correct: "love going", acceptedAnswers: ["love going", "love go"] },
+  { type: 'text', q: "Steve: ___ (you/like/surf) the net? Rob: No, I don't.", correct: "Do you like surfing", acceptedAnswers: ["Do you like surfing", "Do you like surfing the net"] },
+  { type: 'text', q: "Rob: I ___ (not/like/use) computers.", correct: "don't like using", acceptedAnswers: ["don't like using", "dont like using"] },
+  // Donald's week (6b) – избор или кратък текст
+  { q: "Donald plays computer games in the evening every day. So he ___ plays computer games in the evening.", correct: "always", wrong1: "sometimes", wrong2: "never" },
+  { q: "Donald is late for school on Mon, Tue, Thu but not Wed, Fri. So he is ___ late for school.", correct: "sometimes", wrong1: "always", wrong2: "never" },
+];
+
+/**
+ * Grammar Summary & 6c/7a – попълване и тестови (a, b, c) по учебника.
+ */
+export const ENGLISH_GRAMMAR_6ABC_QUESTIONS = [
+  // —— Grammar Summary: Possessive of (попълване) ——
+  { type: 'text', q: "Write your name at the ___ (top/the page), please.", correct: "top of the page", acceptedAnswers: ["top of the page", "the top of the page"] },
+  { type: 'text', q: "Sofia is the ___ (capital/Bulgaria).", correct: "capital of Bulgaria", acceptedAnswers: ["capital of Bulgaria"] },
+  { type: 'text', q: "This is the ___ (end/the story).", correct: "end of the story", acceptedAnswers: ["end of the story", "the end of the story"] },
+  // —— Object pronouns (Lesson 5c): избор a,b,c ——
+  { q: "I like football, but Adam doesn't like ___.", correct: "it", wrong1: "him", wrong2: "them" },
+  { q: "Are they your new friends? Can I meet ___?", correct: "them", wrong1: "they", wrong2: "us" },
+  { q: "My sister loves that song. Play ___ again.", correct: "it", wrong1: "her", wrong2: "she" },
+  { q: "Where is Tom? I need to talk to ___.", correct: "him", wrong1: "he", wrong2: "his" },
+  { q: "Mum is waiting. Let's go with ___.", correct: "her", wrong1: "she", wrong2: "us" },
+  { q: "The teacher asked ___ a question. (I)", correct: "me", wrong1: "I", wrong2: "my" },
+  // —— Present simple + at (попълване) ——
+  { type: 'text', q: "What time does the concert start? It ___ seven o'clock.", correct: "starts at", acceptedAnswers: ["starts at", "starts at seven o'clock"] },
+  { type: 'text', q: "And what time does it ___? (finish)", correct: "finish", acceptedAnswers: ["finish", "finish at"] },
+  { q: "The museum opens ___ nine o'clock.", correct: "at", wrong1: "in", wrong2: "on" },
+  { q: "We have English ___ noon.", correct: "at", wrong1: "in", wrong2: "on" },
+  // —— Adverbs of frequency (6b): попълване и избор ——
+  { type: 'text', q: "I ___ go to bed at nine o'clock. (never) – напишете изречението.", correct: "I never go to bed at nine o'clock.", acceptedAnswers: ["I never go to bed at nine o'clock.", "I never go to bed at nine o'clock"] },
+  { q: "Where do we put 'always' in: He is late? (He ___ is late.)", correct: "He is always late.", wrong1: "He always is late.", wrong2: "Always he is late." },
+  { q: "My sister ___ has breakfast at home.", correct: "usually", wrong1: "never", wrong2: "sometimes" },
+  { q: "We ___ go to school by bus.", correct: "often", wrong1: "never", wrong2: "hardly ever" },
+  // —— Lesson 6c: How often + adverbial (попълване) ——
+  { type: 'text', q: "How often do you brush your teeth? (twice a day) – кратък отговор.", correct: "Twice a day.", acceptedAnswers: ["Twice a day.", "Twice a day", "I brush my teeth twice a day."] },
+  { type: 'text', q: "Do you like surfing the net? – напишете въпроса с you/like/surf.", correct: "Do you like surfing the net?", acceptedAnswers: ["Do you like surfing the net?", "Do you like surfing the net"] },
+  { type: 'text', q: "I love ___ to friends on the phone. (chat)", correct: "chatting", acceptedAnswers: ["chatting", "chat to friends"] },
+  { type: 'text', q: "I ___ like cooking. (not)", correct: "don't like", acceptedAnswers: ["don't like", "dont like", "do not like"] },
+  { type: 'text', q: "She ___ playing the piano. (hate)", correct: "hates", acceptedAnswers: ["hates", "hate"] },
+  // —— Lesson 7a: Present continuous – избор a,b,c (по картинките) ——
+  { q: "What is she eating? (picture: apple) a) an apple  b) an orange  c) a banana", correct: "an apple", wrong1: "an orange", wrong2: "a banana" },
+  { q: "What is he playing? (picture: football) a) tennis  b) football  c) basketball", correct: "football", wrong1: "tennis", wrong2: "basketball" },
+  { q: "What is she reading? (picture: magazine) a) a book  b) a magazine  c) a newspaper", correct: "a magazine", wrong1: "a book", wrong2: "a newspaper" },
+  { q: "What is he listening to? (picture: MP3) a) the radio  b) an MP3 player  c) a podcast", correct: "an MP3 player", wrong1: "the radio", wrong2: "a podcast" },
+  { q: "What is your dad cooking? (picture: chips) a) a cake  b) chips  c) pizza", correct: "chips", wrong1: "a cake", wrong2: "pizza" },
+  { q: "What's the weather like? (picture: snow) a) It's raining  b) It's snowing  c) It's sunny", correct: "It's snowing", wrong1: "It's raining", wrong2: "It's sunny" },
+  // —— Cinema timetable (Grammar Summary) – избор ——
+  { q: "The film 'Not Fair!' has two showings. One is at 18.45. The other is at:", correct: "22.15", wrong1: "19.35", wrong2: "17.20" },
+  { q: "Which film has a showing at 19.35?", correct: "Men On Mars", wrong1: "Three In A Boat", wrong2: "The Rock Star" },
+  { q: "The Rock Star – second showing is at:", correct: "22.15", wrong1: "18.45", wrong2: "19.35" },
+];
+
+/**
+ * 6a – Present simple с фиксирани часове, предлог at, имейл със разписания, Marco's routine.
+ * По картинките: Grammar (fixed times + at) и Workbook 6a.
+ */
+export const ENGLISH_6A_FIXED_TIMES_QUESTIONS = [
+  // —— Present simple + at, граматика (попълване и избор) ——
+  { type: 'text', q: "The museum ___ at nine o'clock. (open)", correct: "opens", acceptedAnswers: ["opens", "opens at nine o'clock"] },
+  { type: 'text', q: "The shop ___ at 6 p.m. (close)", correct: "closes", acceptedAnswers: ["closes", "closes at 6 p.m."] },
+  { type: 'text', q: "The bus ___ at 11.40 a.m. (arrive)", correct: "arrives", acceptedAnswers: ["arrives", "arrives at 11.40 a.m."] },
+  { type: 'text', q: "The match ___ at 4.45 p.m. (finish)", correct: "finishes", acceptedAnswers: ["finishes", "finishes at 4.45 p.m."] },
+  { q: "With times we use the preposition:", correct: "at", wrong1: "on", wrong2: "in" },
+  { q: "Correct form: The bus ___ at 4 p.m.", correct: "leaves", wrong1: "leave", wrong2: "leaving" },
+  { q: "Correct question: ___ the shops open?", correct: "What time do", wrong1: "What time the", wrong2: "What time does the" },
+  { q: "School starts ___ 9 a.m.", correct: "at", wrong1: "on", wrong2: "in" },
+  // —— Email: European concerts trip (разписания) – избор a,b,c ——
+  { q: "Banks ___ at half past nine. (schedule: National Bank 09.30–15.30)", correct: "open", wrong1: "start", wrong2: "leave" },
+  { q: "The plane ___ London at twenty past ten.", correct: "leaves", wrong1: "starts", wrong2: "opens" },
+  { q: "The plane ___ in Amsterdam at ten past eleven.", correct: "arrives", wrong1: "finishes", wrong2: "closes" },
+  { q: "The doors ___ at six. (Concert: Doors open 6 p.m.)", correct: "open", wrong1: "start", wrong2: "arrive" },
+  { q: "The concert ___ at quarter past seven.", correct: "starts", wrong1: "opens", wrong2: "arrives" },
+  { q: "The concert ___ at ten thirty-five.", correct: "finishes", wrong1: "closes", wrong2: "leaves" },
+  { q: "The train to Berlin ___ at five to eleven. (Amsterdam 22.55)", correct: "leaves", wrong1: "opens", wrong2: "starts" },
+  { q: "We ___ in Berlin at twenty to six in the morning. (Berlin 05.40)", correct: "arrive", wrong1: "finish", wrong2: "close" },
+  // —— Workbook 6a: Complete the sentences (попълване) ——
+  { type: 'text', q: "This shop ___ (open) at half past eight.", correct: "opens", acceptedAnswers: ["opens"] },
+  { type: 'text', q: "Lessons at our school ___ (start) at eight o'clock.", correct: "start", acceptedAnswers: ["start"] },
+  { type: 'text', q: "My last lesson ___ (finish) at half past three.", correct: "finishes", acceptedAnswers: ["finishes"] },
+  { type: 'text', q: "My father's office ___ (close) at six p.m.", correct: "closes", acceptedAnswers: ["closes"] },
+  { type: 'text', q: "Your train ___ (leave) at ten past nine.", correct: "leaves", acceptedAnswers: ["leaves"] },
+  { type: 'text', q: "Trains from London ___ (arrive) here at five past three.", correct: "arrive", acceptedAnswers: ["arrive"] },
+  // —— Write questions and answers (попълване) ——
+  { type: 'text', q: "What time does the English class start? (5.00) – кратък отговор.", correct: "It starts at five o'clock.", acceptedAnswers: ["It starts at five o'clock.", "It starts at 5.00.", "At five o'clock."] },
+  { type: 'text', q: "What time does the concert finish? (9.45) – отговор с It.", correct: "It finishes at 9.45.", acceptedAnswers: ["It finishes at 9.45.", "It finishes at nine forty-five."] },
+  { type: 'text', q: "What time does the film start? (6.00) – въпрос с does.", correct: "What time does the film start?", acceptedAnswers: ["What time does the film start?", "What time does the film start"] },
+  // —— Marco's daily routine (chart) – избор и попълване ——
+  { q: "What time does Marco get up? (chart)", correct: "7.15", wrong1: "7.35", wrong2: "8.15" },
+  { q: "What time does Marco have breakfast?", correct: "7.35", wrong1: "7.15", wrong2: "8.15" },
+  { q: "What time does Marco go to school?", correct: "8.15", wrong1: "7.35", wrong2: "16.30" },
+  { q: "Marco has lunch from 12.30 to 13.30. What does he eat? (chart)", correct: "Pizza and fruit", wrong1: "Eggs", wrong2: "Nothing" },
+  { q: "What does Marco never do? (chart)", correct: "Watch TV", wrong1: "Do homework", wrong2: "Play computer games" },
+  { q: "When does Marco play computer games? (chart)", correct: "Always, after dinner", wrong1: "Never", wrong2: "In the morning" },
+  { type: 'text', q: "Marco goes to bed at ___. (chart: 22.30)", correct: "22.30", acceptedAnswers: ["22.30", "10.30 p.m.", "half past ten"] },
+  { type: 'text', q: "Marco has breakfast at 7.35. He eats ___ for breakfast. (chart: Eggs)", correct: "eggs", acceptedAnswers: ["eggs", "Eggs"] },
+];
