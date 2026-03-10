@@ -49,15 +49,12 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   /** Име на участника и дали е започнал теста */
   const [userName, setUserName] = useState('');
   const [started, setStarted] = useState(false);
-  /** Разбъркан ред на въпросите – фиксиран при стартиране на теста */
+  /** Разбъркан ред на въпросите – фиксиран при зареждане на страницата */
   const [shuffledQuestions] = useState(() => shuffle([...questions]));
+  /** Разбъркан ред на отговорите за всеки въпрос – фиксиран при стартиране на теста */
+  const [optionOrders, setOptionOrders] = useState(null);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [optionOrder, setOptionOrder] = useState(() => {
-    const q0 = shuffledQuestions[0];
-    const n = [q0?.correct, q0?.wrong1, q0?.wrong2, q0?.wrong3].filter(Boolean).length;
-    return shuffle(Array.from({ length: n }, (_, i) => i));
-  });
   const [answered, setAnswered] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   /** При показване на обобщение: { correctCount, total, grade, gradeLabel, resultSaved } */
@@ -74,7 +71,10 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
     qCurrent?.wrong2,
     qCurrent?.wrong3,
   ].filter(Boolean);
-  const orderedOpts = optionOrder.map((i) => opts[i]).filter((_, i) => opts[i] != null);
+  const orderForQuestion = optionOrders?.[index];
+  const orderedOpts = orderForQuestion != null
+    ? orderForQuestion.map((i) => opts[i]).filter(Boolean)
+    : opts;
   const isText = isTextQuestion(qCurrent);
 
   const handleNext = () => {
@@ -109,9 +109,6 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
         return;
       }
       setIndex((i) => i + 1);
-      const nextQ = shuffledQuestions[index + 1];
-      const nextN = [nextQ?.correct, nextQ?.wrong1, nextQ?.wrong2, nextQ?.wrong3].filter(Boolean).length;
-      setOptionOrder(shuffle(Array.from({ length: nextN }, (_, i) => i)));
       setAnswered(false);
       setSelectedOption(null);
       setTypedAnswer('');
@@ -135,12 +132,19 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
     if (index > 0) {
       setIndex((i) => i - 1);
       setAnswered(false);
-      const prevQ = shuffledQuestions[index - 1];
-      const prevN = [prevQ?.correct, prevQ?.wrong1, prevQ?.wrong2, prevQ?.wrong3].filter(Boolean).length;
-      setOptionOrder(shuffle(Array.from({ length: prevN }, (_, i) => i)));
       setSelectedOption(null);
       setTypedAnswer('');
     }
+  };
+
+  const handleStart = () => {
+    if (!userName.trim()) return;
+    const orders = shuffledQuestions.map((q) => {
+      const n = [q?.correct, q?.wrong1, q?.wrong2, q?.wrong3].filter(Boolean).length;
+      return n ? shuffle(Array.from({ length: n }, (_, i) => i)) : [];
+    });
+    setOptionOrders(orders);
+    setStarted(true);
   };
 
   if (!started) {
@@ -157,11 +161,11 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
             onChange={(e) => setUserName(e.target.value.trim())}
             placeholder="Име"
             className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-[#1a3a52] focus:ring-2 focus:ring-[#1a3a52]/20"
-            onKeyDown={(e) => e.key === 'Enter' && userName.trim() && setStarted(true)}
+            onKeyDown={(e) => e.key === 'Enter' && handleStart()}
           />
           <button
             type="button"
-            onClick={() => userName.trim() && setStarted(true)}
+            onClick={handleStart}
             disabled={!userName.trim()}
             className="px-6 py-3 rounded-lg font-semibold bg-[#1a3a52] text-white hover:bg-[#244a62] disabled:opacity-50 disabled:cursor-not-allowed"
           >

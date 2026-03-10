@@ -189,7 +189,7 @@ const GEOGRAFIA_POPALVANE_QUESTIONS = [
   { type: 'text', q: 'Място за размяна на стоки и услуги срещу пари се нарича:', correct: 'пазар', acceptedAnswers: ['пазар'] },
   { type: 'text', q: 'През кой век започва бързото нарастване на населението?', correct: 'XVIII', acceptedAnswers: ['xviii', '18', 'осемнадесети'] },
   { type: 'text', q: 'Коя международна организация има за цел опазване на мира?', correct: 'ООН', acceptedAnswers: ['оон'] },
-  { type: 'text', q: 'Преобладаваща религия в България?', correct: 'православие', acceptedAnswers: ['православие', 'православно'] },
+  { type: 'text', q: 'Преобладаваща религия в България?', correct: 'християнство', acceptedAnswers: ['християнство'] },
   { type: 'text', q: 'Държави със силна централна власт се наричат:', correct: 'унитарни', acceptedAnswers: ['унитарни'] },
   { type: 'text', q: 'Коя е общата европейска валута от 2002 г.?', correct: 'евро', acceptedAnswers: ['евро'] },
 ];
