@@ -64,6 +64,7 @@ import { PRIRODA_VOZDUH_QUESTIONS } from './priroda-tests';
 import {
   LITERATURA_DA_PROVERIM_VAR1_QUESTIONS,
   LITERATURA_DA_PROVERIM_VAR2_QUESTIONS,
+  LITERATURA_FOLKLOR_KALENDAR_QUESTIONS,
 } from './literatura-tests';
 
 const TESTS = {
@@ -236,6 +237,11 @@ const TESTS = {
     title: 'Да проверим – Литература (Вариант 2)',
     slug: 'da-proverim-var2',
     questions: LITERATURA_DA_PROVERIM_VAR2_QUESTIONS,
+  },
+  '5|literatura|folklore-kalendar': {
+    title: 'Литература – фолклорен календар, празници и обичаи',
+    slug: 'folklore-kalendar',
+    questions: LITERATURA_FOLKLOR_KALENDAR_QUESTIONS,
   },
   '5|english|unit-6c-once-a-week': {
     title: 'Unit 6c – Once a week (frequency & personality)',
