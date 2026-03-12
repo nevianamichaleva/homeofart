@@ -7,6 +7,7 @@
  * - english-tests.js (Английски език)
  * - istoriya-tests.js (История)
  * - priroda-tests.js (Човек и природа)
+ * - literatura-tests.js (Литература)
  *
  * URL на тест: /test-pilot/клас/предмет/slug
  */
@@ -59,6 +60,11 @@ import {
 } from './istoriya-tests';
 
 import { PRIRODA_VOZDUH_QUESTIONS } from './priroda-tests';
+
+import {
+  LITERATURA_DA_PROVERIM_VAR1_QUESTIONS,
+  LITERATURA_DA_PROVERIM_VAR2_QUESTIONS,
+} from './literatura-tests';
 
 const TESTS = {
   '5|bg|morfolojiya': {
@@ -220,6 +226,16 @@ const TESTS = {
     title: 'Човек и природа – Въздухът',
     slug: 'vozduh',
     questions: PRIRODA_VOZDUH_QUESTIONS,
+  },
+  '5|literatura|da-proverim-var1': {
+    title: 'Да проверим – Литература (Вариант 1)',
+    slug: 'da-proverim-var1',
+    questions: LITERATURA_DA_PROVERIM_VAR1_QUESTIONS,
+  },
+  '5|literatura|da-proverim-var2': {
+    title: 'Да проверим – Литература (Вариант 2)',
+    slug: 'da-proverim-var2',
+    questions: LITERATURA_DA_PROVERIM_VAR2_QUESTIONS,
   },
   '5|english|unit-6c-once-a-week': {
     title: 'Unit 6c – Once a week (frequency & personality)',

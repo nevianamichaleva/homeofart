@@ -11,13 +11,14 @@ const SUBJECT_LABELS = {
   english: 'Английски език',
   geografia: 'География',
   istoriya: 'История',
+  literatura: 'Литература',
   matematika: 'Математика',
   bg: 'Български език',
   priroda: 'Човек и природа',
 };
 
 /** Ред на предметите: първо Български, English, География, История, Човек и природа, останалите по азбучен ред. */
-const SUBJECT_ORDER = ['bg', 'english', 'geografia', 'istoriya', 'priroda'];
+const SUBJECT_ORDER = ['bg', 'english', 'geografia', 'istoriya', 'literatura', 'priroda'];
 
 export default function TestPilotPage() {
   const [openSubject, setOpenSubject] = useState(null);
