@@ -57,6 +57,14 @@ import {
 import {
   ISTORIYA_DREVNA_TRAKIYA_QUESTIONS,
   ISTORIYA_TRAKIYA_OBSHTESTVO_QUESTIONS,
+  ISTORIA_CARSTVO_ODRISI,
+  ISTORIA_ODRISKI_CARE,
+  ISTORIA_RELIGIA,
+  KULTURA_TRAKIYA,
+  ISTORIA_UPRAJNENIE,
+  ISTORIA_OBOBSHTENIE_TRAKIYA,
+  ISTORIA_SVAURZVANE_QUESTIONS,
+  ISTORIA_PODREDBA_QUESTIONS,
 } from './istoriya-tests';
 
 import { PRIRODA_VOZDUH_QUESTIONS } from './priroda-tests';
@@ -222,6 +230,46 @@ const TESTS = {
     title: 'Общество и всекидневен живот на траките (урок 27)',
     slug: 'trakiya-obshtestvo',
     questions: ISTORIYA_TRAKIYA_OBSHTESTVO_QUESTIONS,
+  },
+  '5|istoriya|carstvo-odrisi': {
+    title: 'История – Одриско царство',
+    slug: 'carstvo-odrisi',
+    questions: ISTORIA_CARSTVO_ODRISI,
+  },
+  '5|istoriya|odriski-care': {
+    title: 'История – Одриски царе',
+    slug: 'odriski-care',
+    questions: ISTORIA_ODRISKI_CARE,
+  },
+  '5|istoriya|religia': {
+    title: 'История – Религия на траките',
+    slug: 'religia',
+    questions: ISTORIA_RELIGIA,
+  },
+  '5|istoriya|kultura-trakiya': {
+    title: 'История – Култура на траките',
+    slug: 'kultura-trakiya',
+    questions: KULTURA_TRAKIYA,
+  },
+  '5|istoriya|uprajnenie': {
+    title: 'История – Управление',
+    slug: 'uprajnenie',
+    questions: ISTORIA_UPRAJNENIE,
+  },
+  '5|istoriya|obobshtenie-trakiya': {
+    title: 'История – Обобщение Тракия',
+    slug: 'obobshtenie-trakiya',
+    questions: ISTORIA_OBOBSHTENIE_TRAKIYA,
+  },
+  '5|istoriya|svarzvane': {
+    title: 'История – Свързване (личност/термин с описание)',
+    slug: 'svarzvane',
+    questions: ISTORIA_SVAURZVANE_QUESTIONS,
+  },
+  '5|istoriya|podredba': {
+    title: 'История – Подреждане по време (Урок 26)',
+    slug: 'podredba',
+    questions: ISTORIA_PODREDBA_QUESTIONS,
   },
   '5|priroda|vozduh': {
     title: 'Човек и природа – Въздухът',

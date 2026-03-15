@@ -3,7 +3,7 @@
 import { db } from '@/lib/firebase';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function shuffle(arr) {
   const b = [...arr];
@@ -17,6 +17,16 @@ function shuffle(arr) {
 /** Дали въпросът е с написване на отговор (не избор от 3). */
 function isTextQuestion(q) {
   return q && q.type === 'text';
+}
+
+/** Дали въпросът е за свързване на двойки. */
+function isMatchingQuestion(q) {
+  return q && q.type === 'matching' && Array.isArray(q.pairs) && q.pairs.length > 0;
+}
+
+/** Дали въпросът е за подреждане по ред. */
+function isOrderingQuestion(q) {
+  return q && q.type === 'ordering' && Array.isArray(q.items) && q.items.length > 0;
 }
 
 /** Нормализира отговор за сравнение: trim, малки букви, излишни интервали. */
@@ -34,6 +44,18 @@ function isCorrectAnswer(question, userAnswer) {
       : [normalizeAnswer(question.correct)];
     return accepted.some((a) => a === normalized);
   }
+  if (isMatchingQuestion(question)) {
+    if (!Array.isArray(userAnswer) || userAnswer.length !== question.pairs.length) return false;
+    const correctSet = new Set(question.pairs.map(([a, b]) => `${a}|${b}`));
+    const userSet = new Set(userAnswer.map(([a, b]) => `${a}|${b}`));
+    if (correctSet.size !== userSet.size) return false;
+    for (const p of userSet) if (!correctSet.has(p)) return false;
+    return true;
+  }
+  if (isOrderingQuestion(question)) {
+    if (!Array.isArray(userAnswer) || userAnswer.length !== question.items.length) return false;
+    return question.items.every((item, i) => item === userAnswer[i]);
+  }
   return userAnswer === question.correct;
 }
 
@@ -41,6 +63,12 @@ function isCorrectAnswer(question, userAnswer) {
 function getCorrectDisplay(question) {
   if (question.acceptedAnswers && question.acceptedAnswers.length > 0) {
     return question.acceptedAnswers[0];
+  }
+  if (isMatchingQuestion(question)) {
+    return question.pairs.map(([a, b]) => `${a} → ${b}`).join('; ');
+  }
+  if (isOrderingQuestion(question)) {
+    return question.items.map((item, i) => `${i + 1}. ${item}`).join(' ');
   }
   return question.correct;
 }
@@ -63,19 +91,42 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   const [selectedOption, setSelectedOption] = useState(null);
   /** За въпроси тип "текст" – написаният отговор */
   const [typedAnswer, setTypedAnswer] = useState('');
+  /** За matching: разбъркан ред на дясната колона по индекс на въпрос */
+  const [matchingCache, setMatchingCache] = useState(null);
+  /** За ordering: разбъркан ред на елементите по индекс на въпрос */
+  const [orderingCache, setOrderingCache] = useState(null);
+  /** За matching: избрани дясни индекси за всяка лява позиция { 0: 1, 1: 3, ... } */
+  const [matchingSelections, setMatchingSelections] = useState({});
+  /** За ordering: текущ ред на елементите (масив от низове) */
+  const [orderingItems, setOrderingItems] = useState([]);
 
   const qCurrent = shuffledQuestions[index];
-  const opts = [
-    qCurrent?.correct,
-    qCurrent?.wrong1,
-    qCurrent?.wrong2,
-    qCurrent?.wrong3,
-  ].filter(Boolean);
+  const isMatching = isMatchingQuestion(qCurrent);
+  const isOrdering = isOrderingQuestion(qCurrent);
+  const isText = isTextQuestion(qCurrent);
+  const opts = (qCurrent?.options && qCurrent.options.length > 0)
+    ? qCurrent.options
+    : [
+        qCurrent?.correct,
+        qCurrent?.wrong1,
+        qCurrent?.wrong2,
+        qCurrent?.wrong3,
+      ].filter(Boolean);
   const orderForQuestion = optionOrders?.[index];
-  const orderedOpts = orderForQuestion != null
+  const orderedOpts = orderForQuestion != null && orderForQuestion.length > 0
     ? orderForQuestion.map((i) => opts[i]).filter(Boolean)
     : opts;
-  const isText = isTextQuestion(qCurrent);
+
+  useEffect(() => {
+    const q = shuffledQuestions[index];
+    if (!q) return;
+    if (isOrderingQuestion(q) && orderingCache?.[index]) {
+      setOrderingItems(orderingCache[index]);
+    }
+    if (isMatchingQuestion(q)) {
+      setMatchingSelections({});
+    }
+  }, [index, orderingCache]);
 
   const handleNext = () => {
     if (answered) {
@@ -114,9 +165,23 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
       setTypedAnswer('');
       return;
     }
-    const valueToStore = isText ? typedAnswer : selectedOption;
+    let valueToStore;
+    if (isText) valueToStore = typedAnswer;
+    else if (isMatching) {
+      const leftLabels = qCurrent.pairs.map(([l]) => l);
+      const rightLabels = matchingCache?.[index] ?? qCurrent.pairs.map(([, r]) => r);
+      const pairs = leftLabels.map((left, i) => {
+        const ri = matchingSelections[i];
+        return ri != null ? [left, rightLabels[ri]] : null;
+      });
+      if (pairs.some((p) => p == null)) return;
+      valueToStore = pairs;
+    } else if (isOrdering) valueToStore = orderingItems;
+    else valueToStore = selectedOption;
+
     if (isText && normalizeAnswer(typedAnswer) === '') return;
-    if (!isText && selectedOption == null) return;
+    if (!isText && !isMatching && !isOrdering && selectedOption == null) return;
+    if (isOrdering && orderingItems.length !== (qCurrent?.items?.length ?? 0)) return;
     setAnswers((prev) => {
       const next = [...prev];
       next[index] = valueToStore;
@@ -130,21 +195,37 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
 
   const handlePrev = () => {
     if (index > 0) {
-      setIndex((i) => i - 1);
+      const prevIdx = index - 1;
+      setIndex(prevIdx);
       setAnswered(false);
       setSelectedOption(null);
       setTypedAnswer('');
+      const prevQ = shuffledQuestions[prevIdx];
+      if (isOrderingQuestion(prevQ) && orderingCache?.[prevIdx]) setOrderingItems(orderingCache[prevIdx]);
+      if (isMatchingQuestion(prevQ)) setMatchingSelections({});
     }
   };
 
   const handleStart = () => {
     if (!userName.trim()) return;
     const orders = shuffledQuestions.map((q) => {
-      const n = [q?.correct, q?.wrong1, q?.wrong2, q?.wrong3].filter(Boolean).length;
+      if (isMatchingQuestion(q) || isOrderingQuestion(q)) return [];
+      const optsForQ = (q?.options && q.options.length > 0) ? q.options : [q?.correct, q?.wrong1, q?.wrong2, q?.wrong3].filter(Boolean);
+      const n = optsForQ.length;
       return n ? shuffle(Array.from({ length: n }, (_, i) => i)) : [];
     });
     setOptionOrders(orders);
+    const matchCache = {};
+    const orderCache = {};
+    shuffledQuestions.forEach((q, i) => {
+      if (isMatchingQuestion(q)) matchCache[i] = shuffle(q.pairs.map(([, r]) => r));
+      if (isOrderingQuestion(q)) orderCache[i] = shuffle([...q.items]);
+    });
+    setMatchingCache(matchCache);
+    setOrderingCache(orderCache);
     setStarted(true);
+    const firstQ = shuffledQuestions[0];
+    if (isOrderingQuestion(firstQ) && orderCache[0]) setOrderingItems(orderCache[0]);
   };
 
   if (!started) {
@@ -228,6 +309,9 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   const correctDisplay = getCorrectDisplay(q);
   const isUserCorrect = answered && isCorrectAnswer(q, userAnswer);
 
+  const leftLabels = isMatching ? q.pairs.map(([l]) => l) : [];
+  const rightLabels = (isMatching && matchingCache?.[index]) || (isMatching ? q.pairs.map(([, r]) => r) : []);
+
   return (
     <div id="quiz" className="max-w-xl mx-auto">
       <p className="text-lg font-semibold text-gray-800 mb-4 leading-snug">
@@ -250,6 +334,90 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
                 : 'border-gray-200 bg-white focus:border-[#1a3a52] focus:ring-2 focus:ring-[#1a3a52]/20'
             }`}
           />
+        </div>
+      ) : isMatching ? (
+        <div className="space-y-3">
+          <p className="text-sm text-gray-600 mb-2">Свържи всяка позиция отляво с подходящата отдясно.</p>
+          <div className="flex flex-col gap-2">
+            {leftLabels.map((left, i) => (
+              <div key={i} className="flex flex-wrap items-center gap-2">
+                <span className="font-medium text-gray-800 min-w-[120px]">{left}</span>
+                <span className="text-gray-400">→</span>
+                <select
+                  value={matchingSelections[i] ?? ''}
+                  onChange={(e) => setMatchingSelections((prev) => ({ ...prev, [i]: Number(e.target.value) }))}
+                  disabled={answered}
+                  className={`flex-1 min-w-[200px] px-3 py-2 rounded-lg border-2 ${
+                    answered
+                      ? isUserCorrect
+                        ? 'border-green-500 bg-green-50'
+                        : 'border-red-400 bg-red-50'
+                      : 'border-gray-200 focus:border-[#1a3a52]'
+                  }`}
+                >
+                  <option value="">— избери —</option>
+                  {rightLabels.map((right, j) => {
+                    const usedElsewhere = Object.entries(matchingSelections).some(([k, v]) => Number(k) !== i && v === j);
+                    return (
+                      <option key={j} value={j} disabled={usedElsewhere && (matchingSelections[i] !== j)}>
+                        {right}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : isOrdering ? (
+        <div className="space-y-2">
+          <p className="text-sm text-gray-600 mb-2">Подреди отгоре надолу (първо най-ранното).</p>
+          <ul className="space-y-2">
+            {orderingItems.map((item, i) => (
+              <li key={i} className="flex items-center gap-2">
+                <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-[#1a3a52]/10 text-[#1a3a52] font-semibold text-sm">
+                  {i + 1}
+                </span>
+                <span className="flex-1 px-3 py-2 rounded-lg border-2 border-gray-200 bg-white">{item}</span>
+                {!answered && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (i === 0) return;
+                        setOrderingItems((prev) => {
+                          const next = [...prev];
+                          [next[i - 1], next[i]] = [next[i], next[i - 1]];
+                          return next;
+                        });
+                      }}
+                      disabled={i === 0}
+                      className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                      aria-label="Нагоре"
+                    >
+                      ↑
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (i === orderingItems.length - 1) return;
+                        setOrderingItems((prev) => {
+                          const next = [...prev];
+                          [next[i], next[i + 1]] = [next[i + 1], next[i]];
+                          return next;
+                        });
+                      }}
+                      disabled={i === orderingItems.length - 1}
+                      className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                      aria-label="Надолу"
+                    >
+                      ↓
+                    </button>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       ) : (
         <div className="flex flex-col gap-2">
