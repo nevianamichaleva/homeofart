@@ -73,6 +73,21 @@ function getCorrectDisplay(question) {
   return question.correct;
 }
 
+/** Кратък текст на дадения от потребителя отговор за резюмето. */
+function formatUserAnswerDisplay(question, userAnswer) {
+  if (userAnswer == null || userAnswer === '') return '—';
+  if (isTextQuestion(question)) return String(userAnswer);
+  if (isMatchingQuestion(question)) {
+    if (!Array.isArray(userAnswer)) return '—';
+    return userAnswer.map(([a, b]) => `${a} → ${b}`).join('; ');
+  }
+  if (isOrderingQuestion(question)) {
+    if (!Array.isArray(userAnswer)) return '—';
+    return userAnswer.map((item, i) => `${i + 1}. ${item}`).join(' ');
+  }
+  return String(userAnswer);
+}
+
 export default function Quiz({ title, questions, testId = '', testTitle = '' }) {
   /** Име на участника и дали е започнал теста */
   const [userName, setUserName] = useState('');
@@ -83,9 +98,8 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   const [optionOrders, setOptionOrders] = useState(null);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [answered, setAnswered] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
-  /** При показване на обобщение: { correctCount, total, grade, gradeLabel, resultSaved } */
+  /** При показване на обобщение: { correctCount, total, grade, gradeLabel, resultSaved?, perQuestion } */
   const [summaryResult, setSummaryResult] = useState(null);
   /** Избраният отговор за текущия въпрос (null = нищо не е избрано) */
   const [selectedOption, setSelectedOption] = useState(null);
@@ -120,51 +134,88 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   useEffect(() => {
     const q = shuffledQuestions[index];
     if (!q) return;
-    if (isOrderingQuestion(q) && orderingCache?.[index]) {
-      setOrderingItems(orderingCache[index]);
-    }
-    if (isMatchingQuestion(q)) {
-      setMatchingSelections({});
-    }
-  }, [index, orderingCache]);
+    const saved = answers[index];
 
-  const handleNext = () => {
-    if (answered) {
-      if (index + 1 >= shuffledQuestions.length) {
-        const correctCount = answers.filter((a, i) => isCorrectAnswer(shuffledQuestions[i], a)).length;
-        const total = shuffledQuestions.length;
-        const gradeRaw = 2 + (correctCount / total) * 4;
-        const grade = Math.round(gradeRaw * 2) / 2;
-        const gradeLabel =
-          grade >= 5.5 ? 'Отличен' : grade >= 4.5 ? 'Много добър' : grade >= 3.5 ? 'Добър' : grade >= 2.5 ? 'Среден' : 'Слаб';
-        setSummaryResult({ correctCount, total, grade, gradeLabel });
-        setShowSummary(true);
-        const points = `${correctCount}/${total}`;
-        const assessment = `${grade} (${gradeLabel})`;
-        const test = testId || title || '';
-        (async () => {
-          try {
-            await addDoc(collection(db, 'results'), {
-              name: userName.trim() || 'Анонимен',
-              points,
-              assessment,
-              test,
-              testTitle: testTitle || test,
-              createdAt: serverTimestamp(),
-            });
-            setSummaryResult((prev) => (prev ? { ...prev, resultSaved: true } : null));
-          } catch (err) {
-            console.warn('Неуспешен запис на резултат:', err?.message);
-          }
-        })();
-        return;
-      }
-      setIndex((i) => i + 1);
-      setAnswered(false);
+    if (isTextQuestion(q)) {
+      setTypedAnswer(typeof saved === 'string' ? saved : '');
       setSelectedOption(null);
-      setTypedAnswer('');
       return;
     }
+    if (isMatchingQuestion(q)) {
+      setTypedAnswer('');
+      setSelectedOption(null);
+      const rightLabels = matchingCache?.[index] ?? q.pairs.map(([, r]) => r);
+      const leftLabels = q.pairs.map(([l]) => l);
+      if (Array.isArray(saved) && saved.length > 0) {
+        const sel = {};
+        leftLabels.forEach((left, i) => {
+          const pair = saved.find(([l]) => l === left);
+          if (pair) {
+            const ri = rightLabels.indexOf(pair[1]);
+            if (ri >= 0) sel[i] = ri;
+          }
+        });
+        setMatchingSelections(sel);
+      } else {
+        setMatchingSelections({});
+      }
+      return;
+    }
+    if (isOrderingQuestion(q)) {
+      setTypedAnswer('');
+      setSelectedOption(null);
+      if (orderingCache?.[index]) {
+        setOrderingItems(
+          Array.isArray(saved) && saved.length === q.items.length ? saved : orderingCache[index],
+        );
+      }
+      return;
+    }
+    setTypedAnswer('');
+    setSelectedOption(saved ?? null);
+  }, [index, orderingCache, matchingCache, shuffledQuestions, answers]);
+
+  const finishTest = (finalAnswers) => {
+    const correctCount = finalAnswers.filter((a, i) => isCorrectAnswer(shuffledQuestions[i], a)).length;
+    const total = shuffledQuestions.length;
+    const gradeRaw = 2 + (correctCount / total) * 4;
+    const grade = Math.round(gradeRaw * 2) / 2;
+    const gradeLabel =
+      grade >= 5.5 ? 'Отличен' : grade >= 4.5 ? 'Много добър' : grade >= 3.5 ? 'Добър' : grade >= 2.5 ? 'Среден' : 'Слаб';
+    const perQuestion = shuffledQuestions.map((question, i) => {
+      const ua = finalAnswers[i];
+      const ok = isCorrectAnswer(question, ua);
+      return {
+        n: i + 1,
+        questionText: question.q,
+        userDisplay: formatUserAnswerDisplay(question, ua),
+        correctDisplay: getCorrectDisplay(question),
+        ok,
+      };
+    });
+    setSummaryResult({ correctCount, total, grade, gradeLabel, perQuestion });
+    setShowSummary(true);
+    const points = `${correctCount}/${total}`;
+    const assessment = `${grade} (${gradeLabel})`;
+    const test = testId || title || '';
+    (async () => {
+      try {
+        await addDoc(collection(db, 'results'), {
+          name: userName.trim() || 'Анонимен',
+          points,
+          assessment,
+          test,
+          testTitle: testTitle || test,
+          createdAt: serverTimestamp(),
+        });
+        setSummaryResult((prev) => (prev ? { ...prev, resultSaved: true } : null));
+      } catch (err) {
+        console.warn('Неуспешен запис на резултат:', err?.message);
+      }
+    })();
+  };
+
+  const handleNext = () => {
     let valueToStore;
     if (isText) valueToStore = typedAnswer;
     else if (isMatching) {
@@ -182,27 +233,23 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
     if (isText && normalizeAnswer(typedAnswer) === '') return;
     if (!isText && !isMatching && !isOrdering && selectedOption == null) return;
     if (isOrdering && orderingItems.length !== (qCurrent?.items?.length ?? 0)) return;
-    setAnswers((prev) => {
-      const next = [...prev];
-      next[index] = valueToStore;
-      return next;
-    });
-    setAnswered(true);
+
+    const nextAnswers = [...answers];
+    nextAnswers[index] = valueToStore;
+    setAnswers(nextAnswers);
+
     if (index + 1 >= shuffledQuestions.length) {
-      document.querySelector('#quiz-next')?.focus();
+      finishTest(nextAnswers);
+      return;
     }
+    setIndex((i) => i + 1);
+    setSelectedOption(null);
+    setTypedAnswer('');
   };
 
   const handlePrev = () => {
     if (index > 0) {
-      const prevIdx = index - 1;
-      setIndex(prevIdx);
-      setAnswered(false);
-      setSelectedOption(null);
-      setTypedAnswer('');
-      const prevQ = shuffledQuestions[prevIdx];
-      if (isOrderingQuestion(prevQ) && orderingCache?.[prevIdx]) setOrderingItems(orderingCache[prevIdx]);
-      if (isMatchingQuestion(prevQ)) setMatchingSelections({});
+      setIndex((i) => i - 1);
     }
   };
 
@@ -258,7 +305,7 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   }
 
   if (showSummary && summaryResult) {
-    const { correctCount, total, grade, gradeLabel, resultSaved } = summaryResult;
+    const { correctCount, total, grade, gradeLabel, resultSaved, perQuestion } = summaryResult;
     const percentRounded = Math.round((100 * correctCount) / total);
     const displayName = userName.trim() || 'Анонимен';
     const isExcellent = grade >= 5;
@@ -268,9 +315,39 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
         <p className="text-lg font-medium text-gray-700 mb-2">
           Верни отговори: {correctCount} от {total} ({percentRounded}%).
         </p>
-        <p className="text-lg font-semibold text-[#1a3a52]">
+        <p className="text-lg font-semibold text-[#1a3a52] mb-6">
           Оценка: <span className="text-2xl">{grade}</span> ({gradeLabel})
         </p>
+        {Array.isArray(perQuestion) && perQuestion.length > 0 && (
+          <div className="mb-6 border-t border-gray-200 pt-4">
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">Преглед по въпроси</h3>
+            <ul className="space-y-4 max-h-[min(60vh,28rem)] overflow-y-auto pr-1">
+              {perQuestion.map((row) => (
+                <li
+                  key={row.n}
+                  className={`rounded-lg border-2 p-3 text-sm ${
+                    row.ok ? 'border-green-200 bg-green-50/80' : 'border-red-200 bg-red-50/80'
+                  }`}
+                >
+                  <p className="font-semibold text-gray-900 mb-1">
+                    {row.n}. {row.questionText}{' '}
+                    <span className={row.ok ? 'text-green-700' : 'text-red-700'}>
+                      ({row.ok ? 'верен' : 'грешен'})
+                    </span>
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-medium text-gray-600">Ваш отговор:</span> {row.userDisplay}
+                  </p>
+                  {!row.ok && (
+                    <p className="text-gray-800 mt-1">
+                      <span className="font-medium text-gray-600">Верен отговор:</span> {row.correctDisplay}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         {isExcellent ? (
           <div className="flex justify-center my-4">
             <DotLottieReact
@@ -305,10 +382,6 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   const q = shuffledQuestions[index];
   if (!q) return null;
 
-  const userAnswer = answers[index];
-  const correctDisplay = getCorrectDisplay(q);
-  const isUserCorrect = answered && isCorrectAnswer(q, userAnswer);
-
   const leftLabels = isMatching ? q.pairs.map(([l]) => l) : [];
   const rightLabels = (isMatching && matchingCache?.[index]) || (isMatching ? q.pairs.map(([, r]) => r) : []);
 
@@ -324,15 +397,8 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
             type="text"
             value={typedAnswer}
             onChange={(e) => setTypedAnswer(e.target.value)}
-            disabled={answered}
             placeholder="..."
-            className={`w-full px-4 py-3 rounded-lg border-2 text-gray-800 placeholder-gray-400 ${
-              answered
-                ? isUserCorrect
-                  ? 'border-green-500 bg-green-50'
-                  : 'border-red-400 bg-red-50'
-                : 'border-gray-200 bg-white focus:border-[#1a3a52] focus:ring-2 focus:ring-[#1a3a52]/20'
-            }`}
+            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 bg-white text-gray-800 placeholder-gray-400 focus:border-[#1a3a52] focus:ring-2 focus:ring-[#1a3a52]/20"
           />
         </div>
       ) : isMatching ? (
@@ -346,14 +412,7 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
                 <select
                   value={matchingSelections[i] ?? ''}
                   onChange={(e) => setMatchingSelections((prev) => ({ ...prev, [i]: Number(e.target.value) }))}
-                  disabled={answered}
-                  className={`flex-1 min-w-[200px] px-3 py-2 rounded-lg border-2 ${
-                    answered
-                      ? isUserCorrect
-                        ? 'border-green-500 bg-green-50'
-                        : 'border-red-400 bg-red-50'
-                      : 'border-gray-200 focus:border-[#1a3a52]'
-                  }`}
+                  className="flex-1 min-w-[200px] px-3 py-2 rounded-lg border-2 border-gray-200 focus:border-[#1a3a52]"
                 >
                   <option value="">— избери —</option>
                   {rightLabels.map((right, j) => {
@@ -379,88 +438,60 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
                   {i + 1}
                 </span>
                 <span className="flex-1 px-3 py-2 rounded-lg border-2 border-gray-200 bg-white">{item}</span>
-                {!answered && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (i === 0) return;
-                        setOrderingItems((prev) => {
-                          const next = [...prev];
-                          [next[i - 1], next[i]] = [next[i], next[i - 1]];
-                          return next;
-                        });
-                      }}
-                      disabled={i === 0}
-                      className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
-                      aria-label="Нагоре"
-                    >
-                      ↑
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (i === orderingItems.length - 1) return;
-                        setOrderingItems((prev) => {
-                          const next = [...prev];
-                          [next[i], next[i + 1]] = [next[i + 1], next[i]];
-                          return next;
-                        });
-                      }}
-                      disabled={i === orderingItems.length - 1}
-                      className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
-                      aria-label="Надолу"
-                    >
-                      ↓
-                    </button>
-                  </>
-                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (i === 0) return;
+                    setOrderingItems((prev) => {
+                      const next = [...prev];
+                      [next[i - 1], next[i]] = [next[i], next[i - 1]];
+                      return next;
+                    });
+                  }}
+                  disabled={i === 0}
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                  aria-label="Нагоре"
+                >
+                  ↑
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (i === orderingItems.length - 1) return;
+                    setOrderingItems((prev) => {
+                      const next = [...prev];
+                      [next[i], next[i + 1]] = [next[i + 1], next[i]];
+                      return next;
+                    });
+                  }}
+                  disabled={i === orderingItems.length - 1}
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                  aria-label="Надолу"
+                >
+                  ↓
+                </button>
               </li>
             ))}
           </ul>
         </div>
       ) : (
         <div className="flex flex-col gap-2">
-          {orderedOpts.map((text, i) => {
-            const isCorrect = text === q.correct;
-            const isWrong = answered && text !== q.correct && userAnswer === text;
-            const showCorrect = answered && isCorrect;
-            const showWrong = answered && isWrong;
-            return (
-              <label
-                key={i}
-                className={`flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition-colors ${
-                  showCorrect
-                    ? 'border-green-500 bg-green-50'
-                    : showWrong
-                      ? 'border-red-400 bg-red-50'
-                      : 'border-gray-200 bg-white hover:border-[#1a3a52] hover:bg-gray-50'
-                }`}
-              >
-                <input
-                  type="radio"
-                  name={`opt-${index}`}
-                  value={text}
-                  checked={selectedOption === text}
-                  onChange={() => setSelectedOption(text)}
-                  disabled={answered}
-                  className="mt-1 flex-shrink-0"
-                />
-                <span>{text}</span>
-              </label>
-            );
-          })}
-        </div>
-      )}
-      {answered && (
-        <div
-          className={`mt-4 p-4 rounded-lg font-medium ${
-            isUserCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-          }`}
-        >
-          {isUserCorrect
-            ? 'Верен отговор.'
-            : `Грешен отговор. Верен: ${correctDisplay}`}
+          {orderedOpts.map((text, i) => (
+            <label
+              key={i}
+              className="flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition-colors border-gray-200 bg-white hover:border-[#1a3a52] hover:bg-gray-50"
+            >
+              <input
+                type="radio"
+                name={`opt-${index}`}
+                value={text}
+                checked={selectedOption === text}
+                onChange={() => setSelectedOption(text)}
+                className="mt-1 flex-shrink-0"
+              />
+              <span>{text}</span>
+            </label>
+          ))}
         </div>
       )}
       <div className="flex justify-between items-center flex-wrap gap-3 mt-6">
@@ -481,11 +512,7 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
           onClick={handleNext}
           className="px-4 py-2 rounded-lg font-semibold bg-[#1a3a52] text-white hover:bg-[#244a62]"
         >
-          {answered
-            ? index + 1 >= shuffledQuestions.length
-              ? 'Край на теста'
-              : 'Напред →'
-            : 'Отговор и напред →'}
+          {index + 1 >= shuffledQuestions.length ? 'Завърши теста' : 'Напред →'}
         </button>
       </div>
     </div>
