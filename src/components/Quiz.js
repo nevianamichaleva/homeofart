@@ -73,7 +73,7 @@ function getCorrectDisplay(question) {
   return question.correct;
 }
 
-/** Кратък текст на дадения от потребителя отговор за резюмето. */
+/** Кратък текст на отговор за резюме. */
 function formatUserAnswerDisplay(question, userAnswer) {
   if (userAnswer == null || userAnswer === '') return '—';
   if (isTextQuestion(question)) return String(userAnswer);
@@ -88,6 +88,14 @@ function formatUserAnswerDisplay(question, userAnswer) {
   return String(userAnswer);
 }
 
+/** След колко други въпроса да се върне грешен въпрос за повторно решаване. */
+const RETRY_AFTER_STEPS = 3;
+
+function newPathStepId(prefix) {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return `${prefix}-${crypto.randomUUID()}`;
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
 export default function Quiz({ title, questions, testId = '', testTitle = '' }) {
   /** Име на участника и дали е започнал теста */
   const [userName, setUserName] = useState('');
@@ -96,8 +104,16 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   const [shuffledQuestions] = useState(() => shuffle([...questions]));
   /** Разбъркан ред на отговорите за всеки въпрос – фиксиран при стартиране на теста */
   const [optionOrders, setOptionOrders] = useState(null);
-  const [index, setIndex] = useState(0);
-  const [answers, setAnswers] = useState([]);
+  /** Ред на стъпките: основни въпроси + вмъкнати повторения след грешка */
+  const [pathSteps, setPathSteps] = useState([]);
+  const [pathPos, setPathPos] = useState(0);
+  /** Отговор по id на стъпка (включително повторни) */
+  const [pathAnswers, setPathAnswers] = useState({});
+  /** Само първи не-повторен отговор по индекс на въпрос — за оценка и резюме */
+  const [firstScoring, setFirstScoring] = useState({});
+  /** qIndex → вече е планирано повторение за този въпрос */
+  const [retryScheduled, setRetryScheduled] = useState({});
+  const [answered, setAnswered] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   /** При показване на обобщение: { correctCount, total, grade, gradeLabel, resultSaved?, perQuestion } */
   const [summaryResult, setSummaryResult] = useState(null);
@@ -114,7 +130,9 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   /** За ordering: текущ ред на елементите (масив от низове) */
   const [orderingItems, setOrderingItems] = useState([]);
 
-  const qCurrent = shuffledQuestions[index];
+  const step = pathSteps[pathPos];
+  const qIndex = step?.qIndex ?? 0;
+  const qCurrent = shuffledQuestions[qIndex];
   const isMatching = isMatchingQuestion(qCurrent);
   const isOrdering = isOrderingQuestion(qCurrent);
   const isText = isTextQuestion(qCurrent);
@@ -126,26 +144,25 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
         qCurrent?.wrong2,
         qCurrent?.wrong3,
       ].filter(Boolean);
-  const orderForQuestion = optionOrders?.[index];
+  const orderForQuestion = optionOrders?.[qIndex];
   const orderedOpts = orderForQuestion != null && orderForQuestion.length > 0
     ? orderForQuestion.map((i) => opts[i]).filter(Boolean)
     : opts;
 
   useEffect(() => {
-    const q = shuffledQuestions[index];
-    if (!q) return;
-    const saved = answers[index];
+    if (!step || !qCurrent) return;
+    const saved = pathAnswers[step.id];
 
-    if (isTextQuestion(q)) {
+    if (isTextQuestion(qCurrent)) {
       setTypedAnswer(typeof saved === 'string' ? saved : '');
       setSelectedOption(null);
       return;
     }
-    if (isMatchingQuestion(q)) {
+    if (isMatchingQuestion(qCurrent)) {
       setTypedAnswer('');
       setSelectedOption(null);
-      const rightLabels = matchingCache?.[index] ?? q.pairs.map(([, r]) => r);
-      const leftLabels = q.pairs.map(([l]) => l);
+      const rightLabels = matchingCache?.[qIndex] ?? qCurrent.pairs.map(([, r]) => r);
+      const leftLabels = qCurrent.pairs.map(([l]) => l);
       if (Array.isArray(saved) && saved.length > 0) {
         const sel = {};
         leftLabels.forEach((left, i) => {
@@ -161,30 +178,36 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
       }
       return;
     }
-    if (isOrderingQuestion(q)) {
+    if (isOrderingQuestion(qCurrent)) {
       setTypedAnswer('');
       setSelectedOption(null);
-      if (orderingCache?.[index]) {
+      if (orderingCache?.[qIndex]) {
         setOrderingItems(
-          Array.isArray(saved) && saved.length === q.items.length ? saved : orderingCache[index],
+          Array.isArray(saved) && saved.length === qCurrent.items.length ? saved : orderingCache[qIndex],
         );
       }
       return;
     }
     setTypedAnswer('');
     setSelectedOption(saved ?? null);
-  }, [index, orderingCache, matchingCache, shuffledQuestions, answers]);
+    // pathAnswers умишлено не е в deps — иначе при запис на същата стъпка се нулира полето
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathPos, step?.id, qIndex, orderingCache, matchingCache]);
 
-  const finishTest = (finalAnswers) => {
-    const correctCount = finalAnswers.filter((a, i) => isCorrectAnswer(shuffledQuestions[i], a)).length;
+  const finishTest = () => {
     const total = shuffledQuestions.length;
+    const correctCount = shuffledQuestions.reduce(
+      (acc, _, i) => acc + (firstScoring[i]?.correct ? 1 : 0),
+      0,
+    );
     const gradeRaw = 2 + (correctCount / total) * 4;
     const grade = Math.round(gradeRaw * 2) / 2;
     const gradeLabel =
       grade >= 5.5 ? 'Отличен' : grade >= 4.5 ? 'Много добър' : grade >= 3.5 ? 'Добър' : grade >= 2.5 ? 'Среден' : 'Слаб';
     const perQuestion = shuffledQuestions.map((question, i) => {
-      const ua = finalAnswers[i];
-      const ok = isCorrectAnswer(question, ua);
+      const fs = firstScoring[i];
+      const ua = fs?.answer;
+      const ok = Boolean(fs?.correct);
       return {
         n: i + 1,
         questionText: question.q,
@@ -216,11 +239,23 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   };
 
   const handleNext = () => {
+    if (!step) return;
+
+    if (answered) {
+      if (pathPos + 1 >= pathSteps.length) {
+        finishTest();
+        return;
+      }
+      setPathPos((p) => p + 1);
+      setAnswered(false);
+      return;
+    }
+
     let valueToStore;
     if (isText) valueToStore = typedAnswer;
     else if (isMatching) {
       const leftLabels = qCurrent.pairs.map(([l]) => l);
-      const rightLabels = matchingCache?.[index] ?? qCurrent.pairs.map(([, r]) => r);
+      const rightLabels = matchingCache?.[qIndex] ?? qCurrent.pairs.map(([, r]) => r);
       const pairs = leftLabels.map((left, i) => {
         const ri = matchingSelections[i];
         return ri != null ? [left, rightLabels[ri]] : null;
@@ -234,22 +269,38 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
     if (!isText && !isMatching && !isOrdering && selectedOption == null) return;
     if (isOrdering && orderingItems.length !== (qCurrent?.items?.length ?? 0)) return;
 
-    const nextAnswers = [...answers];
-    nextAnswers[index] = valueToStore;
-    setAnswers(nextAnswers);
+    const correct = isCorrectAnswer(qCurrent, valueToStore);
 
-    if (index + 1 >= shuffledQuestions.length) {
-      finishTest(nextAnswers);
-      return;
+    setPathAnswers((prev) => ({ ...prev, [step.id]: valueToStore }));
+
+    if (!step.isRetry) {
+      setFirstScoring((prev) => ({
+        ...prev,
+        [step.qIndex]: { answer: valueToStore, correct },
+      }));
     }
-    setIndex((i) => i + 1);
-    setSelectedOption(null);
-    setTypedAnswer('');
+
+    if (!step.isRetry && !correct && !retryScheduled[step.qIndex]) {
+      setRetryScheduled((prev) => ({ ...prev, [step.qIndex]: true }));
+      setPathSteps((prev) => {
+        const insertAt = Math.min(pathPos + 1 + RETRY_AFTER_STEPS, prev.length);
+        const newStep = { id: newPathStepId(`r${step.qIndex}`), qIndex: step.qIndex, isRetry: true };
+        const next = [...prev];
+        next.splice(insertAt, 0, newStep);
+        return next;
+      });
+    }
+
+    setAnswered(true);
+    if (pathPos + 1 >= pathSteps.length) {
+      document.querySelector('#quiz-next')?.focus();
+    }
   };
 
   const handlePrev = () => {
-    if (index > 0) {
-      setIndex((i) => i - 1);
+    if (pathPos > 0) {
+      setPathPos((p) => p - 1);
+      setAnswered(false);
     }
   };
 
@@ -270,6 +321,18 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
     });
     setMatchingCache(matchCache);
     setOrderingCache(orderCache);
+    setPathSteps(
+      shuffledQuestions.map((_, i) => ({
+        id: newPathStepId(`m${i}`),
+        qIndex: i,
+        isRetry: false,
+      })),
+    );
+    setPathPos(0);
+    setPathAnswers({});
+    setFirstScoring({});
+    setRetryScheduled({});
+    setAnswered(false);
     setStarted(true);
     const firstQ = shuffledQuestions[0];
     if (isOrderingQuestion(firstQ) && orderCache[0]) setOrderingItems(orderCache[0]);
@@ -321,6 +384,9 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
         {Array.isArray(perQuestion) && perQuestion.length > 0 && (
           <div className="mb-6 border-t border-gray-200 pt-4">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">Преглед по въпроси</h3>
+            <p className="text-xs text-gray-500 mb-3">
+              Оценката е само от първото задаване на всеки въпрос; повторните опити не я променят.
+            </p>
             <ul className="space-y-4 max-h-[min(60vh,28rem)] overflow-y-auto pr-1">
               {perQuestion.map((row) => (
                 <li
@@ -379,16 +445,21 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
     );
   }
 
-  const q = shuffledQuestions[index];
-  if (!q) return null;
+  const q = qCurrent;
+  if (!step || !q) return null;
+
+  const userAnswer = pathAnswers[step.id];
+  const correctDisplay = getCorrectDisplay(q);
+  const isUserCorrect = answered && isCorrectAnswer(q, userAnswer);
 
   const leftLabels = isMatching ? q.pairs.map(([l]) => l) : [];
-  const rightLabels = (isMatching && matchingCache?.[index]) || (isMatching ? q.pairs.map(([, r]) => r) : []);
+  const rightLabels = (isMatching && matchingCache?.[qIndex]) || (isMatching ? q.pairs.map(([, r]) => r) : []);
 
   return (
     <div id="quiz" className="max-w-xl mx-auto">
+  
       <p className="text-lg font-semibold text-gray-800 mb-4 leading-snug">
-        {index + 1}. {q.q}
+        {pathPos + 1}. {q.q}
       </p>
       {isText ? (
         <div className="space-y-2">
@@ -397,8 +468,15 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
             type="text"
             value={typedAnswer}
             onChange={(e) => setTypedAnswer(e.target.value)}
+            disabled={answered}
             placeholder="..."
-            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 bg-white text-gray-800 placeholder-gray-400 focus:border-[#1a3a52] focus:ring-2 focus:ring-[#1a3a52]/20"
+            className={`w-full px-4 py-3 rounded-lg border-2 text-gray-800 placeholder-gray-400 ${
+              answered
+                ? isUserCorrect
+                  ? 'border-green-500 bg-green-50'
+                  : 'border-red-400 bg-red-50'
+                : 'border-gray-200 bg-white focus:border-[#1a3a52] focus:ring-2 focus:ring-[#1a3a52]/20'
+            }`}
           />
         </div>
       ) : isMatching ? (
@@ -412,7 +490,14 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
                 <select
                   value={matchingSelections[i] ?? ''}
                   onChange={(e) => setMatchingSelections((prev) => ({ ...prev, [i]: Number(e.target.value) }))}
-                  className="flex-1 min-w-[200px] px-3 py-2 rounded-lg border-2 border-gray-200 focus:border-[#1a3a52]"
+                  disabled={answered}
+                  className={`flex-1 min-w-[200px] px-3 py-2 rounded-lg border-2 ${
+                    answered
+                      ? isUserCorrect
+                        ? 'border-green-500 bg-green-50'
+                        : 'border-red-400 bg-red-50'
+                      : 'border-gray-200 focus:border-[#1a3a52]'
+                  }`}
                 >
                   <option value="">— избери —</option>
                   {rightLabels.map((right, j) => {
@@ -438,60 +523,88 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
                   {i + 1}
                 </span>
                 <span className="flex-1 px-3 py-2 rounded-lg border-2 border-gray-200 bg-white">{item}</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (i === 0) return;
-                    setOrderingItems((prev) => {
-                      const next = [...prev];
-                      [next[i - 1], next[i]] = [next[i], next[i - 1]];
-                      return next;
-                    });
-                  }}
-                  disabled={i === 0}
-                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
-                  aria-label="Нагоре"
-                >
-                  ↑
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (i === orderingItems.length - 1) return;
-                    setOrderingItems((prev) => {
-                      const next = [...prev];
-                      [next[i], next[i + 1]] = [next[i + 1], next[i]];
-                      return next;
-                    });
-                  }}
-                  disabled={i === orderingItems.length - 1}
-                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
-                  aria-label="Надолу"
-                >
-                  ↓
-                </button>
+                {!answered && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (i === 0) return;
+                        setOrderingItems((prev) => {
+                          const next = [...prev];
+                          [next[i - 1], next[i]] = [next[i], next[i - 1]];
+                          return next;
+                        });
+                      }}
+                      disabled={i === 0}
+                      className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                      aria-label="Нагоре"
+                    >
+                      ↑
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (i === orderingItems.length - 1) return;
+                        setOrderingItems((prev) => {
+                          const next = [...prev];
+                          [next[i], next[i + 1]] = [next[i + 1], next[i]];
+                          return next;
+                        });
+                      }}
+                      disabled={i === orderingItems.length - 1}
+                      className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                      aria-label="Надолу"
+                    >
+                      ↓
+                    </button>
+                  </>
+                )}
               </li>
             ))}
           </ul>
         </div>
       ) : (
         <div className="flex flex-col gap-2">
-          {orderedOpts.map((text, i) => (
-            <label
-              key={i}
-              className="flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition-colors border-gray-200 bg-white hover:border-[#1a3a52] hover:bg-gray-50"
-            >
-              <input
-                type="radio"
-                name={`opt-${index}`}
-                value={text}
-                checked={selectedOption === text}
-                onChange={() => setSelectedOption(text)}
-                className="mt-1 flex-shrink-0"
-              />
-              <span>{text}</span>
-            </label>
-          ))}
+          {orderedOpts.map((text, i) => {
+            const isCorrect = text === q.correct;
+            const isWrong = answered && text !== q.correct && userAnswer === text;
+            const showCorrect = answered && isCorrect;
+            const showWrong = answered && isWrong;
+            return (
+              <label
+                key={i}
+                className={`flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition-colors ${
+                  showCorrect
+                    ? 'border-green-500 bg-green-50'
+                    : showWrong
+                      ? 'border-red-400 bg-red-50'
+                      : 'border-gray-200 bg-white hover:border-[#1a3a52] hover:bg-gray-50'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name={`opt-${step.id}`}
+                  value={text}
+                  checked={selectedOption === text}
+                  onChange={() => setSelectedOption(text)}
+                  disabled={answered}
+                  className="mt-1 flex-shrink-0"
+                />
+                <span>{text}</span>
+              </label>
+            );
+          })}
+        </div>
+      )}
+      {answered && (
+        <div
+          className={`mt-4 p-4 rounded-lg font-medium ${
+            isUserCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+          }`}
+        >
+          {isUserCorrect
+            ? 'Верен отговор.'
+            : `Грешен отговор. Верен: ${correctDisplay}`}
         </div>
       )}
       <div className="flex justify-between items-center flex-wrap gap-3 mt-6">
@@ -499,12 +612,15 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
           type="button"
           onClick={handlePrev}
           className="px-4 py-2 rounded-lg font-semibold border-2 border-[#1a3a52] text-[#1a3a52] bg-white hover:bg-gray-50"
-          style={{ visibility: index === 0 ? 'hidden' : 'visible' }}
+          style={{ visibility: pathPos === 0 ? 'hidden' : 'visible' }}
         >
           ← Предишен
         </button>
-        <span className="font-semibold text-[#1a3a52]">
-          Въпрос {index + 1} от {shuffledQuestions.length}
+        <span className="font-semibold text-[#1a3a52] text-center text-sm sm:text-base max-w-[12rem] sm:max-w-none">
+          Стъпка {pathPos + 1} от {pathSteps.length}
+          {pathSteps.length > shuffledQuestions.length && (
+            <span className="block font-normal text-gray-600 text-xs">(вкл. повторения)</span>
+          )}
         </span>
         <button
           id="quiz-next"
@@ -512,7 +628,11 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
           onClick={handleNext}
           className="px-4 py-2 rounded-lg font-semibold bg-[#1a3a52] text-white hover:bg-[#244a62]"
         >
-          {index + 1 >= shuffledQuestions.length ? 'Завърши теста' : 'Напред →'}
+          {answered
+            ? pathPos + 1 >= pathSteps.length
+              ? 'Край на теста'
+              : 'Напред →'
+            : 'Отговор и напред →'}
         </button>
       </div>
     </div>
