@@ -67,7 +67,15 @@ import {
   ISTORIA_PODREDBA_QUESTIONS,
 } from './istoriya-tests';
 
-import { PRIRODA_VOZDUH_QUESTIONS } from './priroda-tests';
+import {
+  PRIRODA_CHP_TEST2_VESHTESTVA_I_TEHNI_SVOYSTVA_QUESTIONS,
+  PRIRODA_OBOBSHTENIE_VARIANT_1_QUESTIONS,
+  PRIRODA_OBOBSHTENIE_VARIANT_2_QUESTIONS,
+  PRIRODA_VESHTESTVATA_I_TEHNITE_SVOYSTVA_QUESTIONS,
+  PRIRODA_VESHTESTVA_SMESI_I_PROMENI_MIX_QUESTIONS,
+  PRIRODA_VODA_VAZDUH_SMESI_KONTROL_QUESTIONS,
+  PRIRODA_VOZDUH_QUESTIONS,
+} from './priroda-tests';
 
 import {
   LITERATURA_DA_PROVERIM_VAR1_QUESTIONS,
@@ -275,6 +283,36 @@ const TESTS = {
     title: 'Човек и природа – Въздухът',
     slug: 'vozduh',
     questions: PRIRODA_VOZDUH_QUESTIONS,
+  },
+  '5|priroda|veshtestva-smesi-promeni-mix': {
+    title: 'Човек и природа – Вещества, смеси и промени (избор и попълване)',
+    slug: 'veshtestva-smesi-promeni-mix',
+    questions: PRIRODA_VESHTESTVA_SMESI_I_PROMENI_MIX_QUESTIONS,
+  },
+  '5|priroda|veshtestvata-i-tehnite-svoystva': {
+    title: 'Човек и природа – Веществата и техните свойства',
+    slug: 'veshtestvata-i-tehnite-svoystva',
+    questions: PRIRODA_VESHTESTVATA_I_TEHNITE_SVOYSTVA_QUESTIONS,
+  },
+  '5|priroda|obobshtenie-variant-1': {
+    title: 'Човек и природа – Обобщение (Вариант 1)',
+    slug: 'obobshtenie-variant-1',
+    questions: PRIRODA_OBOBSHTENIE_VARIANT_1_QUESTIONS,
+  },
+  '5|priroda|obobshtenie-variant-2': {
+    title: 'Човек и природа – Обобщение (Вариант 2)',
+    slug: 'obobshtenie-variant-2',
+    questions: PRIRODA_OBOBSHTENIE_VARIANT_2_QUESTIONS,
+  },
+  '5|priroda|voda-vazduh-i-smesi-kontrol': {
+    title: 'Човек и природа – Вода, въздух и смеси (контрол)',
+    slug: 'voda-vazduh-i-smesi-kontrol',
+    questions: PRIRODA_VODA_VAZDUH_SMESI_KONTROL_QUESTIONS,
+  },
+  '5|priroda|chp-test-2-veshtestva': {
+    title: 'Човек и природа – Тест 2: Веществата и техните свойства',
+    slug: 'chp-test-2-veshtestva',
+    questions: PRIRODA_CHP_TEST2_VESHTESTVA_I_TEHNI_SVOYSTVA_QUESTIONS,
   },
   '5|literatura|da-proverim-var1': {
     title: 'Да проверим – Литература (Вариант 1)',
