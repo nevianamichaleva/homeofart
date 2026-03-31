@@ -332,3 +332,178 @@ export const ENGLISH_6A_FIXED_TIMES_QUESTIONS = [
   { type: 'text', q: "Marco goes to bed at ___. (chart: 22.30)", correct: "22.30", acceptedAnswers: ["22.30", "10.30 p.m.", "half past ten"] },
   { type: 'text', q: "Marco has breakfast at 7.35. He eats ___ for breakfast. (chart: Eggs)", correct: "eggs", acceptedAnswers: ["eggs", "Eggs"] },
 ];
+
+/**
+ * Unit 7c – Don't look at the ground: йога инструкции, здравни съвети,
+ * части на тялото и болести. Два теста:
+ * 1) попълване на упражненията (императиви и здравни съвети);
+ * 2) проверка за думи – части на тялото и болести (значение + правопис).
+ */
+
+// 1) Попълване на упражненията – страница 92–93 (йога пози + здравни съвети).
+export const ENGLISH_UNIT_7C_FILL_QUESTIONS = [
+  // Yoga instructions – imperatives (Exercise "Try the tree")
+  {
+    type: 'text',
+    q: "Complete the instruction: ___ look down.",
+    correct: "Don't",
+    acceptedAnswers: ["Don't", "dont"],
+  },
+  {
+    type: 'text',
+    q: "Complete the instruction: Stand with your feet together and your arms down. ___.",
+    correct: "Relax",
+    acceptedAnswers: ["Relax"],
+  },
+  {
+    type: 'text',
+    q: "Complete the instruction: You must wear ___ clothes.",
+    correct: "comfortable",
+    acceptedAnswers: ["comfortable"],
+  },
+  {
+    type: 'text',
+    q: "Complete the instruction: You must '___' to your body.",
+    correct: "listen",
+    acceptedAnswers: ["listen"],
+  },
+  // Health rules – practice exercise (Don't/Do + verb)
+  {
+    type: 'text',
+    q: "Complete the rule: ___ go to bed late on school days.",
+    correct: "Don't",
+    acceptedAnswers: ["Don't", "dont"],
+  },
+  {
+    type: 'text',
+    q: "Complete the rule: ___ sport, yoga or other exercise for 20–30 minutes, five days a week.",
+    correct: "Do",
+    acceptedAnswers: ["Do"],
+  },
+  {
+    type: 'text',
+    q: "Complete the rule: ___ plenty of fruit and vegetables.",
+    correct: "Eat",
+    acceptedAnswers: ["Eat"],
+  },
+  {
+    type: 'text',
+    q: "Complete the rule: ___ breakfast every day.",
+    correct: "Have",
+    acceptedAnswers: ["Have"],
+  },
+  {
+    type: 'text',
+    q: "Complete the rule: ___ a lot of chocolate. It’s bad for your teeth.",
+    correct: "Don't eat",
+    acceptedAnswers: ["Don't eat", "dont eat", "do not eat"],
+  },
+  {
+    type: 'text',
+    q: "Complete the rule: ___ TV for hours. It’s bad for your eyes.",
+    correct: "Don't watch",
+    acceptedAnswers: ["Don't watch", "dont watch", "do not watch"],
+  },
+  {
+    type: 'text',
+    q: "Complete the rule: ___ sunglasses and a hat in the sun.",
+    correct: "Wear",
+    acceptedAnswers: ["Wear"],
+  },
+];
+
+// 2) Думи – части на тялото и болести: значението и правописът.
+export const ENGLISH_UNIT_7C_VOCAB_QUESTIONS = [
+  // Parts of the body – matching EN → BG
+  {
+    type: 'matching',
+    q: "Match the parts of the body with their Bulgarian meaning.",
+    pairs: [
+      ["ankle", "глезен"],
+      ["arm", "ръка (цяла)"],
+      ["back", "гръб"],
+      ["chest", "гръден кош"],
+      ["ear", "ухо"],
+      ["elbow", "лакът"],
+      ["eye", "око"],
+      ["face", "лице"],
+      ["finger", "пръст (на ръката)"],
+      ["foot", "стъпало"],
+      ["hair", "коса"],
+      ["hand", "длан/ръка"],
+      ["head", "глава"],
+      ["knee", "коляно"],
+      ["leg", "крак"],
+      ["mouth", "уста"],
+      ["neck", "врат"],
+      ["nose", "нос"],
+      ["shoulder", "рамо"],
+      ["stomach", "стомах/корем"],
+      ["teeth", "зъби"],
+      ["thumb", "палец (на ръката)"],
+      ["toe", "пръст (на крака)"],
+      ["tooth", "зъб"],
+    ],
+  },
+  // Spelling – students write the English word from Bulgarian meaning
+  {
+    type: 'text',
+    q: "Write in English: „глезен“. ",
+    correct: "ankle",
+    acceptedAnswers: ["ankle"],
+  },
+  {
+    type: 'text',
+    q: "Write in English: „гръб“. ",
+    correct: "back",
+    acceptedAnswers: ["back"],
+  },
+  {
+    type: 'text',
+    q: "Write in English: „коляно“. ",
+    correct: "knee",
+    acceptedAnswers: ["knee"],
+  },
+  {
+    type: 'text',
+    q: "Write in English: „стъпало“. ",
+    correct: "foot",
+    acceptedAnswers: ["foot"],
+  },
+  {
+    type: 'text',
+    q: "Write in English: „зъби“. ",
+    correct: "teeth",
+    acceptedAnswers: ["teeth"],
+  },
+  // Illness vocabulary – matching
+  {
+    type: 'matching',
+    q: "Match each problem with the correct illness/symptom.",
+    pairs: [
+      ["a headache", "главоболие"],
+      ["a stomachache", "болки в стомаха"],
+      ["a toothache", "зъбобол"],
+      ["a sore throat", "болно гърло"],
+      ["a temperature", "температура"],
+      ["a cough", "кашлица"],
+      ["a cold", "настинка"],
+      ["flu", "грип"],
+      ["I feel sick / ill.", "Чувствам се зле / болен."],
+    ],
+  },
+  // Illness – spelling
+  {
+    type: 'text',
+    q: "Write in English: „зъбобол“ (with article).",
+    correct: "a toothache",
+    acceptedAnswers: ["a toothache", "toothache"],
+  },
+  {
+    type: 'text',
+    q: "Write in English: „температура“ (като симптом, with article).",
+    correct: "a temperature",
+    acceptedAnswers: ["a temperature", "temperature"],
+  },
+];
+
