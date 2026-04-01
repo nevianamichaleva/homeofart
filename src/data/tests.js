@@ -53,7 +53,9 @@ import {
   ENGLISH_TIME_QUESTIONS,
   ENGLISH_UNIT_6C_QUESTIONS,
   ENGLISH_UNIT_7C_FILL_QUESTIONS,
-  ENGLISH_UNIT_7C_VOCAB_QUESTIONS
+  ENGLISH_UNIT_7C_VOCAB_QUESTIONS,
+  ENGLISH_UNIT_8A_PAST_QUESTIONS,
+  ENGLISH_UNIT_8A_PAST_FILL_QUESTIONS,
 } from './english-tests';
 
 import {
@@ -350,6 +352,16 @@ const TESTS = {
     title: '6a – Present simple & fixed times (попълване и тестови)',
     slug: '6a-fixed-times',
     questions: ENGLISH_6A_FIXED_TIMES_QUESTIONS,
+  },
+  '5|english|unit-8a-the-past': {
+    title: 'Unit 8a – The Past (was/were, time phrases)',
+    slug: 'unit-8a-the-past',
+    questions: ENGLISH_UNIT_8A_PAST_QUESTIONS,
+  },
+  '5|english|unit-8a-the-past-fill': {
+    title: 'Unit 8a – The Past (practice 1–5, попълване)',
+    slug: 'unit-8a-the-past-fill',
+    questions: ENGLISH_UNIT_8A_PAST_FILL_QUESTIONS,
   },
   '5|english|unit-7c-fill': {
     title: 'Unit 7c – Don\'t look at the ground: йога инструкции, здравни съвети, части на тялото и болести (попълване)',

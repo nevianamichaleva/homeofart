@@ -507,3 +507,94 @@ export const ENGLISH_UNIT_7C_VOCAB_QUESTIONS = [
   },
 ];
 
+/**
+ * Unit 8a – The Past: was/were (affirmative/negative/questions),
+ * past phrases (yesterday, last week, etc.) и типични изрази от диалога.
+ * Смесен тест: попълване + избор.
+ */
+export const ENGLISH_UNIT_8A_PAST_QUESTIONS = [
+  // Grammar: was / were – affirmative
+  { type: 'text', q: "Complete: I ___ at home all evening.", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "Complete: They ___ at the cinema yesterday.", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "Complete: It ___ very cold last night.", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "Complete: We ___ in London last year.", correct: "were", acceptedAnswers: ["were"] },
+
+  // Negative
+  { type: 'text', q: "Complete: I ___ at school yesterday. (negative)", correct: "wasn't", acceptedAnswers: ["wasn't", "was not"] },
+  { type: 'text', q: "Complete: They ___ at home last weekend. (negative)", correct: "weren't", acceptedAnswers: ["weren't", "were not"] },
+
+  // Questions with was/were
+  { type: 'text', q: "Write the question: you / at the drama club / yesterday evening?", correct: "Were you at the drama club yesterday evening?", acceptedAnswers: ["Were you at the drama club yesterday evening?", "Were you at the drama club yesterday evening"] },
+  { type: 'text', q: "Write the question: Where / he / last night?", correct: "Where was he last night?", acceptedAnswers: ["Where was he last night?", "Where was he last night"] },
+
+  // Short answers
+  { q: "Choose the correct short answer: Were you at home yesterday?", correct: "Yes, I was.", wrong1: "Yes, I were.", wrong2: "Yes, I am." },
+  { q: "Choose the correct short answer: Was she at the sports centre?", correct: "No, she wasn't.", wrong1: "No, she weren't.", wrong2: "No, she didn't." },
+
+  // Past time phrases – vocabulary
+  { q: "Which phrase means 'вчера'? ", correct: "yesterday", wrong1: "last week", wrong2: "tomorrow" },
+  { q: "Which phrase means 'миналата седмица'?", correct: "last week", wrong1: "next week", wrong2: "this week" },
+  { q: "Which phrase means 'вчера вечерта'?", correct: "yesterday evening", wrong1: "this evening", wrong2: "last morning" },
+  { q: "Which phrase means 'миналата година'?", correct: "last year", wrong1: "next year", wrong2: "this year" },
+
+  // Dialogue phrases from the lesson (checking meaning/usage)
+  { q: "Choose the best reply: 'I was at home all evening.'", correct: "Really? Why?", wrong1: "How often?", wrong2: "Where are you now?" },
+  { q: "Choose the best reply: 'The film was really good.'", correct: "That's great.", wrong1: "What time is it?", wrong2: "Never mind." },
+  { q: "Choose the best reply: 'My day was terrible.'", correct: "Oh no. Why?", wrong1: "Really? That's great.", wrong2: "See you next week." },
+
+  // Word building: past of be in context
+  { type: 'text', q: "Complete the sentence: My friends ___ at my house last Saturday. (be)", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "Complete the sentence: The weather ___ fantastic yesterday. (be)", correct: "was", acceptedAnswers: ["was"] },
+];
+
+/**
+ * Unit 8a – Practice 1–5 (учебник стр. 40–41):
+ * само попълване по изреченията от упражненията.
+ */
+export const ENGLISH_UNIT_8A_PAST_FILL_QUESTIONS = [
+  // Exercise 1 – Circle the correct words (превръщаме в попълване)
+  { type: 'text', q: "I ___ late for school yesterday. (was / were)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "Noah ___ at the club on Saturday. (was / were)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "The football match ___ very exciting. (was / were)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "Kate and Emma ___ in my class last year. (was / were)", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "You ___ tired this morning. (was / were)", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "Mel ___ great at the concert last week. (was / were)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "My friends and I ___ on holiday in Italy last year. (was / were)", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "Yesterday's homework ___ very difficult. (was / were)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "John's cousins ___ at the café last Saturday. (was / were)", correct: "were", acceptedAnswers: ["were"] },
+
+  // Exercise 2 – Complete the second sentence
+  { type: 'text', q: "Today, I'm on holiday. Yesterday, I ___ at school.", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "Today it's sunny. Last week, it ___ sunny.", correct: "wasn't", acceptedAnswers: ["wasn't", "was not"] },
+  { type: 'text', q: "Today, we are in English. At nine o'clock this morning, we ___ in an English lesson.", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "At the moment, I'm in my bedroom. Yesterday evening, I ___ in the living room.", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "Today, my parents are at work. Yesterday, they ___ at home.", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "My computer is very old now. In 2005, it ___ very new.", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "Today, Lisa's at a concert. Last night, she ___ at home.", correct: "was", acceptedAnswers: ["was"] },
+
+  // Exercise 3 – Molly's letter (was / were / wasn't / weren't)
+  { type: 'text', q: "Dear Sophie, I ___ in London yesterday. (Molly's letter)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "I ___ on a school trip. (Molly's letter)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "We ___ on the bus for two hours. (Molly's letter)", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "At 9.15, we ___ outside Buckingham Palace. (Molly's letter)", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "The Queen and Prince Philip ___ there! (Molly's letter)", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "They ___ in Australia. (Molly's letter – negative)", correct: "weren't", acceptedAnswers: ["weren't", "were not"] },
+  { type: 'text', q: "At half past eleven, I ___ on the London Eye. (Molly's letter)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "It ___ very exciting. (Molly's letter)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "I ___ hungry, but it was lunchtime. (Molly's letter – negative)", correct: "wasn't", acceptedAnswers: ["wasn't", "was not"] },
+  { type: 'text', q: "There ___ a long walk along the river first. (Molly's letter)", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "It ___ sunny, but it ___ very hot. (Molly's letter)", correct: "was", acceptedAnswers: ["was"], },
+
+  // Exercise 4 – Questions about the school trip timetable (was / were)
+  { type: 'text', q: "Complete the question: What time ___ the students at the bus station at 8 a.m.?", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "Complete the question: Where ___ Molly at 9.15 a.m.?", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "Complete the question: What time ___ she at the London Eye?", correct: "was", acceptedAnswers: ["was"] },
+  { type: 'text', q: "Complete the question: Where ___ the students from 5 p.m. to 8 p.m.?", correct: "were", acceptedAnswers: ["were"] },
+
+  // Exercise 5 – There was / There were
+  { type: 'text', q: "Complete: There ___ some flowers in the vase yesterday morning. (was / were)", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "Complete: There ___ my books in my bag yesterday evening. (was / were)", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "Complete: Today there is only one shop in my street. In 1980, there ___ two shops.", correct: "were", acceptedAnswers: ["were"] },
+  { type: 'text', q: "Complete: There ___ a lot of people in the park yesterday.", correct: "were", acceptedAnswers: ["were"] },
+];
+
