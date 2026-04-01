@@ -388,7 +388,7 @@ export function getTest(classNum, subject, testSlug) {
  * Всеки елемент: { classNum, subject, slug, title, questionCount }
  */
 export function getAllTests() {
-  return Object.entries(TESTS).map(([key, data]) => {
+  const list = Object.entries(TESTS).map(([key, data]) => {
     const [classNum, subject, slug] = key.split('|');
     return {
       classNum,
@@ -398,4 +398,6 @@ export function getAllTests() {
       questionCount: data.questions.length,
     };
   });
+  // Последно добавените тестове в TESTS да се показват първи в списъците.
+  return list.reverse();
 }

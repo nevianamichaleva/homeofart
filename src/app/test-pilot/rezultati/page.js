@@ -31,21 +31,41 @@ function getGradeFromAssessment(assessment) {
   return Number.isFinite(num) ? num : 0;
 }
 
+/** Преобразува Firestore Timestamp / обект във native Date. */
+function toJsDate(timestamp) {
+  if (!timestamp) return null;
+  try {
+    if (timestamp.toDate) return timestamp.toDate();
+    if (typeof timestamp.seconds === 'number') return new Date(timestamp.seconds * 1000);
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
+/** Дали датата е в същия календарен ден като "днес" (локално време). */
+function isToday(timestamp) {
+  const d = toJsDate(timestamp);
+  if (!d) return false;
+  const now = new Date();
+  return (
+    d.getFullYear() === now.getFullYear()
+    && d.getMonth() === now.getMonth()
+    && d.getDate() === now.getDate()
+  );
+}
+
 /** Форматира дата от Firestore Timestamp или обект. */
 function formatDate(timestamp) {
-  if (!timestamp) return '–';
-  try {
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp.seconds * 1000);
-    return date.toLocaleDateString('bg-BG', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  } catch {
-    return '–';
-  }
+  const date = toJsDate(timestamp);
+  if (!date) return '–';
+  return date.toLocaleDateString('bg-BG', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 }
 
 export default function RezultatiPage() {
@@ -62,6 +82,8 @@ export default function RezultatiPage() {
         const list = [];
         snap.forEach((doc) => {
           const data = doc.data();
+          // Показваме само резултати от днешния ден.
+          if (!isToday(data.createdAt)) return;
           list.push({
             id: doc.id,
             name: data.name || 'Анонимен',
