@@ -45,6 +45,7 @@ import {
   GEOGRAFIA_MIX_QUESTIONS,
   GEOGRAFIA_OBOBSTAVASHT_QUESTIONS,
   GEOGRAFIA_POPALVANE_QUESTIONS,
+  GEOGRAFIA_VODITE_NA_AFRIKA_QUESTIONS,
 } from './geografia-tests';
 
 import {
@@ -56,6 +57,7 @@ import {
   ENGLISH_PRESENT_SIMPLE_AT_QUESTIONS,
   ENGLISH_ROUNDUP_6_WRITE_IN_QUESTIONS,
   ENGLISH_TIME_QUESTIONS,
+  ENGLISH_14_04_2026_QUESTIONS,
   ENGLISH_UNIT_6C_QUESTIONS,
   ENGLISH_UNIT_7C_FILL_QUESTIONS,
   ENGLISH_UNIT_7C_VOCAB_QUESTIONS,
@@ -69,6 +71,7 @@ import {
   ISTORIA_ODRISKI_CARE,
   ISTORIA_PODREDBA_QUESTIONS,
   ISTORIA_RELIGIA,
+  ISTORIA_RIM_SREDIZEMNOMORIETO_QUESTIONS,
   ISTORIA_SVAURZVANE_QUESTIONS,
   ISTORIA_UPRAJNENIE,
   ISTORIYA_DREVNA_TRAKIYA_QUESTIONS,
@@ -223,6 +226,11 @@ const TESTS = {
     slug: 'geografia-mix',
     questions: GEOGRAFIA_MIX_QUESTIONS,
   },
+  '5|geografia|vodite-na-afrika': {
+    title: 'География – Водите на Африка (урок 52)',
+    slug: 'vodite-na-afrika',
+    questions: GEOGRAFIA_VODITE_NA_AFRIKA_QUESTIONS,
+  },
   '5|english|language-revision': {
     title: 'Language Revision (English)',
     slug: 'language-revision',
@@ -297,6 +305,11 @@ const TESTS = {
     title: 'История – Подреждане по време (Урок 26)',
     slug: 'podredba',
     questions: ISTORIA_PODREDBA_QUESTIONS,
+  },
+  '5|istoriya|rim-sredizemnomorieto': {
+    title: 'История – Рим, господар на Средиземноморието (урок 32)',
+    slug: 'rim-sredizemnomorieto',
+    questions: ISTORIA_RIM_SREDIZEMNOMORIETO_QUESTIONS,
   },
   '5|priroda|vozduh': {
     title: 'Човек и природа – Въздухът',
@@ -387,6 +400,11 @@ const TESTS = {
     title: 'Unit 7c – Don\'t look at the ground: йога инструкции, здравни съвети, части на тялото и болести (проверка за думи)',
     slug: 'unit-7c-vocab',
     questions: ENGLISH_UNIT_7C_VOCAB_QUESTIONS,
+  },
+  '5|english|angl-14-04-2026': {
+    title: 'Англ. 14.04.2026',
+    slug: 'angl-14-04-2026',
+    questions: ENGLISH_14_04_2026_QUESTIONS,
   },
 };
 
