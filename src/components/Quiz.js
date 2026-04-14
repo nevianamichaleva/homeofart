@@ -14,6 +14,15 @@ function shuffle(arr) {
   return b;
 }
 
+function optionLabelRank(text) {
+  if (typeof text !== 'string') return Number.MAX_SAFE_INTEGER;
+  const match = text.trim().match(/^([АБВГабвгAБВГaбвг])\)/u);
+  if (!match) return Number.MAX_SAFE_INTEGER;
+  const ch = match[1].toUpperCase();
+  const rank = { А: 0, A: 0, Б: 1, В: 2, Г: 3 };
+  return rank[ch] ?? Number.MAX_SAFE_INTEGER;
+}
+
 /** Дали въпросът е с написване на отговор (не избор от 3). */
 function isTextQuestion(q) {
   return q && q.type === 'text';
@@ -97,11 +106,15 @@ function newPathStepId(prefix) {
 }
 
 export default function Quiz({ title, questions, testId = '', testTitle = '' }) {
+  const shouldShuffleQuestions = !String(testId).startsWith('7|');
+  const shouldShuffleOptions = !String(testId).startsWith('7|');
   /** Име на участника и дали е започнал теста */
   const [userName, setUserName] = useState('');
   const [started, setStarted] = useState(false);
-  /** Разбъркан ред на въпросите – фиксиран при зареждане на страницата */
-  const [shuffledQuestions] = useState(() => shuffle([...questions]));
+  /** Ред на въпросите – за 7. клас не се разбърква. */
+  const [shuffledQuestions] = useState(() =>
+    shouldShuffleQuestions ? shuffle([...questions]) : [...questions]
+  );
   /** Разбъркан ред на отговорите за всеки въпрос – фиксиран при стартиране на теста */
   const [optionOrders, setOptionOrders] = useState(null);
   /** Ред на стъпките: основни въпроси + вмъкнати повторения след грешка */
@@ -144,10 +157,13 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
         qCurrent?.wrong2,
         qCurrent?.wrong3,
       ].filter(Boolean);
+  const displayOpts = shouldShuffleOptions
+    ? opts
+    : [...opts].sort((a, b) => optionLabelRank(a) - optionLabelRank(b));
   const orderForQuestion = optionOrders?.[qIndex];
   const orderedOpts = orderForQuestion != null && orderForQuestion.length > 0
-    ? orderForQuestion.map((i) => opts[i]).filter(Boolean)
-    : opts;
+    ? orderForQuestion.map((i) => displayOpts[i]).filter(Boolean)
+    : displayOpts;
 
   useEffect(() => {
     if (!step || !qCurrent) return;
@@ -310,7 +326,9 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
       if (isMatchingQuestion(q) || isOrderingQuestion(q)) return [];
       const optsForQ = (q?.options && q.options.length > 0) ? q.options : [q?.correct, q?.wrong1, q?.wrong2, q?.wrong3].filter(Boolean);
       const n = optsForQ.length;
-      return n ? shuffle(Array.from({ length: n }, (_, i) => i)) : [];
+      if (!n) return [];
+      if (!shouldShuffleOptions) return Array.from({ length: n }, (_, i) => i);
+      return shuffle(Array.from({ length: n }, (_, i) => i));
     });
     setOptionOrders(orders);
     const matchCache = {};
@@ -457,6 +475,11 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
 
   return (
     <div id="quiz" className="max-w-xl mx-auto">
+      {q.sectionIntro && (
+        <div className="mb-5 rounded-xl border border-[#1a3a52]/20 bg-white p-4">
+          <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">{q.sectionIntro}</p>
+        </div>
+      )}
   
       <p className="text-lg font-semibold text-gray-800 mb-4 leading-snug">
         {pathPos + 1}. {q.q}

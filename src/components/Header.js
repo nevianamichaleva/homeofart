@@ -36,6 +36,11 @@ export default function Header() {
               Тестове
             </Link>
           )}
+          {pathname !== '/test-pilot/7-nvo' && (
+            <Link href="/test-pilot/7-nvo" className="text-gray-700 hover:text-gray-900 font-medium">
+              7. клас НВО
+            </Link>
+          )}
         </nav>
       </div>
     </header>

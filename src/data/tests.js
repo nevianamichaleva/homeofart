@@ -32,6 +32,11 @@ import {
 } from './bulgarski-tests';
 
 import {
+  BULGARSKI_NVO_7_BEL_2024_QUESTIONS,
+  BULGARSKI_NVO_7_BEL_2025_QUESTIONS,
+} from './seventh-grade-tests';
+
+import {
   GEOGRAFIA_DOPALNITELNI_QUESTIONS,
   GEOGRAFIA_IKONOMIKA_PART1,
   GEOGRAFIA_IKONOMIKA_PART2,
@@ -167,6 +172,16 @@ const TESTS = {
     title: 'Български език – граматика (избор от 4 отговора)',
     slug: 'gramatika-4',
     questions: BULGARSKI_GRAMATIKA_4_QUESTIONS,
+  },
+  '7|bg|bel-2024': {
+    title: 'БЕЛ-2024',
+    slug: 'bel-2024',
+    questions: BULGARSKI_NVO_7_BEL_2024_QUESTIONS,
+  },
+  '7|bg|bel-2025': {
+    title: 'БЕЛ-2025',
+    slug: 'bel-2025',
+    questions: BULGARSKI_NVO_7_BEL_2025_QUESTIONS,
   },
   '5|geografia|geografia-ikonomika-1': {
     title: 'География и стопанство (част 1)',
