@@ -644,3 +644,91 @@ export const ENGLISH_14_04_2026_QUESTIONS = [
   { type: 'text', q: "Correct the mistake: Where she was? -> ___ ___ ___?", correct: "Where was she", acceptedAnswers: ["Where was she", "where was she"] },
 ];
 
+/**
+ * Unit 8b – Past Simple of regular verbs + prepositions of motion
+ * (по упражненията от страниците 42–43).
+ */
+export const ENGLISH_UNIT_8B_REGULAR_VERBS_MOTION_QUESTIONS = [
+  // Exercise 1: story (past simple)
+  { type: 'text', q: "Complete the story: Suddenly, we ___ an old house. (notice)", correct: "noticed", acceptedAnswers: ["noticed"] },
+  { type: 'text', q: "Complete the story: We ___ up to the big old door. (walk)", correct: "walked", acceptedAnswers: ["walked"] },
+  { type: 'text', q: "Complete the story: Dan ___ at the door. (knock)", correct: "knocked", acceptedAnswers: ["knocked"] },
+  { type: 'text', q: "Complete the story: There wasn't anybody there. I ___ to leave. (want)", correct: "wanted", acceptedAnswers: ["wanted"] },
+  { type: 'text', q: "Complete the story: We ___ and we ___. (wait / listen)", correct: "waited", acceptedAnswers: ["waited"] },
+  { type: 'text', q: "Complete the story: ... and we ___ after five minutes. (listen)", correct: "listened", acceptedAnswers: ["listened"] },
+  { type: 'text', q: "Complete the story: The door ___ with a loud BANG! (close)", correct: "closed", acceptedAnswers: ["closed"] },
+
+  // Past simple forms: affirmative/negative
+  { q: "Choose the correct affirmative form of 'finish':", correct: "finished", wrong1: "finishd", wrong2: "finisht" },
+  { q: "Choose the correct negative sentence:", correct: "I didn't watch a film.", wrong1: "I didn't watched a film.", wrong2: "I not watch a film." },
+  { q: "Choose the correct negative sentence:", correct: "He didn't notice us.", wrong1: "He not noticed us.", wrong2: "He didn't noticed us." },
+  { q: "Choose the correct sentence:", correct: "They phoned you yesterday.", wrong1: "They phone you yesterday.", wrong2: "They did phoned you yesterday." },
+
+  // Exercise 3: complete with past simple
+  { type: 'text', q: "I ___ basketball when I was young. (play)", correct: "played", acceptedAnswers: ["played"] },
+  { type: 'text', q: "We ___ to school every day. (walk)", correct: "walked", acceptedAnswers: ["walked"] },
+  { type: 'text', q: "I ___ a video last week. (watch)", correct: "watched", acceptedAnswers: ["watched"] },
+  { type: 'text', q: "Yesterday, my sister and I ___ dinner. (cook)", correct: "cooked", acceptedAnswers: ["cooked"] },
+  { type: 'text', q: "My sister ___ French last year. (study)", correct: "studied", acceptedAnswers: ["studied"] },
+  { type: 'text', q: "He ___ in a hospital in 2005. (work)", correct: "worked", acceptedAnswers: ["worked"] },
+  { type: 'text', q: "They ___ their English exam last week. (finish)", correct: "finished", acceptedAnswers: ["finished"] },
+
+  // Exercise 4: negatives
+  { type: 'text', q: "Darren ___ to go to the concert. (decide, negative)", correct: "didn't decide", acceptedAnswers: ["didn't decide", "did not decide"] },
+  { type: 'text', q: "I ___ hard for my exams last week. (study, negative)", correct: "didn't study", acceptedAnswers: ["didn't study", "did not study"] },
+  { type: 'text', q: "My parents ___ to go to Spain on holiday. (want, negative)", correct: "didn't want", acceptedAnswers: ["didn't want", "did not want"] },
+  { type: 'text', q: "Nelly ___ when she watched the sad film. (cry, negative)", correct: "didn't cry", acceptedAnswers: ["didn't cry", "did not cry"] },
+
+  // Prepositions of motion + exercise 2 rewrites
+  { q: "Complete: He walked ___ the house. (out of / across / up)", correct: "out of", wrong1: "across", wrong2: "up" },
+  { q: "Complete: He walked ___ the road. (along / into / past)", correct: "along", wrong1: "into", wrong2: "past" },
+  { q: "Complete: He climbed ___ the stairs. (up / across / out of)", correct: "up", wrong1: "across", wrong2: "out of" },
+  { q: "Complete: He climbed ___ the stairs. (down / into / along)", correct: "down", wrong1: "into", wrong2: "along" },
+  { q: "Complete: We looked ___ all the rooms. (in / out of / down)", correct: "in", wrong1: "out of", wrong2: "down" },
+  { q: "Complete: Kelly answered the man and talked ___ him. (to / into / across)", correct: "to", wrong1: "into", wrong2: "across" },
+];
+
+/**
+ * Unit 8b – само попълване (regular verbs + prepositions of motion).
+ */
+export const ENGLISH_UNIT_8B_FILL_ONLY_QUESTIONS = [
+  // Exercise 1
+  { type: 'text', q: "Suddenly, we ___ an old house. (notice)", correct: "noticed", acceptedAnswers: ["noticed"] },
+  { type: 'text', q: "We ___ up to the big old door. (walk)", correct: "walked", acceptedAnswers: ["walked"] },
+  { type: 'text', q: "Dan ___ at the door. (knock)", correct: "knocked", acceptedAnswers: ["knocked"] },
+  { type: 'text', q: "I ___ to leave, but we ___ and we ___. (want / wait / listen) – first blank", correct: "wanted", acceptedAnswers: ["wanted"] },
+  { type: 'text', q: "I wanted to leave, but we ___ and we listened. (wait)", correct: "waited", acceptedAnswers: ["waited"] },
+  { type: 'text', q: "I wanted to leave, but we waited and we ___. (listen)", correct: "listened", acceptedAnswers: ["listened"] },
+  { type: 'text', q: "The door ___ with a loud BANG! (close)", correct: "closed", acceptedAnswers: ["closed"] },
+
+  // Exercise 2
+  { type: 'text', q: "Dan didn't like to open the door. -> Dan ___ to open the door.", correct: "tried", acceptedAnswers: ["tried"] },
+  { type: 'text', q: "They waited for ten minutes. -> They ___ for ten minutes.", correct: "waited", acceptedAnswers: ["waited"] },
+  { type: 'text', q: "They climbed down the stairs. -> They ___ down the stairs.", correct: "climbed", acceptedAnswers: ["climbed"] },
+  { type: 'text', q: "They looked through the window. -> They ___ through the window.", correct: "looked", acceptedAnswers: ["looked"] },
+  { type: 'text', q: "A man asked: 'What do you want?' -> A man ___ 'What do you want?'", correct: "asked", acceptedAnswers: ["asked"] },
+  { type: 'text', q: "Kelly answered the man. -> Kelly ___ the man.", correct: "answered", acceptedAnswers: ["answered"] },
+
+  // Exercise 3
+  { type: 'text', q: "I ___ basketball when I was young. (play)", correct: "played", acceptedAnswers: ["played"] },
+  { type: 'text', q: "I ___ a video last week. (watch)", correct: "watched", acceptedAnswers: ["watched"] },
+  { type: 'text', q: "Yesterday, my sister and I ___ dinner. (cook)", correct: "cooked", acceptedAnswers: ["cooked"] },
+  { type: 'text', q: "My sister ___ French last year. (study)", correct: "studied", acceptedAnswers: ["studied"] },
+  { type: 'text', q: "He ___ in a hospital in 2005. (work)", correct: "worked", acceptedAnswers: ["worked"] },
+  { type: 'text', q: "They ___ their English exam last week. (finish)", correct: "finished", acceptedAnswers: ["finished"] },
+
+  // Exercise 4 (negative)
+  { type: 'text', q: "Darren ___ to go to the concert. (decide, negative)", correct: "didn't decide", acceptedAnswers: ["didn't decide", "did not decide"] },
+  { type: 'text', q: "I ___ hard for my exams last week. (study, negative)", correct: "didn't study", acceptedAnswers: ["didn't study", "did not study"] },
+  { type: 'text', q: "My parents ___ to go to Spain on holiday. (want, negative)", correct: "didn't want", acceptedAnswers: ["didn't want", "did not want"] },
+  { type: 'text', q: "Nelly ___ when she watched the sad film. (cry, negative)", correct: "didn't cry", acceptedAnswers: ["didn't cry", "did not cry"] },
+
+  // Exercise 5 (webpage + prepositions from box)
+  { type: 'text', q: "The first people ___ in our island in 676. (arrive)", correct: "arrived", acceptedAnswers: ["arrived"] },
+  { type: 'text', q: "The people ___ the city Willstown because... (call)", correct: "called", acceptedAnswers: ["called"] },
+  { type: 'text', q: "In 1821, 73 men ___ the first game of football on the island. (play)", correct: "played", acceptedAnswers: ["played"] },
+  { type: 'text', q: "Click here to ___ up the hill and look over the city. (climb)", correct: "climb", acceptedAnswers: ["climb"] },
+  { type: 'text', q: "There's a restaurant here. You can eat local fish. Click again to climb ___ the museum. (to)", correct: "to", acceptedAnswers: ["to"] },
+  { type: 'text', q: "Click here to go ___ the museum and look at some things inside. (into)", correct: "into", acceptedAnswers: ["into"] },
+];
+

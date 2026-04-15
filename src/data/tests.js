@@ -58,6 +58,8 @@ import {
   ENGLISH_ROUNDUP_6_WRITE_IN_QUESTIONS,
   ENGLISH_TIME_QUESTIONS,
   ENGLISH_14_04_2026_QUESTIONS,
+  ENGLISH_UNIT_8B_FILL_ONLY_QUESTIONS,
+  ENGLISH_UNIT_8B_REGULAR_VERBS_MOTION_QUESTIONS,
   ENGLISH_UNIT_6C_QUESTIONS,
   ENGLISH_UNIT_7C_FILL_QUESTIONS,
   ENGLISH_UNIT_7C_VOCAB_QUESTIONS,
@@ -411,6 +413,16 @@ const TESTS = {
     title: 'Англ. 14.04.2026',
     slug: 'angl-14-04-2026',
     questions: ENGLISH_14_04_2026_QUESTIONS,
+  },
+  '5|english|unit-8b-regular-verbs-motion': {
+    title: 'Unit 8b – Past Simple regular verbs & prepositions of motion',
+    slug: 'unit-8b-regular-verbs-motion',
+    questions: ENGLISH_UNIT_8B_REGULAR_VERBS_MOTION_QUESTIONS,
+  },
+  '5|english|unit-8b-fill': {
+    title: 'Unit 8b – само попълване (regular verbs & motion)',
+    slug: 'unit-8b-fill',
+    questions: ENGLISH_UNIT_8B_FILL_ONLY_QUESTIONS,
   },
 };
 
