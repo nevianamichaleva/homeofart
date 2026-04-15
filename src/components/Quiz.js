@@ -257,7 +257,8 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   const handleNext = () => {
     if (!step) return;
 
-    if (answered) {
+    const alreadyAnswered = Object.prototype.hasOwnProperty.call(pathAnswers, step.id);
+    if (answered || alreadyAnswered) {
       if (pathPos + 1 >= pathSteps.length) {
         finishTest();
         return;
@@ -467,8 +468,10 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
   if (!step || !q) return null;
 
   const userAnswer = pathAnswers[step.id];
+  const isStepAlreadyAnswered = Object.prototype.hasOwnProperty.call(pathAnswers, step.id);
+  const isAnswerFinal = answered || isStepAlreadyAnswered;
   const correctDisplay = getCorrectDisplay(q);
-  const isUserCorrect = answered && isCorrectAnswer(q, userAnswer);
+  const isUserCorrect = isAnswerFinal && isCorrectAnswer(q, userAnswer);
 
   const leftLabels = isMatching ? q.pairs.map(([l]) => l) : [];
   const rightLabels = (isMatching && matchingCache?.[qIndex]) || (isMatching ? q.pairs.map(([, r]) => r) : []);
@@ -491,10 +494,10 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
             type="text"
             value={typedAnswer}
             onChange={(e) => setTypedAnswer(e.target.value)}
-            disabled={answered}
+            disabled={isAnswerFinal}
             placeholder="..."
             className={`w-full px-4 py-3 rounded-lg border-2 text-gray-800 placeholder-gray-400 ${
-              answered
+              isAnswerFinal
                 ? isUserCorrect
                   ? 'border-green-500 bg-green-50'
                   : 'border-red-400 bg-red-50'
@@ -513,9 +516,9 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
                 <select
                   value={matchingSelections[i] ?? ''}
                   onChange={(e) => setMatchingSelections((prev) => ({ ...prev, [i]: Number(e.target.value) }))}
-                  disabled={answered}
+                  disabled={isAnswerFinal}
                   className={`flex-1 min-w-[200px] px-3 py-2 rounded-lg border-2 ${
-                    answered
+                    isAnswerFinal
                       ? isUserCorrect
                         ? 'border-green-500 bg-green-50'
                         : 'border-red-400 bg-red-50'
@@ -546,7 +549,7 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
                   {i + 1}
                 </span>
                 <span className="flex-1 px-3 py-2 rounded-lg border-2 border-gray-200 bg-white">{item}</span>
-                {!answered && (
+                {!isAnswerFinal && (
                   <>
                     <button
                       type="button"
@@ -590,9 +593,9 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
         <div className="flex flex-col gap-2">
           {orderedOpts.map((text, i) => {
             const isCorrect = text === q.correct;
-            const isWrong = answered && text !== q.correct && userAnswer === text;
-            const showCorrect = answered && isCorrect;
-            const showWrong = answered && isWrong;
+            const isWrong = isAnswerFinal && text !== q.correct && userAnswer === text;
+            const showCorrect = isAnswerFinal && isCorrect;
+            const showWrong = isAnswerFinal && isWrong;
             return (
               <label
                 key={i}
@@ -610,7 +613,7 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
                   value={text}
                   checked={selectedOption === text}
                   onChange={() => setSelectedOption(text)}
-                  disabled={answered}
+                  disabled={isAnswerFinal}
                   className="mt-1 flex-shrink-0"
                 />
                 <span>{text}</span>
@@ -619,7 +622,7 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
           })}
         </div>
       )}
-      {answered && (
+      {isAnswerFinal && (
         <div
           className={`mt-4 p-4 rounded-lg font-medium ${
             isUserCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
@@ -651,7 +654,7 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
           onClick={handleNext}
           className="px-4 py-2 rounded-lg font-semibold bg-[#1a3a52] text-white hover:bg-[#244a62]"
         >
-          {answered
+          {isAnswerFinal
             ? pathPos + 1 >= pathSteps.length
               ? 'Край на теста'
               : 'Напред →'
