@@ -81,6 +81,7 @@ import {
 
 import {
   PRIRODA_CHP_TEST2_VESHTESTVA_I_TEHNI_SVOYSTVA_QUESTIONS,
+  PRIRODA_KLETKATA_OSNOVNA_GRADIVNA_EDINICA_QUESTIONS,
   PRIRODA_OBOBSHTENIE_VARIANT_1_QUESTIONS,
   PRIRODA_OBOBSHTENIE_VARIANT_2_QUESTIONS,
   PRIRODA_VESHTESTVATA_I_TEHNITE_SVOYSTVA_QUESTIONS,
@@ -345,6 +346,11 @@ const TESTS = {
     title: 'Човек и природа – Тест 2: Веществата и техните свойства',
     slug: 'chp-test-2-veshtestva',
     questions: PRIRODA_CHP_TEST2_VESHTESTVA_I_TEHNI_SVOYSTVA_QUESTIONS,
+  },
+  '5|priroda|kletkata-osnovna-gradivna-edinica': {
+    title: 'Човек и природа – Клетката, основна градивна единица на организмите (урок 51)',
+    slug: 'kletkata-osnovna-gradivna-edinica',
+    questions: PRIRODA_KLETKATA_OSNOVNA_GRADIVNA_EDINICA_QUESTIONS,
   },
   '5|literatura|da-proverim-var1': {
     title: 'Да проверим – Литература (Вариант 1)',
