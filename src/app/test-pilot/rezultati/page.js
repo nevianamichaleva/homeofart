@@ -43,18 +43,6 @@ function toJsDate(timestamp) {
   return null;
 }
 
-/** Дали датата е в същия календарен ден като "днес" (локално време). */
-function isToday(timestamp) {
-  const d = toJsDate(timestamp);
-  if (!d) return false;
-  const now = new Date();
-  return (
-    d.getFullYear() === now.getFullYear()
-    && d.getMonth() === now.getMonth()
-    && d.getDate() === now.getDate()
-  );
-}
-
 /** Форматира дата от Firestore Timestamp или обект. */
 function formatDate(timestamp) {
   const date = toJsDate(timestamp);
@@ -82,8 +70,6 @@ export default function RezultatiPage() {
         const list = [];
         snap.forEach((doc) => {
           const data = doc.data();
-          // Показваме само резултати от днешния ден.
-          if (!isToday(data.createdAt)) return;
           list.push({
             id: doc.id,
             name: data.name || 'Анонимен',
@@ -107,7 +93,8 @@ export default function RezultatiPage() {
             return 0;
           }
         });
-        setResults(list);
+        // Показваме само последните 15 резултата.
+        setResults(list.slice(0, 15));
       } catch (err) {
         if (!cancelled) setError(err?.message || 'Грешка при зареждане.');
       } finally {
@@ -138,7 +125,7 @@ export default function RezultatiPage() {
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Резултати от тестовете</h1>
             <p className="text-gray-600">
-              Всички резултати и класация по предмет.
+              Последните 15 резултата и класация по предмет.
             </p>
           </div>
           <Link
@@ -168,7 +155,7 @@ export default function RezultatiPage() {
             {/* Всички резултати */}
             <section className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
               <h2 className="text-xl font-semibold text-[#1a3a52] px-6 py-4 border-b border-gray-200">
-                Всички резултати
+                Последни 15 резултата
               </h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-left">
