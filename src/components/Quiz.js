@@ -483,6 +483,12 @@ export default function Quiz({ title, questions, testId = '', testTitle = '' }) 
           <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">{q.sectionIntro}</p>
         </div>
       )}
+      {q.rewriteText && (
+        <div className="mb-5 rounded-xl border border-amber-300/60 bg-amber-50 p-4">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-amber-700">Текст за редакция</p>
+          <p className="whitespace-pre-line text-sm leading-relaxed text-gray-800">{q.rewriteText}</p>
+        </div>
+      )}
   
       <p className="text-lg font-semibold text-gray-800 mb-4 leading-snug">
         {pathPos + 1}. {q.q}
