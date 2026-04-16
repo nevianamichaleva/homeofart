@@ -89,6 +89,7 @@ import {
   PRIRODA_VESHTESTVATA_I_TEHNITE_SVOYSTVA_QUESTIONS,
   PRIRODA_VESHTESTVA_SMESI_I_PROMENI_MIX_QUESTIONS,
   PRIRODA_VODA_VAZDUH_SMESI_KONTROL_QUESTIONS,
+  PRIRODA_VODATA_I_HORATA_QUESTIONS,
   PRIRODA_VOZDUH_QUESTIONS,
 } from './priroda-tests';
 
@@ -353,6 +354,11 @@ const TESTS = {
     title: 'Човек и природа – Клетката, основна градивна единица на организмите (урок 51)',
     slug: 'kletkata-osnovna-gradivna-edinica',
     questions: PRIRODA_KLETKATA_OSNOVNA_GRADIVNA_EDINICA_QUESTIONS,
+  },
+  '5|priroda|vodata-i-horata': {
+    title: 'Човек и природа – Водата и хората',
+    slug: 'vodata-i-horata',
+    questions: PRIRODA_VODATA_I_HORATA_QUESTIONS,
   },
   '5|literatura|da-proverim-var1': {
     title: 'Да проверим – Литература (Вариант 1)',
